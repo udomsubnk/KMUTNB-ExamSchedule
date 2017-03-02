@@ -10,6 +10,12 @@ router.get('/', function(req, res, next) {
 router.get('/precourse',function(req,res,next){
   res.render('first',{title:'Pre-Course : KMUTNB'});
 });
+router.get('/second',function(req,res,next){
+  res.render('second',{title:'Pre-Course : KMUTNB'});
+});
+router.get('/third',function(req,res,next){
+  res.render('third',{title:'Pre-Course : KMUTNB'});
+});
 router.post('/data', (req,res,next)=>{
 	var id = req.body.id;
   res.send(reqData(id))

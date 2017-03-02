@@ -1,27 +1,136 @@
-<div class="container">
-	<div class="input-group">
-      	<input type="text" class="form-control" placeholder="Name or ID">
-      	<span class="input-group-btn">
-        	<button class="btn btn-info btn-md" type="button">Search</button>
-      	</span>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./bs/css/mycss.css">
+    <title>Pre-courses</title>
+  </head>
+  <body class="root">
+    <div class="container top">
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <h1 class="text-centertop">Pre-Courses</h1>
+          <h4 class="kmutnb-text">KMUTNB</h4>
+        </div>
+      </div>
     </div>
-	<table class="table table-hover table-courses">
-    	<thead>
-      		<tr>
-	        	<th class="col-md-3 col-xs-3 col-sm-3 col-lg-3">ID</th>
-	        	<th class="col-md-7 col-xs-7 col-sm-7 col-lg-7">Name</th>
-	        	<th class="col-md-2 col-xs-2 col-sm-2 col-lg-2"></th>
-      		</tr>
-    	</thead>
-    	<tbody>
-      		<tr>
-		        <td>0406111</td>
-		        <td>Udomsub Naikorn</td>
-		        <td><button type="button" class="btn btn-success">Add</button></td>
-      		</tr>
-    	</tbody>
-  	</table>
-  	<table class="table table-shedule">
-  		
-  	</table>
-</div>
+    <div class="container middle">
+      <form class="eiei">
+        <div class="row m0">
+          <div class="col-md-1 col-xs-2 text-center topic-text">
+            <label>คณะ</label>
+          </div>
+          <div class="col-md-11 col-xs-10">
+            <select class="form-control input-lg" id="sel1">
+              <option selected disabled>เลือกคณะ</option>
+              <option>คณะวิศวกรรมศาสตร์</option>
+              <option>คณะครุศาสตร์อุตสาหกรรม</option>
+              <option>คณะวิทยาลัยเทคโนโลยีอุตสาหกรรม</option>
+              <option>คณะวิทยาศาสตร์ประยุกต์</option>
+              <option>คณะอุตสาหกรรมเกษตร</option>
+              <option>คณะเทคโนโลยีและการจัดการอุตสาหกรรม</option>
+
+            </select>
+          </div>
+        </div>
+        <div class="row m0">
+          <div class="col-md-1 col-xs-2 text-center topic-text">
+            <label>หลักสูตร</label>
+          </div>
+          <div class="col-md-11 col-xs-10">
+            <div class="dropdown">
+              <select class="form-control input-lg" id="sel1">
+                <option selected disabled>เลือกหลักสูตร</option>
+                <option>วิทยาการคอมพิวเตอร์</option>
+                <option>วิทยาการคอมพิวเตอร์</option>
+                <option>วิทยาการคอมพิวเตอร์</option>
+                <option>วิทยาการคอมพิวเตอร์</option>
+                <option>วิทยาการคอมพิวเตอร์</option>
+              </select>
+            </div>
+          </div>
+          </div>
+          <div class="row m0">
+            <div class="col-md-1 col-xs-2 text-center topic-text">
+              <label>หลักสูตร</label>
+            </div>
+            <div class="col-md-5 col-xs-4">
+              <div class="dropdown">
+                <select class="form-control input-lg" id="sel1">
+                  <option selected disabled>เลือกหลักสูตร</option>
+                  <option>D สมทบพิเศษ</option>
+                  <option>D สมทบพิเศษ</option>
+                  <option>D สมทบพิเศษ</option>
+                  <option>D สมทบพิเศษ</option>
+                  <option>D สมทบพิเศษ</option>
+                  <option>D สมทบพิเศษ</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-1 col-xs-2 text-center topic-text">
+              <label>ชั้นปี</label>
+            </div>
+            <div class="col-md-5 col-xs-4">
+              <div class="dropdown">
+                <div class="dropdown">
+                  <select class="form-control input-lg" id="sel1">
+                    <option selected disabled>เลือกปี</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+                </div>
+              </div>
+            </div>
+          <div class="row m0">
+            <div class="col-md-1 col-xs-2 text-center topic-text">
+              <label>ห้อง</label>
+            </div>
+            <div class="col-md-5 col-xs-4">
+              <div class="dropdown">
+                <div class="dropdown">
+                  <select class="form-control input-lg" id="sel1">
+                    <option selected disabled>เลือกห้อง</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-1 col-xs-2 text-center topic-text">
+              <label>รอบ</label>
+            </div>
+            <div class="col-md-5 col-xs-4">
+              <div class="dropdown">
+                <div class="dropdown">
+                  <select class="form-control input-lg" id="sel1">
+                    <option selected disabled>เลือกรอบ</option>
+                    <option>เช้า</option>
+                    <option>บ่าย</option>
+                    <option>เย็น</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row m1">
+
+            <div class="col-md-12 col-xs-12">
+              <a href="/second">
+                <button type="button" class="btn btn-primary size-menu2 btn-lg">ดึงวิชา</button>
+              </a>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

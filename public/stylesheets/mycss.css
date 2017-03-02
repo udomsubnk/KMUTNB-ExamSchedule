@@ -1,0 +1,40 @@
+.middle{
+  margin-top: 50px;
+}
+.m0{
+  margin-top:20px;
+}
+.m1{
+  margin-top:60px;
+}
+.text-centertop{
+  padding-top:35px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 700;
+}
+.kmutnb-text{
+  font-family: sans-serif;
+  text-align: center;
+  font-size:24px;
+  color: #1abc9c;
+}
+.topic-text{
+  font-family: sans-serif;
+  text-align: center;
+  font-size:18px;
+  padding-top: 10px;
+}
+.text-center{
+  text-align: center;
+}
+.root{
+  background-color: #f0eeea;
+}
+.size-menu1{
+  width: 40%;
+}
+.size-menu2{
+  width: 100%;
+
+}

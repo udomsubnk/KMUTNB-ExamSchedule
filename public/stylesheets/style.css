@@ -1,7 +1,7 @@
 body {
   	padding: 50px;
   	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background:#f0eeea !important;
+	background: #f0eeea !important;
 }
 a {
   color: #00B7FF;
@@ -9,9 +9,65 @@ a {
 .table-courses{
 	border: 1px solid #ddd;
 	border-radius: 5px;
-	margin-top: 20px;
+	margin-top: 5px;
 	background: #fff;
 }
 .table-schedule{
-	
+	background: #fff;
+}
+.table-schedule > thead > tr > th{
+	text-align: center !important;
+	height: 40px;
+	border: 1px solid #ddd;
+}
+.table-schedule > thead > tr > th:nth-child(odd){
+	background: #c3c2c2;
+}
+.table-schedule > thead > tr{
+	border: 1px solid #ddd;
+}
+.table-schedule > tbody > tr{
+	height: 50px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+.table-schedule > tbody > tr > td:first-child{
+	font-size: 1.7rem;
+	border: 1px solid #ddd;	
+}
+.table-exams{
+	background: #fff;
+}
+.table-exams > thead > tr > th{
+	text-align: center !important;
+	height: 40px;
+	border: 1px solid #ddd;
+}
+.table-exams > thead > tr > th:nth-child(odd){
+	background: #c3c2c2;
+}
+.table-exams > thead > tr{
+	border: 1px solid #ddd;
+}
+.table-exams > tbody > tr{
+	height: 50px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+.table-exams > tbody > tr > td:first-child{
+	font-size: 1.7rem;
+	border: 1px solid #ddd;	
+}
+span.date{
+	color: #000;
+}
+.mgt20{
+	margin-top: 20px;
+}
+.mgt40{
+	margin-top: 40px;
+}
+.export{
+	width: 100%;
+	margin-top: 20px;
 }
