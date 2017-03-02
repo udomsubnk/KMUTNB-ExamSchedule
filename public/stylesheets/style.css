@@ -1,8 +1,17 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  	padding: 50px;
+  	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background:#f0eeea !important;
 }
-
 a {
   color: #00B7FF;
+}
+.table-courses{
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin-top: 20px;
+	background: #fff;
+}
+.table-schedule{
+	
 }

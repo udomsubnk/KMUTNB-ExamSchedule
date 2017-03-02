@@ -5,7 +5,10 @@ var cheerio = require('cheerio');
 var fs = require('fs');
 var path = require('path');
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Pre-Course : KMUTNB' });
+});
+router.get('/precourse',function(req,res,next){
+  res.render('first',{title:'Pre-Course : KMUTNB'});
 });
 router.post('/data', (req,res,next)=>{
 	var id = req.body.id;
