@@ -1,5 +1,5 @@
 body {
-  	padding: 50px;
+  	padding: 0px;
   	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	background: #f0eeea !important;
 }
@@ -58,6 +58,29 @@ a {
 	font-size: 1.7rem;
 	border: 1px solid #ddd;	
 }
+.table-exams-final{
+	background: #fff;
+}
+.table-exams-final > thead > tr > th{
+	text-align: center !important;
+	height: 40px;
+	border: 1px solid #ddd;
+}
+.table-exams-final > thead > tr > th:nth-child(odd){
+	background: #c3c2c2;
+}
+.table-exams-final > thead > tr{
+	border: 1px solid #ddd;
+}
+.table-exams-final > tbody > tr{
+	height: 50px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+.table-exams-final > tbody > tr > td:first-child{
+	font-size: 1.7rem;
+	border: 1px solid #ddd;	
+}
 span.date{
 	color: #000;
 }
@@ -70,4 +93,10 @@ span.date{
 .export{
 	width: 100%;
 	margin-top: 20px;
+}
+.show{
+	background: white !important;
+}
+.zzz{
+	margin-top: 60px;
 }
