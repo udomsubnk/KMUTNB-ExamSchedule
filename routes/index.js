@@ -4,9 +4,17 @@ var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
 var path = require('path');
+
+
+
+// router.get('/xxx',function(req,res){
+//   res.sendFile(path.join(__dirname + '/template/index.html'))
+// })
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Pre-Course : KMUTNB' });
 });
+
 router.get('/precourse',function(req,res,next){
   res.render('first',{title:'Pre-Course : KMUTNB'});
 });
