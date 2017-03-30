@@ -4,9 +4,10 @@ var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
 var path = require('path');
-
-
-
+var bodyParser = require('body-parser')
+router.use(bodyParser.urlencoded({ extended: true }))
+router.use( bodyParser.json() );
+var request = require('request');
 // router.get('/xxx',function(req,res){
 //   res.sendFile(path.join(__dirname + '/template/index.html'))
 // })
@@ -31,6 +32,31 @@ router.post('/data', (req,res,next)=>{
 router.get('/file/:id',(req,res,next)=>{
   console.log('Come in')
   res.sendFile(path.resolve('public/files/'+req.params.id+'.ics'));
+});
+router.post('/courses',(req,res,next)=>{
+  var currCode = req.body.currCode
+  var facCode = req.body.facCode
+  var stuGroup = req.body.stuGroup
+  var stuRound = req.body.stuRound
+  var stuType = req.body.stuType
+  var stuYear = req.body.stuYear
+  var data = {
+    currCode: currCode,
+    facCode: facCode,
+    stuGroup: stuGroup,
+    stuRound: stuRound,
+    stuType: stuType,
+    stuYear: stuYear,
+    timePrecision:4
+  }
+  //  request.post({url: 'http://klogic.kmutnb.ac.th:8080/kris/tess/dataQuerySelector.jsp?query=studentTab',formData:data},function (error, res, body) {
+  //     if(res.statusCode == 200){
+  //       console.log(res);
+  //     } else {
+  //       console.log('error: '+ res.statusCode)
+  //     }
+  //   }
+  // )
 });
 
 function reqData(id){
