@@ -33,32 +33,6 @@ router.get('/file/:id',(req,res,next)=>{
   console.log('Come in')
   res.sendFile(path.resolve('public/files/'+req.params.id+'.ics'));
 });
-router.post('/courses',(req,res,next)=>{
-  var currCode = req.body.currCode
-  var facCode = req.body.facCode
-  var stuGroup = req.body.stuGroup
-  var stuRound = req.body.stuRound
-  var stuType = req.body.stuType
-  var stuYear = req.body.stuYear
-  var data = {
-    currCode: currCode,
-    facCode: facCode,
-    stuGroup: stuGroup,
-    stuRound: stuRound,
-    stuType: stuType,
-    stuYear: stuYear,
-    timePrecision:4
-  }
-  //  request.post({url: 'http://klogic.kmutnb.ac.th:8080/kris/tess/dataQuerySelector.jsp?query=studentTab',formData:data},function (error, res, body) {
-  //     if(res.statusCode == 200){
-  //       console.log(res);
-  //     } else {
-  //       console.log('error: '+ res.statusCode)
-  //     }
-  //   }
-  // )
-});
-
 function reqData(id){
   fileName = id+"122559"
 	request('http://www.scibase.kmutnb.ac.th/examroom/datatrain.php?IDcard='+id, function (error, response, body) {
