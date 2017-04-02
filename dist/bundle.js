@@ -9517,7 +9517,6 @@ var Main = function (_React$Component) {
           _ListChildren.ListMother,
           null,
           _react2.default.createElement(_ListChildren.ListChildren, null),
-          _react2.default.createElement(_ListChildren.ListChildren, null),
           _react2.default.createElement(_ListChildren.ListChildren, null)
         )
       );
@@ -21856,7 +21855,11 @@ var ListChildren = exports.ListChildren = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'Children'
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Children'
+        )
       );
     }
   }]);
@@ -21879,7 +21882,11 @@ var ListMother = exports.ListMother = function (_React$Component2) {
       return _react2.default.createElement(
         'div',
         null,
-        'Mother',
+        _react2.default.createElement(
+          'h1',
+          null,
+          'MotherFucker'
+        ),
         this.props.children
       );
     }

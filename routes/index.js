@@ -5,16 +5,27 @@ var cheerio = require('cheerio');
 var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser')
+//var subject = require('../src/api/subject')
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use( bodyParser.json() );
 var request = require('request');
 // router.get('/xxx',function(req,res){
 //   res.sendFile(path.join(__dirname + '/template/index.html'))
 // })
-
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Pre-Course : KMUTNB' });
 });
+router.get('/subject', function (req, res) {
+    res.json(subject.findAll());
+});
+
+router.get('/subject/:code', function (req, res) {
+    var code = req.params.code;
+    res.json(subject.findById(code));
+});
+
+
+
 
 router.get('/precourse',function(req,res,next){
   res.render('first',{title:'Pre-Course : KMUTNB'});
