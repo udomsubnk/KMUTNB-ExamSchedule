@@ -1,0 +1,127 @@
+.xxx{
+  color: blue;
+}
+.w{
+  width:40%;
+}
+.circle {
+    margin-top:3%;
+    width: 100px;
+	height: 100px;
+	background: green;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50%;
+    padding-left: 35px;
+    padding-top: 20px;
+    font-size: 50px;
+    color: white;
+
+}
+.index_container {
+    margin-top: 10px;
+    overflow: auto;
+}
+.table-schdule {
+    overflow: scroll;
+    text-align: center;
+}
+.index_header{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.header_inner {
+    line-height: 44px;
+}
+.index_firstHeader {
+    background: #c3c2c2;
+    height: 44px;
+    width: 44px;
+    min-width: 44px;
+}
+.index_day {
+    display: table-row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    border: 1px solid #c3c2c2;
+}
+.day_head {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #c3c2c2;
+    min-width: 40px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.header_header{
+    display: inline-table;
+    height: 44px;
+    width: 44px;
+    font-size: 12px;
+    text-align: left;
+    background-color: rgb(227, 227, 224);
+}
+
+
+.middle-box {
+    margin-top: 4px;
+    display: inline-table;
+    position: relative;
+    height: 40px;
+    width: 173px;
+    border-radius:10px 10px 10px 10px;
+}
+.hiddenbox-box {
+    display: inline-table;
+    height: 44px;
+    display: flex;
+    width: 44px;
+    background: #f0eeea;
+}
+.gg{
+    display:block;
+}
+.row_row {
+    display: flex;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.index_day {
+    display: table-row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    border: 1px solid #c3c2c2;
+}
+.index_day, .day_head{
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.square {
+    background: green;
+    width: 100px;
+    height: 50px;
+    border-radius: 10%;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.searchDown{
+	overflow-y: scroll;
+	height: 125px;
+}
+.secCard{
+	background-color: coral;
+	border-radius:20px 20px 20px 20px;
+	box-shadow: 0px 0px 1px 0px black;
+}
