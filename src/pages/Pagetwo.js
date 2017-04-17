@@ -25,6 +25,7 @@ class Pagetwo extends React.Component{
 		this.selectCourse = this.selectCourse.bind(this)
 		this.addSection = this.addSection.bind(this)
 		this.checkTime = this.checkTime.bind(this)
+		this.removeListSection = this.removeListSection.bind(this)
 	}
 	
 	componentDidMount(){
@@ -104,13 +105,30 @@ class Pagetwo extends React.Component{
 	
 	addSection(data) {
 		const { dataSubject } = this.state
-		
 		dataSubject.push(data)
+		let cutdataSubject = dataSubject.reduce((prev,cur)=>{
+			if(prev.indexOf(cur) < 0 )
+				prev.push(cur);
+			return prev;
+		},[]);
 		this.setState({
-			dataSubject:dataSubject
+			dataSubject:cutdataSubject
 		})
 	}
 	
+	removeListSection(data){
+		const { dataSubject } = this.state
+		const id = data.course_id
+		let obj = dataSubject.find(function(e){
+			return id === e.course_id
+		})
+		let x = dataSubject.indexOf(obj)
+		dataSubject.splice(x,1)
+		this.setState({
+			dataSubject:dataSubject
+		})
+
+	}
   	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
@@ -141,7 +159,7 @@ class Pagetwo extends React.Component{
 				<td className="col-md-6 col-xs-6 col-sm-6 col-lg-6">{ data.course_id }</td>
 				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.prof }</td>
 				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-success" type="button">Add</button></td>
-				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-danger">X</button></td>
+				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-danger" onClick={ this.removeListSection.bind(null,data) }>X</button></td>
 			</tr>
 		)
 		return (
