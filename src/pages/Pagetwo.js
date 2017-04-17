@@ -118,9 +118,9 @@ class Pagetwo extends React.Component{
 	
 	removeListSection(data){
 		const { dataSubject } = this.state
-		const id = data.course_id
+		const id = data.section_id
 		let obj = dataSubject.find(function(e){
-			return id === e.course_id
+			return id === e.section_id
 		})
 		let x = dataSubject.indexOf(obj)
 		dataSubject.splice(x,1)
@@ -135,10 +135,11 @@ class Pagetwo extends React.Component{
 		
 		
 		const showDropdownSearch = SearchList.map( (data) =>
-			<div onClick={ this.selectCourse.bind( null,data.course_id ) }>
+			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
-			</div>
+			</li>
 		)
+		console.log(dataSubject)
 		const showSelectSection = specialSection.map( (data) =>{
 			return (
 				<div onClick={ this.addSection.bind(null,data) } >
@@ -158,24 +159,22 @@ class Pagetwo extends React.Component{
 				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.course_id }</td>
 				<td className="col-md-6 col-xs-6 col-sm-6 col-lg-6">{ data.course_id }</td>
 				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.prof }</td>
-				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-success" type="button">Add</button></td>
+				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-success" type="button" onClick={ this.checkTime.bind(null,data) }>Add</button></td>
 				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-danger" onClick={ this.removeListSection.bind(null,data) }>X</button></td>
 			</tr>
 		)
 		return (
 			<div className="container">
-				<div className="input-group zzz">
-					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg xxx" placeholder="Name or ID"/>
-					<br/>
-					<div>{ showDropdownSearch }</div>
-					<span className="input-group-btn">
-						<button className="btn btn-info btn-md btn-lg btn2" type="button">Search</button>
-					</span>
-					
+				<div className="dropdown">
+					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle" placeholder="Name or ID" data-toggle="dropdown"/>
+					<ul className="dropdown-menu">
+						{ showDropdownSearch }
+					</ul>
 				</div>
 				<div className="row mgt5" >
 					{ showSelectSection }
 				</div>
+				
 				<table className="table table-hover table-courses table-responsive">
 					<thead>
 						<tr>

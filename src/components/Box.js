@@ -27,9 +27,10 @@ export class Sectionbox extends Component {
         const SubjectName = findById(subjectid).name
         return (
             <div className="section-box" style={{ "background": colorrandom }}>
-                <div>{ subjectid }</div>
-                <div>{ SubjectName }</div>
+                <div className="section-box-detail">{ subjectid }</div>
+                <div className="section-box-detail">{ SubjectName }</div>
             </div>
+            
         )
     }
 }
