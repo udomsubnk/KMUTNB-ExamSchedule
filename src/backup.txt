@@ -1,0 +1,17 @@
+                    <option value="01">คณะวิศวกรรมศาสตร์</option>
+                  <option value="02">คณะครุศาสตร์อุตสาหกรรม</option>
+                  <option value="03">คณะวิทยาลัยเทคโนโลยีอุตสาหกรรม</option>
+                  <option value="04">คณะวิทยาศาสตร์ประยุกต์</option>
+                  <option value="05">คณะอุตสาหกรรมเกษตร</option>
+                  <option value="06">คณะเทคโนโลยีและการจัดการอุตสาหกรรม</option>
+                  <option value="07">คณะเทคโนโลยีและสารสนเทศ</option>
+                  <option value="08">คณะศิลปศาสตร์ประยุกต์</option>
+                  <option value="09">บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติฯ</option>
+                  <option value="10">บัณฑิตวิทยาลัย</option>
+                  <option value="11">คณะสถาปัตยกรรมและการออกแบบ</option>
+                  <option value="12">คณะวิศวกรรมศาสตร์และเทคโนโลยี</option>
+                  <option value="13">คณะวิทยาศาสตร์ พลังงานและสิ่งแวดล้อม</option>
+                  <option value="14">คณะบริหารธุรกิจ</option>
+                  <option value="15">วิทยาลัยนานาชาติ</option>
+                  <option value="16">คณะพัฒนาธุรกิจและอุตสาหกรรม</option>
+                  <option value="17">คณะบริหารธุรกิจและอุตสาหกรรมบริการ</option>

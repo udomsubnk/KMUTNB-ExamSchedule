@@ -25,3 +25,9 @@ export var day = [
     {id:23,time:'20:00'},
 
 ]
+export var exsubject = [
+			{id:'01020304',name:'OOP-JA',time:'15:00-18:00',section:'3',prof:'AWS'},
+			{id:'12345678',name:'NETWORK',time:'9:00-12:00',section:'1',prof:'SWK'},
+			{id:'22525898',name:'DATA STRUCTURE',time:'9:00-12:00',section:'2',prof:'PLS'},
+			{id:'33355668',name:'DATABASE',time:'13:00-16:00',section:'3',prof:'AAA'}
+		]

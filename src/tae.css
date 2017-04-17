@@ -54,6 +54,7 @@
     display: table-cell;
     vertical-align: middle;
     height: 100%;
+    width:44px;
     background-color: #fff;
     border-bottom: 1px solid #c3c2c2;
     min-width: 40px;
@@ -70,14 +71,15 @@
     text-align: left;
     background-color: rgb(227, 227, 224);
 }
-
-
-.middle-box {
+.section-box {
+    table-layout: fixed;
     margin-top: 4px;
+    margin-left:3px;
+    margin-right:3px;
     display: inline-table;
     position: relative;
     height: 40px;
-    width: 173px;
+    width: 174px;
     border-radius:10px 10px 10px 10px;
 }
 .hiddenbox-box {
@@ -122,6 +124,42 @@
 }
 .secCard{
 	background-color: coral;
-	border-radius:20px 20px 20px 20px;
+	border-radius:10px 10px 10px 10px;
 	box-shadow: 0px 0px 1px 0px black;
+    cursor: pointer;
+}
+.SectionListItem {
+    margin-top:5px;
+    box-shadow: 0 0.1vh 3vh rgba(0, 0, 0, 0.1);
+    background:coral; 
+    border: 5px solid rgba(255, 255, 255, 0);
+    border-radius: 2vmin;
+    color: black;
+    padding: 1vmin 1vmin;
+    cursor: pointer;
+}
+.SectionListItem-info-top {
+    clear: both;
+    display: block;
+}
+.SectionListItem-info-bottom {
+    clear: both;
+    display: block;
+}
+.SectionListItem-title {
+    font-size: 1em;
+    font-weight: bold;
+    text-align:center;
+}
+.SectionListItem-detail {
+    font-size: 1em;
+   
+    text-align:center;
+}
+.SectionListItem:hover{
+    background:#e57248;
+    color: black;
+}
+.mgt5{
+    margin-top: 5px;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { findById } from '../api/subject'
 
-export class Middlebox extends Component {
+export class Sectionbox extends Component {
     constructor(){
         super()
         this.state= {
@@ -8,6 +9,9 @@ export class Middlebox extends Component {
         }
     }
     componentWillMount(){
+        this.randomColor()
+    }
+    randomColor(){
         let letters = '0123456789ABCDEF';
         let color = '#';
         for (let i = 0; i < 6; i++ ) {
@@ -19,20 +23,22 @@ export class Middlebox extends Component {
     }
     render() {
         const { colorrandom } = this.state
+        const { subjectid } = this.props
+        const SubjectName = findById(subjectid).name
         return (
-            <div className="middle-box" style={{ "background": colorrandom }}>
-                { this.props.subjectid }
+            <div className="section-box" style={{ "background": colorrandom }}>
+                <div>{ subjectid }</div>
+                <div>{ SubjectName }</div>
             </div>
         )
     }
 }
 export class Hiddenbox extends Component {
-    
     render() {
         const { data } = this.props
         return (
             <div className="hiddenbox-box" >
-                { data.status && <Middlebox subjectid={ this.props.data.subject}/>}
+                { data.status && <Sectionbox subjectid={ this.props.data.subject}/>}
             </div>
         )
     }
