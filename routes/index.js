@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser')
-var subject = require('../src/api/subject')
+// var subject = require('../src/api/subject')
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use( bodyParser.json() );
 var request = require('request');
