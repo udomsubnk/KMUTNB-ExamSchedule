@@ -3,14 +3,14 @@ import Pagetree from'./Pagethree'
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
 import { Sectionbox,Daybox,Hiddenbox } from '../components/Box'
-
+import { findNameFormCourseID } from '../api/subject'
 import { findSection } from '../api/section'
 import { day } from '../api/day'
 
 class Pagetwo extends React.Component{
 
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state={
 			val:'',
 			subject:[],
@@ -18,15 +18,18 @@ class Pagetwo extends React.Component{
 			selectSection:[],
 			specialSection:[],
 			arraybox:[],
+			dataSubject:[]
 		}
+		
 		this.searchUpdate = this.searchUpdate.bind(this)
 		this.selectCourse = this.selectCourse.bind(this)
-		this.clickShow = this.clickShow.bind(this)
+		this.addSection = this.addSection.bind(this)
 		this.checkTime = this.checkTime.bind(this)
 	}
-
+	
 	componentDidMount(){
-		const { arraybox } = this.state
+		const { arraybox,dataSubject } = this.state
+		const { dataPageOne } = this.props
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
 		.then( subject =>{
@@ -43,7 +46,8 @@ class Pagetwo extends React.Component{
 			arraybox.push(itembox)
 		}
 		this.setState({
-			arraybox:arraybox
+			arraybox:arraybox,
+			dataSubject:dataPageOne
 		})
 	}
 	
@@ -98,21 +102,18 @@ class Pagetwo extends React.Component{
 		}
 	}
 	
-	clickShow(data) {
-		this.checkTime(data)
+	addSection(data) {
+		const { dataSubject } = this.state
+		
+		dataSubject.push(data)
+		this.setState({
+			dataSubject:dataSubject
+		})
 	}
 	
   	render() {
-		const { 
-			gothree,
-			data 
-		} = this.props
-		const { 
-			subject,
-			SearchList,
-			specialSection,
-			arraybox,
-		} = this.state 
+		const { gothree,data } = this.props
+		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
 		
 		
 		const showDropdownSearch = SearchList.map( (data) =>
@@ -120,10 +121,9 @@ class Pagetwo extends React.Component{
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
 			</div>
 		)
-		console.log(SearchList)
 		const showSelectSection = specialSection.map( (data) =>{
 			return (
-				<div onClick={ this.clickShow.bind(null,data) } >
+				<div onClick={ this.addSection.bind(null,data) } >
 					<SectionListItem key={ data.section_id } sectionName={ data }/>
 				</div>
 			)
@@ -133,6 +133,16 @@ class Pagetwo extends React.Component{
 		)
 		const subjectbox =  arraybox.map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
+		)
+		
+		const showdataSubject = dataSubject.map((data)=>
+			<tr key={ data.section_id}>
+				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.course_id }</td>
+				<td className="col-md-6 col-xs-6 col-sm-6 col-lg-6">{ data.course_id }</td>
+				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.prof }</td>
+				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-success" type="button">Add</button></td>
+				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-danger">X</button></td>
+			</tr>
 		)
 		return (
 			<div className="container">
@@ -158,9 +168,8 @@ class Pagetwo extends React.Component{
 							<th className="col-md-1 col-xs-1 col-sm-1 col-lg-1"></th>
 						</tr>
 					</thead>
-
 					<tbody>
-						
+						{ showdataSubject }
 						
 					</tbody>
 				</table>
