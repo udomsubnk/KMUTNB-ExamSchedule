@@ -1,49 +1,46 @@
 import React, { Component } from 'react';
-import { findById } from '../api/subject'
+import randomColor from '../containers/randomColor'
 
-export class Sectionbox extends Component {
-    constructor(){
-        super()
-        this.state= {
-            colorrandom:0
-        }
-    }
-    componentWillMount(){
-        this.randomColor()
-    }
-    randomColor(){
-        let letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        this.setState({
-            colorrandom:color
-        })
-    }
+export class Bigbox extends Component {
     render() {
-        const { colorrandom } = this.state
-        const { subjectid } = this.props
-        const SubjectName = findById(subjectid).name
+        const { data,color } = this.props
         return (
-            <div className="section-box" style={{ "background": colorrandom }}>
-                <div className="section-box-detail">{ subjectid }</div>
-                <div className="section-box-detail">{ SubjectName }</div>
+            <div className = "section-box" style = {{ "background": color,"width": "262px" }}>
+                <div className="section-box-detail">{ data.course_id }</div>
+                <div className="section-box-detail">{ data.name }</div>
             </div>
             
         )
     }
 }
+
+export class Smallbox extends Component {
+    render() {
+        const { data,color } = this.props
+        return (
+            <div className = "section-box" style = {{ "background": color,"width": "174px" }}>
+                <div className="section-box-detail">{ data.course_id }</div>
+                <div className="section-box-detail">{ data.name }</div>
+            </div>
+            
+        )
+    }
+}
+
 export class Hiddenbox extends Component {
     render() {
+        console.log('render')
         const { data } = this.props
+        const BigboxRandomColor = randomColor(Bigbox)
+        const SmallboxRandomColor = randomColor(Smallbox)
         return (
             <div className="hiddenbox-box" >
-                { data.status && <Sectionbox subjectid={ this.props.data.subject}/>}
+                { data.status && <SmallboxRandomColor sectionid={ data.sectionId }/>}
             </div>
         )
     }
 }
+
 export class Daybox extends Component {
     render() {
         return (

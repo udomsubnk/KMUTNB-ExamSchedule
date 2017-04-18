@@ -2,11 +2,12 @@ import React from'react'
 import Pagetree from'./Pagethree'
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
-import { Sectionbox,Daybox,Hiddenbox } from '../components/Box'
+import { Daybox,Hiddenbox } from '../components/Box'
 import { findNameFormCourseID } from '../api/subject'
 import { findSection } from '../api/section'
 import { day } from '../api/day'
-
+import AllDayList from '../containers/AllDayList'
+import SelectSubjectItem from '../components/SelectSubjectItem'
 class Pagetwo extends React.Component{
 
 	constructor(props){
@@ -42,7 +43,7 @@ class Pagetwo extends React.Component{
 			let itembox = {
 				id:i,
 				status:false,
-				subject:''
+				sectionId:''
 			}
 			arraybox.push(itembox)
 		}
@@ -93,7 +94,7 @@ class Pagetwo extends React.Component{
 			if(timeOpen=='10:00' && timeClose=='12:00'){
 				console.log('ok')
 				arraybox[0].status = true
-				arraybox[0].subject = data.course_id
+				arraybox[0].sectionId = data.section_id
 				
 				
 				this.setState({
@@ -129,17 +130,14 @@ class Pagetwo extends React.Component{
 		})
 
 	}
-  	render() {
+	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
-		
-		
 		const showDropdownSearch = SearchList.map( (data) =>
 			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
 			</li>
 		)
-		console.log(dataSubject)
 		const showSelectSection = specialSection.map( (data) =>{
 			return (
 				<div onClick={ this.addSection.bind(null,data) } >
@@ -153,21 +151,14 @@ class Pagetwo extends React.Component{
 		const subjectbox =  arraybox.map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
-		
 		const showdataSubject = dataSubject.map((data)=>
-			<tr key={ data.section_id}>
-				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.course_id }</td>
-				<td className="col-md-6 col-xs-6 col-sm-6 col-lg-6">{ data.course_id }</td>
-				<td className="col-md-2 col-xs-2 col-sm-2 col-lg-2">{ data.prof }</td>
-				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-success" type="button" onClick={ this.checkTime.bind(null,data) }>Add</button></td>
-				<td className="col-md-1 col-xs-1 col-sm-1 col-lg-1"><button className="btn btn-danger" onClick={ this.removeListSection.bind(null,data) }>X</button></td>
-			</tr>
+			<SelectSubjectItem key={ data.section_id} data= { data } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
 		)
 		return (
 			<div className="container">
 				<div className="dropdown">
 					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle" placeholder="Name or ID" data-toggle="dropdown"/>
-					<ul className="dropdown-menu">
+					<ul className="dropdown-menu" style = {{ "min-width":"100%","overflow-y":"scroll","height":"115px" }}>
 						{ showDropdownSearch }
 					</ul>
 				</div>
@@ -198,42 +189,7 @@ class Pagetwo extends React.Component{
 							<div className="index_firstHeader"></div>
 							{ daybox }
 						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#F3DF12", "height": "40px" }}>Mon</div>
-							<div className="row_row">
-								{ subjectbox }
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#E447B1", "height": "40px" }}>Tue</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#11E454", "height": "40px" }}>Wed</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#E4830E", "height": "40px" }}>Thu</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#3083E4", "height": "40px" }}>Fri</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#7F14C2", "height": "40px" }}>Sat</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
+						<AllDayList subjectbox = { subjectbox }/>
 					</div>
 				</div>
 				<button type="button" onClick={ ()=> gothree()} className="btn btn-primary btn-lg export">Export</button>
