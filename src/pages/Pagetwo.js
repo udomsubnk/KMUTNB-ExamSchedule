@@ -3,14 +3,17 @@ import Pagetree from'./Pagethree'
 
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
-import { Daybox,Hiddenbox } from '../components/Box'
+import { Daybox,Hiddenbox,DayboxExam,HiddenboxExam } from '../components/Box'
 import SelectSubjectItem from '../components/SelectSubjectItem'
 
 import { findNameFormCourseID } from '../api/subject'
 import { findSection } from '../api/section'
-import { day } from '../api/day'
+import { day,dayExam } from '../api/day'
+import { findDataExam } from '../api/exam'
 
-import ScheduleTable from '../containers/ScheduleTable'
+import StudyTable from '../containers/StudyTable'
+import ExamTable from '../containers/ExamTable'
+import ExamList from '../containers/ExamList'
 
 class Pagetwo extends Component{
 
@@ -24,7 +27,10 @@ class Pagetwo extends Component{
 			specialSection:[],
 			arraybox:[],
 			dataSubject:[],
-			allselect:[]
+			allselect:[],
+			examarrayMid:[],
+			examarrayFinal:[],
+			temp:0
 		}
 		
 		this.searchUpdate = this.searchUpdate.bind(this)
@@ -32,16 +38,9 @@ class Pagetwo extends Component{
 		this.addSection = this.addSection.bind(this)
 		this.checkTime = this.checkTime.bind(this)
 		this.removeListSection = this.removeListSection.bind(this)
-		this.randomColor = this.randomColor.bind(this)
+		this.checkTimeExam = this.checkTimeExam.bind(this)
 	}
-	randomColor(){
-        let letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color
-    }
+	
 	componentWillMount(){
 		const { arraybox } = this.state
 		for(var i=0;i<6;i++){
@@ -53,7 +52,6 @@ class Pagetwo extends Component{
 					beginStatusSmall:false,
 					status:false,
 					sectionId:'',
-					color:this.randomColor
 				}
 				arraybox[i].push(itembox)
 			}
@@ -161,10 +159,72 @@ class Pagetwo extends Component{
 				})
 			}
 		}
-		console.log(allselect)
+		const size = allselect.length
+		this.checkTimeExam(data,size)
 		
 	}
-	
+	checkTimeExam(data,size){
+		const { examarrayMid,temp } = this.state
+		const tempExamarrayMid = []
+		const tempExamarrayFinal = []
+		for(var j=0;j<23;j++){
+			let inlist = {
+				id:j,
+				begin:false,
+				status:false,
+				statusBox:true,
+				sectionId:''
+			}
+			tempExamarrayMid.push(inlist)
+		}
+		
+		let dataExam = findDataExam(data.course_id)
+		const timeStartMidExam = dataExam.exam.mid.timeStart
+		const timeEndtMidExam = dataExam.exam.mid.timeEnd
+		const hourExamMid = parseInt(timeEndtMidExam)-parseInt(timeStartMidExam)
+		
+		const timeStartFinalExam = dataExam.exam.final.timeStart
+		const timeEndFinalExam = dataExam.exam.final.timeEnd
+		const hourExamFinal = parseInt(timeEndFinalExam)-parseInt(timeStartFinalExam)
+
+		let alldateMid = dataExam.exam.mid.day+' '+dataExam.exam.mid.date+'/'+dataExam.exam.mid.month+'/'+dataExam.exam.mid.year
+		let alldateFinal = dataExam.exam.final.day+' '+dataExam.exam.final.date+'/'+dataExam.exam.final.month+'/'+dataExam.exam.final.year
+
+		const arraytimeExam =['9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
+		'14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']
+		const targetMid = arraytimeExam.indexOf(timeStartMidExam)
+		const targetFinal = arraytimeExam.indexOf(timeStartFinalExam)
+		console.log('targetMid',targetMid)
+		if(hourExamMid ==3 ){
+			tempExamarrayMid[targetMid].begin = true
+			for(var i=0;i<6;i++){
+				tempExamarrayMid[targetMid+i].status = true
+				tempExamarrayMid[targetMid+i].sectionId = data.section_id		
+			}
+		}else if(hourExamMid ==2){
+			tempExamarrayMid[targetMid].begin = true
+			for(var i=0;i<4;i++){
+				tempExamarrayMid[targetMid+i].status = true
+				tempExamarrayMid[targetMid+i].sectionId = data.section_id
+			}
+		}else if(hourExamMid ==1){
+			tempExamarrayMid[size-1][targetMid].begin = true
+			for(var i=0;i<2;i++){
+				tempExamarrayMid[targetMid+i].status = true
+				tempExamarrayMid[targetMid+i].sectionId = data.section_id	
+			}
+		}
+		if(temp<size){
+			examarrayMid.push(tempExamarrayMid)
+			this.setState({
+				temp:size
+			})
+		}
+		this.setState({
+			examarrayMid:examarrayMid
+		})
+		
+	}
 	addSection(data) {
 		const { dataSubject } = this.state
 		dataSubject.push(data)
@@ -194,7 +254,8 @@ class Pagetwo extends Component{
 	render() {
 		console.log('render')
 		const { gothree,data } = this.props
-		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
+		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal } = this.state 
+		
 		const showDropdownSearch = SearchList.map( (data) =>
 			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
@@ -207,10 +268,14 @@ class Pagetwo extends Component{
 				</div>
 			)
 		})
+		
+		console.log(examarrayMid)
 		const daybox = day.map( (data)=>
 			<Daybox key={ data.id } time={ data.time }/>
 		)
-
+		const dayExambox = dayExam.map( (data)=>
+			<DayboxExam key={ data.id } time={ data.time }/>
+		)
 		const subjectboxMon =  arraybox[0].map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
@@ -260,8 +325,7 @@ class Pagetwo extends Component{
 					</tbody>
 				</table>
 				<center><h3>Credits : <span id="credits"> 0 </span></h3></center>
-				<center><h4 className="mgt20"> Study Schudule </h4></center>
-				<ScheduleTable 
+				<StudyTable 
 					boxdataMon = { subjectboxMon }
 					boxdataTue = { subjectboxTue }
 					boxdataWed = { subjectboxWed }
@@ -272,7 +336,11 @@ class Pagetwo extends Component{
 						<div className="index_firstHeader"></div>
 						{ daybox }
 					</div>
-				</ScheduleTable>
+				</StudyTable>
+				<ExamTable dayExambox = { dayExambox } examarrayMid = { examarrayMid} />
+					
+					
+				
 				<button type="button" onClick={ ()=> gothree()} className="btn btn-primary btn-lg export">Export</button>
 			</div>
 		)

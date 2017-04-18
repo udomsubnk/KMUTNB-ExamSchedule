@@ -1,6 +1,9 @@
 .xxx{
   color: blue;
 }
+.pdt20{
+    padding-top: 50px;
+}
 .w{
   width:40%;
 }
@@ -44,6 +47,12 @@
     width: 44px;
     min-width: 44px;
 }
+.index_firstHeaderExam {
+    background: #c3c2c2;
+    height: 44px;
+    width: 64px;
+    min-width: 44px;
+}
 .index_day {
     display: table-row;
     -webkit-box-orient: horizontal;
@@ -74,6 +83,14 @@
     text-align: left;
     background-color: rgb(227, 227, 224);
 }
+.header_headerExam{
+    display: inline-table;
+    height: 44px;
+    width: 48px;
+    font-size: 12px;
+    text-align: left;
+    background-color: rgb(227, 227, 224);
+}
 .section-box {
     table-layout: fixed;
     margin-top: 4px;
@@ -93,7 +110,7 @@
     height: 44px;
     display: flex;
     width: 44px;
-    background: white;
+    background: #f0eeea;
 }
 .gg{
     display:block;
