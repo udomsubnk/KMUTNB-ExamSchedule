@@ -1,4 +1,4 @@
-import React from'react'
+import React,{Component} from'react'
 import Pagetree from'./Pagethree'
 
 import SubjectSearchItem from'../components/SubjectSearchItem'
@@ -12,7 +12,7 @@ import { day } from '../api/day'
 
 import ScheduleTable from '../containers/ScheduleTable'
 
-class Pagetwo extends React.Component{
+class Pagetwo extends Component{
 
 	constructor(props){
 		super(props)
