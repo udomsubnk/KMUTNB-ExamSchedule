@@ -23,7 +23,8 @@ class Pagetwo extends Component{
 			selectSection:[],
 			specialSection:[],
 			arraybox:[],
-			dataSubject:[]
+			dataSubject:[],
+			allselect:[]
 		}
 		
 		this.searchUpdate = this.searchUpdate.bind(this)
@@ -31,10 +32,38 @@ class Pagetwo extends Component{
 		this.addSection = this.addSection.bind(this)
 		this.checkTime = this.checkTime.bind(this)
 		this.removeListSection = this.removeListSection.bind(this)
+		this.randomColor = this.randomColor.bind(this)
 	}
-	
+	randomColor(){
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color
+    }
+	componentWillMount(){
+		const { arraybox } = this.state
+		for(var i=0;i<6;i++){
+			arraybox.push([])
+			for(var j=0;j<25;j++){
+				let itembox = {
+					id:j,
+					beginStatusBig:false,
+					beginStatusSmall:false,
+					status:false,
+					sectionId:'',
+					color:this.randomColor
+				}
+				arraybox[i].push(itembox)
+			}
+		}
+		this.setState({
+			arraybox:arraybox,
+		})
+	}
 	componentDidMount(){
-		const { arraybox,dataSubject } = this.state
+		const { dataSubject } = this.state
 		const { dataPageOne } = this.props
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
@@ -43,16 +72,7 @@ class Pagetwo extends Component{
 				subject: subject
 			})
 		})
-		for(var i=0;i<24;i++){
-			let itembox = {
-				id:i,
-				status:false,
-				sectionId:''
-			}
-			arraybox.push(itembox)
-		}
 		this.setState({
-			arraybox:arraybox,
 			dataSubject:dataPageOne
 		})
 	}
@@ -71,11 +91,9 @@ class Pagetwo extends Component{
 		if(val=='')
 			SearchList=[]
 		else{
-			SearchList = subject.filter(
-				(subject) =>{
+			SearchList = subject.filter((subject)=>{
 					return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
-				}
-			)
+				})
 		}
 		this.setState({
 			val:val,
@@ -84,7 +102,7 @@ class Pagetwo extends Component{
 	}
 
   	checkTime(data){
-		let { arraybox } = this.state
+		let { arraybox,allselect } = this.state
 		let day = data.day
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
@@ -94,18 +112,57 @@ class Pagetwo extends Component{
 			var timeClose = data.time.substring(6,8) + ':' + data.time.substring(9,11)
 		}
 		console.log(timeOpen,timeClose,day)
-		if(day=='M'){
-			if(timeOpen=='10:00' && timeClose=='12:00'){
-				console.log('ok')
-				arraybox[0].status = true
-				arraybox[0].sectionId = data.section_id
+		const hour = parseInt(timeClose)-parseInt(timeOpen)
+		const arrayday = ['M','T','W','H','F','S']
+		const arraytime =['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
+		'14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']
+		const begintime = arraytime.indexOf(timeOpen)
+		const beginday = arrayday.indexOf(day)
+		let check = true
+		if(hour==2){
+			for(var i=0;i<3;i++){
+				if(arraybox[beginday][begintime+i].status == true){
+					console.log('sannnn')
+					check = false
+				}
+			}
+			if(check){
+				arraybox[beginday][begintime].beginStatusSmall = true
+				allselect.push(data.section_id)
 				
-				
+				for(var i=0;i<3;i++){
+					arraybox[beginday][begintime+i].status = true
+					arraybox[beginday][begintime+i].sectionId = data.section_id	
+				}
 				this.setState({
-					arraybox:arraybox
+					arraybox:arraybox,
+					allselect:allselect	
+				})
+			}
+			
+		}else if(hour==3){
+			for(var i=0;i<6;i++){
+				if(arraybox[beginday][begintime+i].status == true){
+					console.log('sannnn')
+					check = false
+				}
+			}
+			if(check){
+				arraybox[beginday][begintime].beginStatusBig = true
+				allselect.push(data.section_id)
+				
+				for(var i=0;i<6;i++){
+					arraybox[beginday][begintime+i].status = true
+					arraybox[beginday][begintime+i].sectionId = data.section_id		
+				}
+				this.setState({
+					arraybox:arraybox,
+					allselect:allselect
 				})
 			}
 		}
+		console.log(allselect)
+		
 	}
 	
 	addSection(data) {
@@ -135,6 +192,7 @@ class Pagetwo extends Component{
 
 	}
 	render() {
+		console.log('render')
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
 		const showDropdownSearch = SearchList.map( (data) =>
@@ -152,9 +210,27 @@ class Pagetwo extends Component{
 		const daybox = day.map( (data)=>
 			<Daybox key={ data.id } time={ data.time }/>
 		)
-		const subjectbox =  arraybox.map( (data) =>
+
+		const subjectboxMon =  arraybox[0].map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
+		const subjectboxTue =  arraybox[1].map( (data) =>
+			<Hiddenbox key={ data.id } data={data}/>
+		)
+		const subjectboxWed =  arraybox[2].map( (data) =>
+			<Hiddenbox key={ data.id } data={data}/>
+		)
+		const subjectboxThe =  arraybox[3].map( (data) =>
+			<Hiddenbox key={ data.id } data={data}/>
+		)
+		const subjectboxFri =  arraybox[4].map( (data) =>
+			<Hiddenbox key={ data.id } data={data}/>
+		)
+		const subjectboxSat =  arraybox[5].map( (data) =>
+			<Hiddenbox key={ data.id } data={data}/>
+		)
+
+
 		const showdataSubject = dataSubject.map((data)=>
 			<SelectSubjectItem key={ data.section_id} data= { data } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
 		)
@@ -185,7 +261,13 @@ class Pagetwo extends Component{
 				</table>
 				<center><h3>Credits : <span id="credits"> 0 </span></h3></center>
 				<center><h4 className="mgt20"> Study Schudule </h4></center>
-				<ScheduleTable boxdata = { subjectbox } >
+				<ScheduleTable 
+					boxdataMon = { subjectboxMon }
+					boxdataTue = { subjectboxTue }
+					boxdataWed = { subjectboxWed }
+					boxdataThe = { subjectboxThe }
+					boxdataFri = { subjectboxFri }
+					boxdataSat = { subjectboxSat } >
 					<div className="index_header">
 						<div className="index_firstHeader"></div>
 						{ daybox }

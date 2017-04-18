@@ -26,16 +26,17 @@ export class Smallbox extends Component {
         )
     }
 }
-
+const BigboxRandomColor = randomColor(Bigbox)
+const SmallboxRandomColor = randomColor(Smallbox)
 export class Hiddenbox extends Component {
     render() {
-        console.log('render')
+        
         const { data } = this.props
-        const BigboxRandomColor = randomColor(Bigbox)
-        const SmallboxRandomColor = randomColor(Smallbox)
+        
         return (
             <div className="hiddenbox-box" >
-                { data.status && <SmallboxRandomColor sectionid={ data.sectionId }/>}
+                { data.beginStatusSmall && <SmallboxRandomColor sectionid={ data.sectionId }/>}
+                { data.beginStatusBig && <BigboxRandomColor sectionid={ data.sectionId }/>}
             </div>
         )
     }

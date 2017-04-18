@@ -1,3 +1,5 @@
+
+
 export var day = [
     {id:0,time:'8:00'},
     {id:1,time:'8:30'},
@@ -21,7 +23,8 @@ export var day = [
     {id:19,time:'17:30'},
     {id:20,time:'18:00'},
     {id:21,time:'18:30'},
-    {id:22,time:'19:30'},
-    {id:23,time:'20:00'},
+    {id:22,time:'19:00'},
+    {id:23,time:'19:30'},
+    {id:24,time:'20:00'},
 
 ]
