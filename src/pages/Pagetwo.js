@@ -1,13 +1,17 @@
 import React from'react'
 import Pagetree from'./Pagethree'
+
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
 import { Daybox,Hiddenbox } from '../components/Box'
+import SelectSubjectItem from '../components/SelectSubjectItem'
+
 import { findNameFormCourseID } from '../api/subject'
 import { findSection } from '../api/section'
 import { day } from '../api/day'
-import AllDayList from '../containers/AllDayList'
-import SelectSubjectItem from '../components/SelectSubjectItem'
+
+import ScheduleTable from '../containers/ScheduleTable'
+
 class Pagetwo extends React.Component{
 
 	constructor(props){
@@ -165,7 +169,6 @@ class Pagetwo extends React.Component{
 				<div className="row mgt5" >
 					{ showSelectSection }
 				</div>
-				
 				<table className="table table-hover table-courses table-responsive">
 					<thead>
 						<tr>
@@ -178,20 +181,16 @@ class Pagetwo extends React.Component{
 					</thead>
 					<tbody>
 						{ showdataSubject }
-						
 					</tbody>
 				</table>
 				<center><h3>Credits : <span id="credits"> 0 </span></h3></center>
 				<center><h4 className="mgt20"> Study Schudule </h4></center>
-				<div className="index_container">
-					<div className="table-schdule">
-						<div className="index_header">
-							<div className="index_firstHeader"></div>
-							{ daybox }
-						</div>
-						<AllDayList subjectbox = { subjectbox }/>
+				<ScheduleTable boxdata = { subjectbox } >
+					<div className="index_header">
+						<div className="index_firstHeader"></div>
+						{ daybox }
 					</div>
-				</div>
+				</ScheduleTable>
 				<button type="button" onClick={ ()=> gothree()} className="btn btn-primary btn-lg export">Export</button>
 			</div>
 		)
