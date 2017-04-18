@@ -2,6 +2,8 @@ import React from'react'
 import Pagetwo from'./Pagetwo'
 import { findCurrent } from '../api/current'
 import OptionDropdownItem from '../components/OptionDropdownItem'
+import { findCourse } from '../api/course'
+
 export default class Pageone extends React.Component{
 
   constructor(){
@@ -13,15 +15,14 @@ export default class Pageone extends React.Component{
         prapet:'',
         year:'',
         sec:'',
-      }
-
-      
+      },
+      alertStatus:false
     }
     this.selectSubject = this.selectSubject.bind(this)
     this.checkCourses = this.checkCourses.bind(this)
+    this.checkSections = this.checkSections.bind(this)
   }
-
-  selectSubject(e){
+ selectSubject(e){
     const { currentName } = this.state
     const value = e.target.value
     const success = findCurrent(value)
@@ -30,12 +31,69 @@ export default class Pageone extends React.Component{
     })
   }
 
-  checkCourses(){
+  checkCourses(e){
     const { coursesSelect } = this.state
-    console.log(coursesSelect)
+    let value = e.target.value
+    switch(value){
+      case'A':
+        coursesSelect.sec = 'A'
+        break;
+      case'B':
+        coursesSelect.sec = 'B'
+        break;
+      case'C':
+        coursesSelect.sec = 'C'
+        break;
+      case'1':
+        coursesSelect.year = '1'
+        break;
+      case'2':
+        coursesSelect.year = '2'
+        break;
+      case'3':
+        coursesSelect.year = '3'
+        break;
+      case'4':
+        coursesSelect.year = '4'
+        break;
+      case'R':
+        coursesSelect.prapet = 'R'
+        break;
+      case'CSB':
+        coursesSelect.prapet = 'CSB'
+        break;
+      case'D':
+        coursesSelect.prapet = 'D'
+        break;
+      case'54040644':
+        coursesSelect.laksoot = '54040644'
+        break;
+      case'59040644':
+        coursesSelect.laksoot = '59040644'
+        break;
+    }
+    this.setState({
+      coursesSelect:coursesSelect
+    })
+    
   }
+  checkSections(){
+    const { alertStatus,coursesSelect } = this.state
+    if(coursesSelect.laksoot== '' || coursesSelect.prapet== '' || coursesSelect.year== '' || coursesSelect.sec== ''){
+      console.log('No') 
+    }else{
+      const courses = findCourse(coursesSelect)
+      if(courses==''){
+        console.log('No in NO') 
+      }else{
+        this.props.gotwo(courses)
+      }
+      
+    }
+  }
+
   render(){
-    const { gotwo } = this.props
+    const { gotwo,alertStatus } = this.props
     const { currentName } = this.state
     const showOptionCurrent = currentName.map((res)=>
         <OptionDropdownItem key={ res.curr_id } currentNameprops={ res }/>
@@ -61,8 +119,8 @@ export default class Pageone extends React.Component{
               </div>
               <div className="col-md-11 col-xs-10">
                 <div className="dropdown">
-                  <select className="form-control input-lg">
-                    <option selected disabled onChange={ this.checkCourses }>เลือกหลักสูตร</option>
+                  <select className="form-control input-lg" onChange={ this.checkCourses }>
+                    <option selected disabled >เลือกหลักสูตร</option>
                     { showOptionCurrent }
                   </select>
                 </div>
@@ -76,24 +134,9 @@ export default class Pageone extends React.Component{
                   <div className="dropdown">
                     <select className="form-control input-lg" onChange={ this.checkCourses }>
                       <option selected disabled>ประเภทนักศึกษา</option>
-                      <option value="ddddd">R ปกติรอบเช้า</option>
-                      <option>T ปกติรอบบ่าย</option>
-                      <option>H โครงการความร่วมมือกับกรมอาชีวศึกษาฯ</option>
-                      <option>S โครงการครูประจำการ</option>
-                      <option>A ช่างฝึกหัด</option>
-                      <option>O โครงการเร่งรัดการผลิตบัณฑิต</option>
-                      <option>D โครงการสมทบพิเศษ</option>
-                      <option>N โครงการเครือข่ายฯ</option>
-                      <option>HM โครงการพัฒนาผู้บริหารด้านการจัดการอุตสาหกรรม</option>
-                      <option>E นักศึกษาพิเศษ</option>
-                      <option>L นักศึกษาโครงการลาว</option>
-                      <option>B นักศึกษาปรับพื้น</option>
-                      <option>X โครงการพัฒนาผู้บริหารด้านอุตสาหกรรม</option>
-                      <option>DP โครงการสมทบพิเศษ(CSs ปราจีนบุรี)</option>
-                      <option>BP โครงการสองภาษา</option>
-                      <option>EP โครงการภาษาอังกฤษ</option>
-                      <option>DE โครงการเสริมทักษะภาษาอังกฤษ</option>
-                      <option>IP โครงการนานาชาติ</option>
+                      <option value="R">R ปกติรอบเช้า</option>
+                      <option value="D">D โครงการสมทบพิเศษ</option>
+                      <option value="CSB">BP โครงการสองภาษา</option>
                     </select>
                   </div>
                 </div>
@@ -105,14 +148,10 @@ export default class Pageone extends React.Component{
                     <div className="dropdown">
                       <select className="form-control input-lg" onChange={ this.checkCourses }>
                         <option selected disabled >เลือกปี</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                       </select>
                     </div>
                     </div>
@@ -127,18 +166,9 @@ export default class Pageone extends React.Component{
                     <div className="dropdown">
                       <select className="form-control input-lg" onChange={ this.checkCourses }>
                         <option selected disabled>เลือกห้อง</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                        <option>E</option>
-                        <option>F</option>
-                        <option>G</option>
-                        <option>H</option>
-                        <option>I</option>
-                        <option>J</option>
-                        <option>K</option>
-                        <option>L</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
                       </select>
                     </div>
                   </div>
@@ -161,7 +191,7 @@ export default class Pageone extends React.Component{
               </div>
               <div className="row m1">
                   <div className="col-md-12 col-xs-12">
-                      <button type="button" onClick={ ()=> gotwo() } className="btn btn-primary size-menu2 btn-lg btn1">ดึงวิชา</button>
+                      <button type="button" onClick={ this.checkSections } className="btn btn-primary size-menu2 btn-lg btn1">ดึงวิชา</button>
                   </div>
               </div>
             </form>

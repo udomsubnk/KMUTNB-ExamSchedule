@@ -11,23 +11,28 @@ class Main extends React.Component {
     this.state = {
       ReplyPageone:true,
       ReplyPagetwo:false,
-      ReplyPagethree:false
+      ReplyPagethree:false,
+      dataFormPageOne:{}
+      
     }
     this.goPagetwo = this.goPagetwo.bind(this)
     this.goPagethree = this.goPagethree.bind(this)
   }
 
-  goPagetwo(){
+  goPagetwo(courses){
+    
     let reply = true
     const { 
       ReplyPageone,
       ReplyPagetwo,
-      ReplyPagethree
+      ReplyPagethree,
+      dataFormPageOne
     } = this.state
     this.setState ({
       ReplyPageone:false,
       ReplyPagetwo:true,
-      ReplyPagethree:false
+      ReplyPagethree:false,
+      dataFormPageOne:courses
     })
     
     
@@ -51,12 +56,13 @@ class Main extends React.Component {
     const { 
       ReplyPageone,
       ReplyPagetwo,
-      ReplyPagethree
+      ReplyPagethree,
+      dataFormPageOne
     } = this.state
     return (
       <div>
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
-        { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree }/> }
+        { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
         { ReplyPagethree && <Pagethree/> }
       </div>
     )

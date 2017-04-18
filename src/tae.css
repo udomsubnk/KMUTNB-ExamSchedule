@@ -4,6 +4,9 @@
 .w{
   width:40%;
 }
+.drop-down {
+    cursor:pointer;
+}
 .circle {
     margin-top:3%;
     width: 100px;
@@ -79,8 +82,11 @@
     display: inline-table;
     position: relative;
     height: 40px;
-    width: 174px;
     border-radius:10px 10px 10px 10px;
+}
+.section-box-detail{
+    font-size: 0.5em;
+    text-align:center;
 }
 .hiddenbox-box {
     display: inline-table;

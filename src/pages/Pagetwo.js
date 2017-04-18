@@ -1,16 +1,21 @@
-import React from'react'
+import React,{Component} from'react'
 import Pagetree from'./Pagethree'
+
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
-import { Sectionbox,Daybox,Hiddenbox } from '../components/Box'
+import { Daybox,Hiddenbox } from '../components/Box'
+import SelectSubjectItem from '../components/SelectSubjectItem'
 
+import { findNameFormCourseID } from '../api/subject'
 import { findSection } from '../api/section'
 import { day } from '../api/day'
 
-class Pagetwo extends React.Component{
+import ScheduleTable from '../containers/ScheduleTable'
 
-	constructor(){
-		super()
+class Pagetwo extends Component{
+
+	constructor(props){
+		super(props)
 		this.state={
 			val:'',
 			subject:[],
@@ -18,15 +23,19 @@ class Pagetwo extends React.Component{
 			selectSection:[],
 			specialSection:[],
 			arraybox:[],
+			dataSubject:[]
 		}
+		
 		this.searchUpdate = this.searchUpdate.bind(this)
 		this.selectCourse = this.selectCourse.bind(this)
-		this.clickShow = this.clickShow.bind(this)
+		this.addSection = this.addSection.bind(this)
 		this.checkTime = this.checkTime.bind(this)
+		this.removeListSection = this.removeListSection.bind(this)
 	}
-
+	
 	componentDidMount(){
-		const { arraybox } = this.state
+		const { arraybox,dataSubject } = this.state
+		const { dataPageOne } = this.props
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
 		.then( subject =>{
@@ -38,12 +47,13 @@ class Pagetwo extends React.Component{
 			let itembox = {
 				id:i,
 				status:false,
-				subject:''
+				sectionId:''
 			}
 			arraybox.push(itembox)
 		}
 		this.setState({
-			arraybox:arraybox
+			arraybox:arraybox,
+			dataSubject:dataPageOne
 		})
 	}
 	
@@ -88,7 +98,7 @@ class Pagetwo extends React.Component{
 			if(timeOpen=='10:00' && timeClose=='12:00'){
 				console.log('ok')
 				arraybox[0].status = true
-				arraybox[0].subject = data.course_id
+				arraybox[0].sectionId = data.section_id
 				
 				
 				this.setState({
@@ -98,32 +108,43 @@ class Pagetwo extends React.Component{
 		}
 	}
 	
-	clickShow(data) {
-		this.checkTime(data)
+	addSection(data) {
+		const { dataSubject } = this.state
+		dataSubject.push(data)
+		let cutdataSubject = dataSubject.reduce((prev,cur)=>{
+			if(prev.indexOf(cur) < 0 )
+				prev.push(cur);
+			return prev;
+		},[]);
+		this.setState({
+			dataSubject:cutdataSubject
+		})
 	}
 	
-  	render() {
-		const { 
-			gothree,
-			data 
-		} = this.props
-		const { 
-			subject,
-			SearchList,
-			specialSection,
-			arraybox,
-		} = this.state 
-		
-		
+	removeListSection(data){
+		const { dataSubject } = this.state
+		const id = data.section_id
+		let obj = dataSubject.find(function(e){
+			return id === e.section_id
+		})
+		let x = dataSubject.indexOf(obj)
+		dataSubject.splice(x,1)
+		this.setState({
+			dataSubject:dataSubject
+		})
+
+	}
+	render() {
+		const { gothree,data } = this.props
+		const { subject,SearchList,specialSection,arraybox,dataSubject } = this.state 
 		const showDropdownSearch = SearchList.map( (data) =>
-			<div onClick={ this.selectCourse.bind( null,data.course_id ) }>
+			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
-			</div>
+			</li>
 		)
-		console.log(SearchList)
 		const showSelectSection = specialSection.map( (data) =>{
 			return (
-				<div onClick={ this.clickShow.bind(null,data) } >
+				<div onClick={ this.addSection.bind(null,data) } >
 					<SectionListItem key={ data.section_id } sectionName={ data }/>
 				</div>
 			)
@@ -134,16 +155,16 @@ class Pagetwo extends React.Component{
 		const subjectbox =  arraybox.map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
+		const showdataSubject = dataSubject.map((data)=>
+			<SelectSubjectItem key={ data.section_id} data= { data } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
+		)
 		return (
 			<div className="container">
-				<div className="input-group zzz">
-					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg xxx" placeholder="Name or ID"/>
-					<br/>
-					<div>{ showDropdownSearch }</div>
-					<span className="input-group-btn">
-						<button className="btn btn-info btn-md btn-lg btn2" type="button">Search</button>
-					</span>
-					
+				<div className="dropdown">
+					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle" placeholder="Name or ID" data-toggle="dropdown"/>
+					<ul className="dropdown-menu" style = {{ "min-width":"100%","overflow-y":"scroll","height":"115px" }}>
+						{ showDropdownSearch }
+					</ul>
 				</div>
 				<div className="row mgt5" >
 					{ showSelectSection }
@@ -158,58 +179,18 @@ class Pagetwo extends React.Component{
 							<th className="col-md-1 col-xs-1 col-sm-1 col-lg-1"></th>
 						</tr>
 					</thead>
-
 					<tbody>
-						
-						
+						{ showdataSubject }
 					</tbody>
 				</table>
 				<center><h3>Credits : <span id="credits"> 0 </span></h3></center>
 				<center><h4 className="mgt20"> Study Schudule </h4></center>
-				<div className="index_container">
-					<div className="table-schdule">
-						<div className="index_header">
-							<div className="index_firstHeader"></div>
-							{ daybox }
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#F3DF12", "height": "40px" }}>Mon</div>
-							<div className="row_row">
-								{ subjectbox }
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#E447B1", "height": "40px" }}>Tue</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#11E454", "height": "40px" }}>Wed</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#E4830E", "height": "40px" }}>Thu</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#3083E4", "height": "40px" }}>Fri</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
-						<div className="index_day">
-							<div className="day_head" style={{ "color": "#7F14C2", "height": "40px" }}>Sat</div>
-							<div className="row_row">
-								
-							</div>
-						</div>
+				<ScheduleTable boxdata = { subjectbox } >
+					<div className="index_header">
+						<div className="index_firstHeader"></div>
+						{ daybox }
 					</div>
-				</div>
+				</ScheduleTable>
 				<button type="button" onClick={ ()=> gothree()} className="btn btn-primary btn-lg export">Export</button>
 			</div>
 		)

@@ -15,3 +15,23 @@
                   <option value="15">วิทยาลัยนานาชาติ</option>
                   <option value="16">คณะพัฒนาธุรกิจและอุตสาหกรรม</option>
                   <option value="17">คณะบริหารธุรกิจและอุตสาหกรรมบริการ</option>
+
+                  <option selected disabled>ประเภทนักศึกษา</option>
+                      <option value="R">R ปกติรอบเช้า</option>
+                      <option>T ปกติรอบบ่าย</option>
+                      <option>H โครงการความร่วมมือกับกรมอาชีวศึกษาฯ</option>
+                      <option>S โครงการครูประจำการ</option>
+                      <option>A ช่างฝึกหัด</option>
+                      <option>O โครงการเร่งรัดการผลิตบัณฑิต</option>
+                      <option value="D">D โครงการสมทบพิเศษ</option>
+                      <option>N โครงการเครือข่ายฯ</option>
+                      <option>HM โครงการพัฒนาผู้บริหารด้านการจัดการอุตสาหกรรม</option>
+                      <option>E นักศึกษาพิเศษ</option>
+                      <option>L นักศึกษาโครงการลาว</option>
+                      <option>B นักศึกษาปรับพื้น</option>
+                      <option>X โครงการพัฒนาผู้บริหารด้านอุตสาหกรรม</option>
+                      <option>DP โครงการสมทบพิเศษ(CSs ปราจีนบุรี)</option>
+                      <option value="CSB">BP โครงการสองภาษา</option>
+                      <option>EP โครงการภาษาอังกฤษ</option>
+                      <option>DE โครงการเสริมทักษะภาษาอังกฤษ</option>
+                      <option>IP โครงการนานาชาติ</option>
