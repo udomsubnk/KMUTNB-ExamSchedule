@@ -1,6 +1,9 @@
 .xxx{
   color: blue;
 }
+.pdt20{
+    padding-top: 50px;
+}
 .w{
   width:40%;
 }
@@ -44,6 +47,12 @@
     width: 44px;
     min-width: 44px;
 }
+.index_firstHeaderExam {
+    background: #c3c2c2;
+    height: 44px;
+    width: 64px;
+    min-width: 44px;
+}
 .index_day {
     display: table-row;
     -webkit-box-orient: horizontal;
@@ -52,6 +61,22 @@
     -ms-flex-direction: row;
     flex-direction: row;
     border: 1px solid #c3c2c2;
+}
+.list-exam{
+    display: flex;    
+    position: relative;
+}
+.day_headExam {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    width:61px;
+    background-color: #fff;
+    border-bottom: 1px solid #c3c2c2;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 .day_head {
     display: table-cell;
@@ -70,6 +95,14 @@
     display: inline-table;
     height: 44px;
     width: 44px;
+    font-size: 12px;
+    text-align: left;
+    background-color: rgb(227, 227, 224);
+}
+.header_headerExam{
+    display: inline-table;
+    height: 44px;
+    width: 48px;
     font-size: 12px;
     text-align: left;
     background-color: rgb(227, 227, 224);
@@ -112,7 +145,6 @@
     border: 1px solid #c3c2c2;
 }
 .index_day, .day_head{
-    -webkit-box-align: center;
     align-items: center;
 }
 
