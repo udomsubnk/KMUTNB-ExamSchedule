@@ -4,13 +4,13 @@ import RowExam from './RowExam'
 class ExamTable extends Component {
     
     render() {
-        const { dayExambox,examarrayMid } = this.props
-        const examarrayMidshow = examarrayMid.map((data)=>
+        const { dayExambox,dataarray,title } = this.props
+        const examarrayshow = dataarray.map((data)=>
 			<RowExam data={data} />
 		)
         return (
             <div>
-                <center><h4 className="pdt20"> Exam Schudule </h4></center>
+                <center><h4 className="pdt20"> { title } </h4></center>
                 <div className="index_container pdt20">
                     <div className="table-schdule">
                         <div className="index_header">
@@ -18,7 +18,7 @@ class ExamTable extends Component {
                                 { dayExambox }
                         </div>
                         <div className="index_day">
-                            { examarrayMidshow }
+                            { examarrayshow }
                         </div>
                     </div>
                 </div>

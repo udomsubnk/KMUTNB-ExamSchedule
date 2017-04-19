@@ -164,11 +164,11 @@ class Pagetwo extends Component{
 		
 	}
 	checkTimeExam(data,size){
-		const { examarrayMid,temp } = this.state
-		const tempExamarrayMid = []
-		const tempExamarrayFinal = []
+		const { examarrayMid,temp,examarrayFinal } = this.state
+		let tempExamarrayMid = []
+		let tempExamarrayFinal = []
 		for(var j=0;j<23;j++){
-			let inlist = {
+			let inlistM = {
 				id:j,
 				begin:false,
 				status:false,
@@ -176,9 +176,18 @@ class Pagetwo extends Component{
 				sectionId:'',
 				date:''
 			}
-			tempExamarrayMid.push(inlist)
+			let inlistE = {
+				id:j,
+				begin:false,
+				status:false,
+				statusBox:true,
+				sectionId:'',
+				date:''
+			}
+			tempExamarrayMid.push(inlistM)
+			tempExamarrayFinal.push(inlistE)
 		}
-		
+		console.log('tempExamarrayMid',tempExamarrayMid)
 		let dataExam = findDataExam(data.course_id)
 		const timeStartMidExam = dataExam.exam.mid.timeStart
 		const timeEndtMidExam = dataExam.exam.mid.timeEnd
@@ -195,7 +204,8 @@ class Pagetwo extends Component{
 		'14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']
 		const targetMid = arraytimeExam.indexOf(timeStartMidExam)
 		const targetFinal = arraytimeExam.indexOf(timeStartFinalExam)
-		console.log('targetMid',targetMid)
+		
+		// Mid logic
 		if(hourExamMid ==3 ){
 			tempExamarrayMid[targetMid].begin = true
 			tempExamarrayMid[targetMid].date = alldateMid
@@ -218,14 +228,39 @@ class Pagetwo extends Component{
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id	
 			}
 		}
+		// Final logic
+		if(hourExamFinal ==3 ){
+			tempExamarrayFinal[targetFinal].begin = true
+			tempExamarrayFinal[targetFinal].date = alldateFinal
+			for(var i=0;i<6;i++){
+				tempExamarrayFinal[targetFinal+i].status = true
+				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id		
+			}
+		}else if(hourExamFinal ==2){
+			tempExamarrayFinal[targetFinal].begin = true
+			tempExamarrayFinal[targetFinal].date = alldateFinal
+			for(var i=0;i<4;i++){
+				tempExamarrayFinal[targetFinal+i].status = true
+				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id
+			}
+		}else if(hourExamFinal ==1){
+			tempExamarrayFinal[size-1][targetFinal].begin = true
+			tempExamarrayFinal[targetFinal].date = alldateFinal
+			for(var i=0;i<2;i++){
+				tempExamarrayFinal[targetFinal+i].status = true
+				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id	
+			}
+		}
 		if(temp<size){
 			examarrayMid.push(tempExamarrayMid)
+			examarrayFinal.push(tempExamarrayFinal)
 			this.setState({
 				temp:size
 			})
 		}
 		this.setState({
-			examarrayMid:examarrayMid
+			examarrayMid:examarrayMid,
+			examarrayFinal:examarrayFinal
 		})
 		
 	}
@@ -273,7 +308,7 @@ class Pagetwo extends Component{
 			)
 		})
 		
-		console.log(examarrayMid)
+		console.log('examarrayFinal',examarrayFinal)
 		const daybox = day.map( (data)=>
 			<Daybox key={ data.id } time={ data.time }/>
 		)
@@ -341,8 +376,8 @@ class Pagetwo extends Component{
 						{ daybox }
 					</div>
 				</StudyTable>
-				<ExamTable dayExambox = { dayExambox } examarrayMid = { examarrayMid} />
-					
+				<ExamTable dayExambox = { dayExambox } dataarray = { examarrayMid } title={ 'ExamMidterm Schudule' }/>
+				<ExamTable dayExambox = { dayExambox } dataarray = { examarrayFinal } title={ 'FinalMidterm Schudule'}/>
 					
 				
 				<button type="button" onClick={ ()=> gothree()} className="btn btn-primary btn-lg export">Export</button>

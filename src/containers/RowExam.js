@@ -12,13 +12,13 @@ class RowExam extends Component {
             return data
         })
         const inDate = date.map((data)=>{
-            return data.date+data.date
+            return data.date
         })
             
         
         return (
             <div className="list-exam">
-                <div className="day_headExam" style={{ "color": "#F3DF12", "height": "40px" }}>{ inDate } </div>
+                <div className="day_headExam" style={{ "color": "black", "height": "40px" }}>{ inDate } </div>
                 <div className="row_row">
                     { showhidden }
                 </div>
