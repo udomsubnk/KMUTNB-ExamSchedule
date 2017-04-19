@@ -77,6 +77,7 @@ export default class Pageone extends React.Component{
     })
     
   }
+  
   checkSections(){
     const { alertStatus,coursesSelect } = this.state
     if(coursesSelect.laksoot== '' || coursesSelect.prapet== '' || coursesSelect.year== '' || coursesSelect.sec== ''){

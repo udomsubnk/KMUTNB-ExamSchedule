@@ -3,7 +3,7 @@ import React from'react'
 class Pagethree extends React.Component{
 
   render(){
-
+    const { tableStudy,tableFinal,tableMid,creditNum } = this.props
     return(
       <div className="container">
         <center><h1 className="zzz">Summary</h1></center>

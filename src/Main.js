@@ -12,43 +12,34 @@ class Main extends React.Component {
       ReplyPageone:true,
       ReplyPagetwo:false,
       ReplyPagethree:false,
-      dataFormPageOne:{}
-      
+      dataFormPageOne:{},
+      tableFinal:[],
+      tableMid:[],
+      tableStudy:[],
+      creditNum:0
     }
     this.goPagetwo = this.goPagetwo.bind(this)
     this.goPagethree = this.goPagethree.bind(this)
   }
 
   goPagetwo(courses){
-    
-    let reply = true
-    const { 
-      ReplyPageone,
-      ReplyPagetwo,
-      ReplyPagethree,
-      dataFormPageOne
-    } = this.state
     this.setState ({
       ReplyPageone:false,
       ReplyPagetwo:true,
       ReplyPagethree:false,
       dataFormPageOne:courses
     })
-    
-    
   }
 
-  goPagethree(){
-    const reply=true;
-    const { 
-      ReplyPageone,
-      ReplyPagetwo,
-      ReplyPagethree
-    } = this.state
+  goPagethree(examarrayMid,examarrayFinal,allselect,credit){
     this.setState ({
         ReplyPageone:false,
         ReplyPagetwo:false,
-        ReplyPagethree:true
+        ReplyPagethree:true,
+        tableFinal:examarrayFinal,
+        tableMid:examarrayMid,
+        tableStudy:allselect,
+        creditNum:credit
     })
   }
 
@@ -57,15 +48,20 @@ class Main extends React.Component {
       ReplyPageone,
       ReplyPagetwo,
       ReplyPagethree,
-      dataFormPageOne
+      dataFormPageOne, 
+      tableFinal,
+      tableMid,
+      tableStudy,
+      creditNum
     } = this.state
     return (
       <div>
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
         { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
-        { ReplyPagethree && <Pagethree/> }
+        { ReplyPagethree && <Pagethree tableFinal = { tableFinal } tableMid={ tableMid } tableStudy = { tableStudy } creditNum = { creditNum }/> }
       </div>
     )
   }
 }
+
 export default Main;
