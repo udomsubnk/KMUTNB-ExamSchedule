@@ -6,8 +6,8 @@ import SectionListItem from '../components/SectionListItem'
 import { Daybox,Hiddenbox,DayboxExam,HiddenboxExam } from '../components/Box'
 import SelectSubjectItem from '../components/SelectSubjectItem'
 
-import { findNameFormCourseID } from '../api/subject'
-import { findSection } from '../api/section'
+import { findNameFormCourseID,findById } from '../api/subject'
+import { findSection,findSectionFromSection_id } from '../api/section'
 import { day,dayExam } from '../api/day'
 import { findDataExam } from '../api/exam'
 
@@ -30,7 +30,8 @@ class Pagetwo extends Component{
 			allselect:[],
 			examarrayMid:[],
 			examarrayFinal:[],
-			temp:0
+			temp:0,
+			credit:0
 		}
 		this.removeClick = this.removeClick.bind(this)
 		this.searchUpdate = this.searchUpdate.bind(this)
@@ -39,11 +40,26 @@ class Pagetwo extends Component{
 		this.checkTime = this.checkTime.bind(this)
 		this.removeListSection = this.removeListSection.bind(this)
 		this.checkTimeExam = this.checkTimeExam.bind(this)
+		this.checkCredit = this.checkCredit.bind(this)
 	}
-	
+	checkCredit(){
+		const { credit,allselect } = this.state
+		var temp=0
+		for(var i=0;i<allselect.length;i++){
+			const weigth = findById(findSectionFromSection_id(allselect[i]).course_id).weight
+			const weightInt = parseInt(weigth.substring(0,1))
+			temp+=weightInt
+		}
+		this.setState({
+			credit:temp
+		})
+		
+
+	}
 	componentWillMount(){
 		const { arraybox,dataSubject } = this.state
 		const { dataPageOne } = this.props
+		
 		for(var i=0;i<6;i++){
 			arraybox.push([])
 			for(var j=0;j<25;j++){
@@ -64,6 +80,7 @@ class Pagetwo extends Component{
 		})
 	}
 	componentDidMount(){
+		this.checkCredit()
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
 		.then( subject =>{
@@ -118,7 +135,6 @@ class Pagetwo extends Component{
 			for(var i=0;i<4;i++){
 				if(arraybox[beginday][begintime+i].status == true){
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
-					
 					check = false
 					return
 				}
@@ -159,7 +175,7 @@ class Pagetwo extends Component{
 				})
 			}
 		}
-		
+		this.checkCredit()
 		const size = allselect.length
 		this.checkTimeExam(data,size)
 		
@@ -384,6 +400,7 @@ class Pagetwo extends Component{
 		if( x > -1){
 			allselect.splice(x,1)
 		}
+		this.checkCredit()
 		this.setState({
 			allselect:allselect,
 			examarrayMid:examarrayMid,
@@ -395,7 +412,7 @@ class Pagetwo extends Component{
 	render() {
 		
 		const { gothree,data } = this.props
-		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect } = this.state 
+		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit } = this.state 
 		console.log('kaoarray = ',allselect)
 		const showDropdownSearch = SearchList.map( (data) =>
 			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
@@ -463,7 +480,7 @@ class Pagetwo extends Component{
 						{ showdataSubject }
 					</tbody>
 				</table>
-				<center><h3>Credits : <span id="credits"> 0 </span></h3></center>
+				<center><h3>Credits : <span id="credits"> { credit } </span></h3></center>
 				<StudyTable 
 					boxdataMon = { subjectboxMon }
 					boxdataTue = { subjectboxTue }
