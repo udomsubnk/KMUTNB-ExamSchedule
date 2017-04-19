@@ -4,7 +4,6 @@ class RowExam extends Component {
     
     render() {
         const { data } = this.props
-        console.log('date',data)
         const showhidden = data.map((data)=>
             <HiddenboxExam data={ data }/>
         )
@@ -14,8 +13,6 @@ class RowExam extends Component {
         const inDate = date.map((data)=>{
             return data.date
         })
-            
-        
         return (
             <div className="list-exam">
                 <div className="day_headExam" style={{ "color": "black", "height": "40px" }}>{ inDate } </div>
