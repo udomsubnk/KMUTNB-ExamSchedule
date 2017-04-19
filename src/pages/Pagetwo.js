@@ -107,7 +107,6 @@ class Pagetwo extends Component{
 			var timeOpen = data.time.substring(0,2) + ':' + data.time.substring(3,5)
 			var timeClose = data.time.substring(6,8) + ':' + data.time.substring(9,11)
 		}
-		console.log(timeOpen,timeClose,day)
 		const hour = parseInt(timeClose)-parseInt(timeOpen)
 		const arrayday = ['M','T','W','H','F','S']
 		const arraytime =['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
@@ -121,6 +120,7 @@ class Pagetwo extends Component{
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					
 					check = false
+					return
 				}
 			}
 			if(check){
@@ -142,6 +142,7 @@ class Pagetwo extends Component{
 				if(arraybox[beginday][begintime+i].status == true){
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
+					return
 				}
 			}
 			if(check){
@@ -194,10 +195,10 @@ class Pagetwo extends Component{
 			tempExamarrayMid.push(inlistM)
 			tempExamarrayFinal.push(inlistE)
 		}
-		console.log('tempExamarrayMid',tempExamarrayMid)
 		let dataExam = findDataExam(data.course_id)
 		//########check if no exam ##############
-		if(dataExam==undefined){	
+		if(dataExam==undefined){
+			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
 			return
 		}
 		// ##########################################
@@ -302,6 +303,7 @@ class Pagetwo extends Component{
 		})
 		
 	}
+	
 	addSection(data) {
 		const { dataSubject } = this.state
 		dataSubject.push(data)
@@ -329,7 +331,7 @@ class Pagetwo extends Component{
 
 	}
 	removeClick(data){
-		const {arraybox,examarrayFinal,examarrayMid} = this.state
+		const {arraybox,examarrayFinal,examarrayMid,allselect} = this.state
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
 			var timeClose = data.time.substring(5,7) + ':' + data.time.substring(8,10)	
@@ -357,12 +359,44 @@ class Pagetwo extends Component{
 				 }
 			}
 		}
+		
+		for(var i=0;i<examarrayMid.length;i++){
+			for(var j=0;j<22;j++){
+				if(examarrayMid[i][j].sectionId == data.section_id){
+					var indexRemoveMid = i
+				}
+			}
+		}
+		for(var i=0;i<examarrayFinal.length;i++){
+			for(var j=0;j<22;j++){
+				if(examarrayFinal[i][j].sectionId == data.section_id){
+					var indexRemoveFinal = i
+				}
+			}
+		}
+		if (indexRemoveMid > -1 ) {
+			examarrayMid.splice(indexRemoveMid, 1);
+		}
+		if(indexRemoveFinal > -1){
+			examarrayFinal.splice(indexRemoveFinal, 1);
+		}
+		const x = allselect.indexOf(data.section_id)
+		if( x > -1){
+			allselect.splice(x,1)
+		}
+		this.setState({
+			allselect:allselect,
+			examarrayMid:examarrayMid,
+			examarrayFinal:examarrayFinal
+		})
+
+
 	}
 	render() {
 		
 		const { gothree,data } = this.props
-		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal } = this.state 
-		console.log(arraybox)
+		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect } = this.state 
+		console.log('kaoarray = ',allselect)
 		const showDropdownSearch = SearchList.map( (data) =>
 			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
@@ -399,8 +433,6 @@ class Pagetwo extends Component{
 		const subjectboxSat =  arraybox[5].map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
-		console.log(examarrayFinal)
-		console.log(examarrayMid)
 
 		const showdataSubject = dataSubject.map((data)=>
 			<SelectSubjectItem key={ data.section_id} data= { data } removeClick = { this.removeClick } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
