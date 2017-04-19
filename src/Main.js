@@ -3,7 +3,7 @@ import Pageone from './pages/Pageone'
 import Pagetwo from './pages/Pagetwo'
 import Pagethree from './pages/Pagethree'
 import Header from './Header'
-
+import {ProgressOne,ProgressTwo,ProgressThree} from './components/Progress'
 class Main extends React.Component {
 
   constructor() {
@@ -16,7 +16,15 @@ class Main extends React.Component {
       tableFinal:[],
       tableMid:[],
       tableStudy:[],
-      creditNum:0
+      creditNum:0,
+      subjectboxMon:{}, 
+      subjectboxTue:{}, 
+      subjectboxWed:{}, 
+      subjectboxThe:{}, 
+      subjectboxFri:{},
+      subjectboxSat:{},
+      dayExambox:{},
+      daybox:{}
     }
     this.goPagetwo = this.goPagetwo.bind(this)
     this.goPagethree = this.goPagethree.bind(this)
@@ -31,7 +39,15 @@ class Main extends React.Component {
     })
   }
 
-  goPagethree(examarrayMid,examarrayFinal,allselect,credit){
+  goPagethree(examarrayMid,examarrayFinal,allselect,credit,
+      subjectboxMon, 
+      subjectboxTue, 
+      subjectboxWed, 
+      subjectboxThe, 
+      subjectboxFri,
+      subjectboxSat,
+      dayExambox,
+      daybox){
     this.setState ({
         ReplyPageone:false,
         ReplyPagetwo:false,
@@ -39,7 +55,15 @@ class Main extends React.Component {
         tableFinal:examarrayFinal,
         tableMid:examarrayMid,
         tableStudy:allselect,
-        creditNum:credit
+        creditNum:credit,
+        subjectboxMon:subjectboxMon,
+        subjectboxTue:subjectboxTue, 
+        subjectboxWed:subjectboxWed, 
+        subjectboxThe:subjectboxThe, 
+        subjectboxFri:subjectboxFri,
+        subjectboxSat:subjectboxSat,
+        dayExambox:dayExambox,
+        daybox:daybox
     })
   }
 
@@ -52,13 +76,37 @@ class Main extends React.Component {
       tableFinal,
       tableMid,
       tableStudy,
-      creditNum
+      creditNum,
+      subjectboxMon,
+      subjectboxTue, 
+      subjectboxWed, 
+      subjectboxThe, 
+      subjectboxFri,
+      subjectboxSat,
+      dayExambox,
+      daybox
     } = this.state
     return (
       <div>
+        { ReplyPageone && <ProgressOne/> }
+        { ReplyPagetwo && <ProgressTwo/> }
+        { ReplyPagethree && <ProgressThree/> }
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
         { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
-        { ReplyPagethree && <Pagethree tableFinal = { tableFinal } tableMid={ tableMid } tableStudy = { tableStudy } creditNum = { creditNum }/> }
+        { ReplyPagethree && <Pagethree 
+                                tableFinal = { tableFinal } 
+                                tableMid={ tableMid } 
+                                tableStudy = { tableStudy } 
+                                creditNum = { creditNum }
+                                subjectboxMon = { subjectboxMon }
+                                subjectboxTue = { subjectboxTue }
+                                subjectboxWed = { subjectboxWed }
+                                subjectboxThe = { subjectboxThe }
+                                subjectboxFri = { subjectboxFri }
+                                subjectboxSat = { subjectboxSat }
+                                dayExambox = { dayExambox }
+                                daybox = { daybox }
+                            />}
       </div>
     )
   }

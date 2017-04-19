@@ -3,6 +3,7 @@ import Pagetwo from'./Pagetwo'
 import { findCurrent } from '../api/current'
 import OptionDropdownItem from '../components/OptionDropdownItem'
 import { findCourse } from '../api/course'
+import {ProgressOne} from '../components/Progress'
 
 export default class Pageone extends React.Component{
 

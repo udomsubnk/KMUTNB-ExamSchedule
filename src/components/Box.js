@@ -79,7 +79,7 @@ export class HiddenboxExam extends Component {
     render() {
         const { data } = this.props
         return (
-            <div className="hiddenbox-box" >
+            <div className="hiddenbox-boxExam" >
                { data.begin && <BoxExamRandomColor sectionid={ data.sectionId }/>}
             </div>
         )

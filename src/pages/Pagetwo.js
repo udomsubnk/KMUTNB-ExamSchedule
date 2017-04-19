@@ -7,6 +7,7 @@ import { Daybox,Hiddenbox,DayboxExam,HiddenboxExam } from '../components/Box'
 import SelectSubjectItem from '../components/SelectSubjectItem'
 import { AlertExam,AlertStudy } from '../components/Alert'
 
+
 import { findNameFormCourseID,findById } from '../api/subject'
 import { findSection,findSectionFromSection_id } from '../api/section'
 import { day,dayExam } from '../api/day'
@@ -44,6 +45,7 @@ class Pagetwo extends Component{
 		this.removeListSection = this.removeListSection.bind(this)
 		this.checkTimeExam = this.checkTimeExam.bind(this)
 		this.checkCredit = this.checkCredit.bind(this)
+		this.checkAlert = this.checkAlert.bind(this)
 	}
 	checkCredit(){
 		const { credit,allselect } = this.state
@@ -93,10 +95,64 @@ class Pagetwo extends Component{
 		})
 	}
 
-	shouldComponentUpdate(nextProps){
+	checkAlert(data){
 		const { examarrayMid,examarrayFinal,allselect,alertStudy,alertExam } = this.state
-		for(var i=0;i<examarrayMid.length)
-		return true
+		let tempp1=false,tempp2=false
+			for(var i=1;i<allselect.length;i++){
+				for(var j=0;j<i;j++){
+					var sec1 = findSectionFromSection_id(allselect[i]).course_id
+					var sec2 = findSectionFromSection_id(allselect[j]).course_id
+					if(sec1 == sec2){
+						tempp1 = true
+					}
+				}
+			}
+		
+			for(var i=1;i<examarrayMid.length;i++){
+				for(var j=0;j<i;j++){
+					if(examarrayMid[i][0].day == examarrayMid[j][0].day && examarrayMid[i][0].month == examarrayMid[j][0].month && examarrayMid[i][0].year == examarrayMid[j][0].year){
+						for(var k=0;k<22;k++){
+							if(examarrayMid[i][k].status == true && examarrayMid[j][k].status == true){
+								tempp2 = true
+							}
+						}
+					}
+				}
+			}
+			for(var i=1;i<examarrayFinal.length;i++){
+				for(var j=0;j<i;j++){
+					if(examarrayFinal[i][0].day == examarrayFinal[j][0].day && examarrayFinal[i][0].month == examarrayFinal[j][0].month && examarrayFinal[i][0].year == examarrayFinal[j][0].year){
+						for(var k=0;k<22;k++){
+							if(examarrayFinal[i][k].status == true && examarrayFinal[j][k].status == true){
+								tempp2 = true
+							}
+						}
+					}
+				}
+			}
+		if(tempp1 == true && tempp2 == false){
+			this.setState({
+				alertExam:false,
+				alertStudy:true
+			})
+		}else if(tempp1 == false && tempp2 == true){
+			this.setState({
+				alertExam:true,
+				alertStudy:false
+			})
+		}else if(tempp1 == true && tempp2 == true){
+			this.setState({
+				alertExam:true,
+				alertStudy:true
+			})
+		}else{
+			this.setState({
+				alertExam:false,
+				alertStudy:false
+			})
+		}
+			
+		
 	}
 	selectCourse(id){
 		const {specialSection } = this.state
@@ -161,13 +217,10 @@ class Pagetwo extends Component{
 					allselect:allselect	
 				})
 			}
-			
 		}else if(hour==3){
 			for(var i=0;i<6;i++){
 				if(arraybox[beginday][begintime+i].status == true){
-					this.setState({
-						alertStudy:true
-					})
+					
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
 
@@ -308,9 +361,7 @@ class Pagetwo extends Component{
 				if(examarrayMid[i][0].day == tempExamarrayMid[0].day && examarrayMid[i][0].month == tempExamarrayMid[0].month && examarrayMid[i][0].year == tempExamarrayMid[0].year){
 					for(var j=0;j<22;j++){
 						if(examarrayMid[i][j].status == tempExamarrayMid[j].status){
-							this.setState({
-								alertExam:true
-							})
+							
 							console.log('ดูเหมือนวิชาสอบกลางภาคจะชนกันนะ ลองแก้ไขอีกที')
 						}
 					}
@@ -318,9 +369,7 @@ class Pagetwo extends Component{
 				if(examarrayFinal[i][0].day == tempExamarrayFinal[0].day && examarrayFinal[i][0].month == tempExamarrayFinal[0].month && examarrayFinal[i][0].year == tempExamarrayFinal[0].year){
 					for(var j=0;j<22;j++){
 						if(examarrayFinal[i][j].status == tempExamarrayFinal[j].status){
-							this.setState({
-								alertExam:true
-							})
+							
 							console.log('ดูเหมือนวิชาสอบปลายภาคจะชนกันนะ ลองแก้ไขอีกที')
 						}
 					}
@@ -336,6 +385,7 @@ class Pagetwo extends Component{
 			examarrayMid:examarrayMid,
 			examarrayFinal:examarrayFinal
 		})
+		this.checkAlert(data)
 		
 	}
 	
@@ -425,7 +475,7 @@ class Pagetwo extends Component{
 			examarrayMid:examarrayMid,
 			examarrayFinal:examarrayFinal
 		})
-		console.log('kuy')
+		this.checkAlert()
 
 	}
 	render() {
@@ -471,7 +521,7 @@ class Pagetwo extends Component{
 		const subjectboxSat =  arraybox[5].map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
-
+		
 		const showdataSubject = dataSubject.map((data)=>
 			<SelectSubjectItem key={ data.section_id} data= { data } removeClick = { this.removeClick } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
 		)
@@ -520,7 +570,20 @@ class Pagetwo extends Component{
 				<ExamTable dayExambox = { dayExambox } dataarray = { examarrayFinal } title={ 'FinalMidterm Schudule'}/>
 					
 				
-				<button type="button" onClick={ ()=> gothree(examarrayMid,examarrayFinal,allselect,credit)} className="btn btn-primary btn-lg export">Export</button>
+				<button type="button" onClick={ ()=> gothree(
+					examarrayMid,
+					examarrayFinal,
+					allselect,
+					credit,
+					subjectboxMon,
+					subjectboxTue,
+					subjectboxWed,
+					subjectboxThe,
+					subjectboxFri,
+					subjectboxSat,
+					dayExambox,
+					daybox
+				)} className="btn btn-primary btn-lg export">Export</button>
 			</div>
 		)
 	}
