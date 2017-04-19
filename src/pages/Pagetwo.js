@@ -173,7 +173,8 @@ class Pagetwo extends Component{
 				begin:false,
 				status:false,
 				statusBox:true,
-				sectionId:''
+				sectionId:'',
+				date:''
 			}
 			tempExamarrayMid.push(inlist)
 		}
@@ -197,18 +198,21 @@ class Pagetwo extends Component{
 		console.log('targetMid',targetMid)
 		if(hourExamMid ==3 ){
 			tempExamarrayMid[targetMid].begin = true
+			tempExamarrayMid[targetMid].date = alldateMid
 			for(var i=0;i<6;i++){
 				tempExamarrayMid[targetMid+i].status = true
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id		
 			}
 		}else if(hourExamMid ==2){
 			tempExamarrayMid[targetMid].begin = true
+			tempExamarrayMid[targetMid].date = alldateMid
 			for(var i=0;i<4;i++){
 				tempExamarrayMid[targetMid+i].status = true
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id
 			}
 		}else if(hourExamMid ==1){
 			tempExamarrayMid[size-1][targetMid].begin = true
+			tempExamarrayMid[targetMid].date = alldateMid
 			for(var i=0;i<2;i++){
 				tempExamarrayMid[targetMid+i].status = true
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id	
@@ -261,7 +265,7 @@ class Pagetwo extends Component{
 				<SubjectSearchItem key={ data.course_id } data={ data }/>
 			</li>
 		)
-		const showSelectSection = specialSection.map( (data) =>{
+		const showSelectSection = specialSection.map((data) =>{
 			return (
 				<div onClick={ this.addSection.bind(null,data) } >
 					<SectionListItem key={ data.section_id } sectionName={ data }/>

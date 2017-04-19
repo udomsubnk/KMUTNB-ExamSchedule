@@ -26,6 +26,18 @@ export class Smallbox extends Component {
         )
     }
 }
+export class BoxExam extends Component {
+    render() {
+        const { data,color } = this.props
+        return (
+            <div className = "section-box" style = {{ "background": color,"width": "271px" }}>
+                <div className="section-box-detail">{ data.course_id }</div>
+                <div className="section-box-detail">{ data.name }</div>
+            </div>
+            
+        )
+    }
+}
 const BigboxRandomColor = randomColor(Bigbox)
 const SmallboxRandomColor = randomColor(Smallbox)
 const BoxExamRandomColor = randomColor(BoxExam)
@@ -63,24 +75,11 @@ export class DayboxExam extends Component {
 export class HiddenboxExam extends Component {
     render() {
         const { data } = this.props
-        console.log('data',data)
         return (
             <div className="hiddenbox-box" >
-               { data.begin && <BoxExam data = {data}/>}
+               { data.begin && <BoxExamRandomColor sectionid={ data.sectionId }/>}
             </div>
         )
     }
 }
-export class BoxExam extends Component {
-    render() {
-        const { data } = this.props
-        console.log('BoxExam')
-        return (
-            <div className = "section-box" style = {{ "background": "red","width": "262px" }}>
-                <div className="section-box-detail"></div>
-                <div className="section-box-detail"></div>
-            </div>
-            
-        )
-    }
-}
+
