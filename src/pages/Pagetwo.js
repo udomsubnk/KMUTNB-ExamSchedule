@@ -277,6 +277,7 @@ class Pagetwo extends Component{
 			tempExamarrayFinal.push(inlistE)
 		}
 		let dataExam = findDataExam(data.course_id)
+		
 		//########check if no exam ##############
 		if(dataExam==undefined){
 			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')

@@ -82,13 +82,11 @@ export default class Pageone extends React.Component{
   checkSections(){
     const { alertStatus,coursesSelect } = this.state
     const courses = findCourse(coursesSelect)
-    this.props.gotwo(courses)
     if(coursesSelect.laksoot== '' || coursesSelect.prapet== '' || coursesSelect.year== '' || coursesSelect.sec== ''){
-      console.log('no') 
+      this.props.gotwo(courses)
     }else{
-      const courses = findCourse(coursesSelect)
-      if(courses==''){
-         console.log('no') 
+      if(courses.length == 0){
+         console.log(courses) 
       }else{
         console.log(courses) 
         this.props.gotwo(courses)

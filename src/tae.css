@@ -55,9 +55,9 @@
     content: '';
     display: inline-block;
     background: #CCCCCC;
-    width: 360px;
+    width: 400px;
     height: 5px;
-    left: 650px;
+    left: 750px;
 }
 .iconClose {
     color: #FFF;
