@@ -8,6 +8,7 @@ import {ProgressOne} from '../components/Progress'
 export default class Pageone extends React.Component{
 
   constructor(){
+    
     super()
     this.state = {
       currentName:[],
@@ -31,7 +32,6 @@ export default class Pageone extends React.Component{
       currentName:success
     })
   }
-
   checkCourses(e){
     const { coursesSelect } = this.state
     let value = e.target.value
@@ -192,6 +192,7 @@ export default class Pageone extends React.Component{
                   </div>
                 </div>
               </div>
+
               <div className="row m1">
                   <div className="col-md-12 col-xs-12">
                       <button type="button" onClick={ this.checkSections } className="btn btn-Blue size-menu2 btn-lg btn1 z-depth-2">ดึงวิชา</button>

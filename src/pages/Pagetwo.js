@@ -61,9 +61,12 @@ class Pagetwo extends Component{
 	}
 
 	componentWillMount(){
+		
 		const { arraybox,dataSubject } = this.state
 		const { dataPageOne } = this.props
-		
+		$( document ).ready(function() {
+			$('.add').click()
+		});
 		for(var i=0;i<6;i++){
 			arraybox.push([])
 			for(var j=0;j<25;j++){

@@ -16,20 +16,28 @@ class Pagethree extends React.Component{
   exportMobile(tableStudy){
     var examArray = [];
     for(var i=0;i<tableStudy.length;i++){
-      console.log(findDataExam(findSectionFromSection_id(tableStudy[i]).course_id))
       if(findDataExam(findSectionFromSection_id(tableStudy[i]).course_id)!=undefined)
         examArray.push(findDataExam(findSectionFromSection_id(tableStudy[i]).course_id))
     }
-    fetch('/exportExam', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(examArray)
-    }).then((res)=>{
-      if(res=="succes") window.location="/getFile"
-    })
+    var data = {
+      exam : examArray
+    }
+    $.post('/exportexam',data,(res)=>{
+      if(res=="success")
+        setTimeout(()=>{ window.location="/getFile"; }, 3000);
+    });
+  }
+  componentDidMount(){
+    const { tableStudy } = this.props
+    var myUrl = '/finish?'
+    // finish?id[0]=1020&id[1]=2020
+    for(var i in tableStudy){
+      myUrl+= 'id['+i+']='+tableStudy[i]
+      if(i!=tableStudy.length-1)
+        myUrl+="&"
+    }
+    console.log(myUrl)
+    window.history.pushState(null, null,myUrl);
   }
   render(){
     const { 
@@ -65,7 +73,6 @@ class Pagethree extends React.Component{
         </StudyTable>
         <ExamTable dayExambox = { dayExambox } dataarray = { tableMid } title={ 'ExamMidterm Schudule' }/>
         <ExamTable dayExambox = { dayExambox } dataarray = { tableFinal } title={ 'FinalMidterm Schudule'}/>
-        <input type="text" className="form-control" placeholder="https://www.precourse.com/?ids[0]=586ffaf2f69160005187e661&ids[1]=586ffaf2f69160005187e663" id="url"/>
         
           <button type="button" onClick={ this.exportMobile.bind(null,tableStudy) } className="btn btn-primary btn-lg export">Export to calendar</button>
         

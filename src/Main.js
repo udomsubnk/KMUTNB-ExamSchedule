@@ -4,6 +4,8 @@ import Pagetwo from './pages/Pagetwo'
 import Pagethree from './pages/Pagethree'
 import Header from './Header'
 import {ProgressOne,ProgressTwo,ProgressThree} from './components/Progress'
+import {findSectionFromSection_id} from './api/section'
+
 class Main extends React.Component {
 
   constructor() {
@@ -66,8 +68,33 @@ class Main extends React.Component {
         daybox:daybox
     })
   }
+  componentWillMount(){
+    var url = window.location.href;
+    if(url.indexOf("finish?")!=-1){
+      // http://localhost:3000/finish? id[0],2020,id[1],220 
+      var xx = url.split("finish?").pop().split(/=|&/g)
+      var data = []
+      for(var i in xx){
+        if(xx[i][0]!='i')
+          data.push(xx[i])
+      }
+      console.log(data)
+      for(i in data){
+        data[i]=findSectionFromSection_id(data[i])
+      }
+      console.log(data)
+      this.setState({
+        dataFormPageOne:data,
+        ReplyPageone:false,
+        ReplyPagetwo:true,
+        ReplyPagethree:false
+      })
+    }
+     
+  }
 
   render(){
+    console.log('render')
     const { 
       ReplyPageone,
       ReplyPagetwo,
