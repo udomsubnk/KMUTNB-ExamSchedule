@@ -527,16 +527,16 @@ class Pagetwo extends Component{
 		)
 		return (
 			<div className="container">
-				<div className="dropdown">
-					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle" placeholder="Name or ID" data-toggle="dropdown"/>
-					<ul className="dropdown-menu" style = {{ "min-width":"100%","overflow-y":"scroll","height":"115px" }}>
+				<div className="dropdown word-1">
+					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle z-depth-2" placeholder="Name or ID" data-toggle="dropdown"/>
+					<ul className="dropdown-menu z-depth-2" style = {{ "min-width":"100%","overflow-y":"scroll","height":"115px" }}>
 						{ showDropdownSearch }
 					</ul>
 				</div>
 				<div className="row mgt5" >
 					{ showSelectSection }
 				</div>
-				<table className="table table-hover table-courses table-responsive">
+				<table className="table table-hover table-courses table-responsive z-depth-2">
 					<thead>
 						<tr>
 							<th className="col-md-2 col-xs-2 col-sm-2 col-lg-2">ID</th>
@@ -583,7 +583,7 @@ class Pagetwo extends Component{
 					subjectboxSat,
 					dayExambox,
 					daybox
-				)} className="btn btn-primary btn-lg export">Export</button>
+				)} className="btn btn-Blue btn-lg export">Export</button>
 			</div>
 		)
 	}

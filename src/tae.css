@@ -173,6 +173,7 @@
     background-color: rgb(227, 227, 224);
 }
 .section-box {
+    padding-top:5px;
     table-layout: fixed;
     margin-top: 4px;
     margin-left:3px;
@@ -275,4 +276,98 @@
 }
 .mgt20{
     margin-top: 60px;
+}
+/*.btn-Green{
+    background: #00C853;
+    color: #fff;
+    font-family: BOLD;
+    font-weight: bold;
+    display: inline-block;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    transition: 0.3s;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+    text-decoration: none;
+}
+.btn-Green:hover{
+    background:#00E676;
+    color: #fff;
+    text-decoration: none;
+}*/
+.btn-Green1{
+    background: #00C853;
+    color: #fff;
+    transition: 0.3s;  
+}
+.btn-Green1:hover{
+    background:#00E676;
+    color: #fff;
+}
+/*.btn-Red{
+    background: #FF1744;
+    color: #fff;
+    font-family: BOLD;
+    font-weight: bold;
+    display: inline-block;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    transition: 0.3s;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+    text-decoration: none;
+}
+.btn-Red:hover{
+    background:#FF5252;
+    color: #fff;
+    text-decoration: none;
+}*/
+.btn-Red1{
+    background: #FF1744;
+    color: #fff;
+    transition: 0.3s;  
+}
+.btn-Red1:hover{
+    background:#FF5252;
+    color: #fff;
+}
+.btn-Blue{
+    transition: 0.3s;
+    background: #2962FF;
+    color: #ECEFF1;
+}
+.btn-Blue:active{
+    color: #ECEFF1;
+}
+.btn-Red:active{
+    color: #ECEFF1;
+}
+.btn-Green:active{
+    color: #ECEFF1;
+}
+.btn-Blue:hover{
+    background: #2979FF;
+    color: #ECEFF1;
+}
+.z-depth-1{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+.z-depth-2{
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+}
+.z-depth-3{
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+}
+.z-depth-4{
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+}
+.z-depth-5 {
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
+}
+.word-1{
+    font-family: BOLD;
+    font-weight: bold;
+}
+.whi{
+    color: #fff;
 }
