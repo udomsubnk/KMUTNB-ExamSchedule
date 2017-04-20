@@ -5,14 +5,14 @@ exports.findCourse = function(data){
 		if(data.year!='1'){
 			return chooseCourse(value)
 		}else
-			return ''
+			return []
 	}else if(data.laksoot=='59040644'){	//4
 		if(data.year=='1'){
 			return chooseCourse(value)
 		}else
-			return ''
+			return []
 	}else
-		return''
+		return []
 }
 var chooseCourse = function(sec){
 	var ob = []

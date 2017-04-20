@@ -6,7 +6,7 @@ export class Bigbox extends Component {
         const { data,color } = this.props
     
         return (
-            <div className = "section-box" style = {{ "background": color,"width": "262px" }}>
+            <div className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "262px" }}>
                 <div className="section-box-detail">{ data.course_id }</div>
                 <div className="section-box-detail">{ data.name }</div>
                 <div className="section-box-detail">{ data.name }</div>
@@ -20,7 +20,7 @@ export class Smallbox extends Component {
     render() {
         const { data,color } = this.props
         return (
-            <div className = "section-box" style = {{ "background": color,"width": "174px" }}>
+            <div className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "174px" }}>
                 <div className="section-box-detail">{ data.course_id }</div>
                 <div className="section-box-detail">{ data.name }</div>
                 <div className="section-box-detail">{ data.name }</div>
@@ -33,7 +33,7 @@ export class BoxExam extends Component {
     render() {
         const { data,color } = this.props
         return (
-            <div className = "section-box" style = {{ "background": color,"width": "271px" }}>
+            <div className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "271px" }}>
                 <div className="section-box-detail">{ data.course_id }</div>
                 <div className="section-box-detail">{ data.name }</div>
             </div>
@@ -79,7 +79,7 @@ export class HiddenboxExam extends Component {
     render() {
         const { data } = this.props
         return (
-            <div className="hiddenbox-box" >
+            <div className="hiddenbox-boxExam" >
                { data.begin && <BoxExamRandomColor sectionid={ data.sectionId }/>}
             </div>
         )

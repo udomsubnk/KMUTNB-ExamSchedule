@@ -3,6 +3,8 @@ import Pageone from './pages/Pageone'
 import Pagetwo from './pages/Pagetwo'
 import Pagethree from './pages/Pagethree'
 import Header from './Header'
+import {ProgressOne,ProgressTwo,ProgressThree} from './components/Progress'
+import {findSectionFromSection_id} from './api/section'
 
 class Main extends React.Component {
 
@@ -16,7 +18,15 @@ class Main extends React.Component {
       tableFinal:[],
       tableMid:[],
       tableStudy:[],
-      creditNum:0
+      creditNum:0,
+      subjectboxMon:{}, 
+      subjectboxTue:{}, 
+      subjectboxWed:{}, 
+      subjectboxThe:{}, 
+      subjectboxFri:{},
+      subjectboxSat:{},
+      dayExambox:{},
+      daybox:{}
     }
     this.goPagetwo = this.goPagetwo.bind(this)
     this.goPagethree = this.goPagethree.bind(this)
@@ -31,7 +41,15 @@ class Main extends React.Component {
     })
   }
 
-  goPagethree(examarrayMid,examarrayFinal,allselect,credit){
+  goPagethree(examarrayMid,examarrayFinal,allselect,credit,
+      subjectboxMon, 
+      subjectboxTue, 
+      subjectboxWed, 
+      subjectboxThe, 
+      subjectboxFri,
+      subjectboxSat,
+      dayExambox,
+      daybox){
     this.setState ({
         ReplyPageone:false,
         ReplyPagetwo:false,
@@ -39,11 +57,44 @@ class Main extends React.Component {
         tableFinal:examarrayFinal,
         tableMid:examarrayMid,
         tableStudy:allselect,
-        creditNum:credit
+        creditNum:credit,
+        subjectboxMon:subjectboxMon,
+        subjectboxTue:subjectboxTue, 
+        subjectboxWed:subjectboxWed, 
+        subjectboxThe:subjectboxThe, 
+        subjectboxFri:subjectboxFri,
+        subjectboxSat:subjectboxSat,
+        dayExambox:dayExambox,
+        daybox:daybox
     })
+  }
+  componentWillMount(){
+    var url = window.location.href;
+    if(url.indexOf("finish?")!=-1){
+      // http://localhost:3000/finish? id[0],2020,id[1],220 
+      var xx = url.split("finish?").pop().split(/=|&/g)
+      var data = []
+      for(var i in xx){
+        if(xx[i][0]!='i')
+          data.push(xx[i])
+      }
+      console.log(data)
+      for(i in data){
+        data[i]=findSectionFromSection_id(data[i])
+      }
+      console.log(data)
+      this.setState({
+        dataFormPageOne:data,
+        ReplyPageone:false,
+        ReplyPagetwo:true,
+        ReplyPagethree:false
+      })
+    }
+     
   }
 
   render(){
+    console.log('render')
     const { 
       ReplyPageone,
       ReplyPagetwo,
@@ -52,13 +103,37 @@ class Main extends React.Component {
       tableFinal,
       tableMid,
       tableStudy,
-      creditNum
+      creditNum,
+      subjectboxMon,
+      subjectboxTue, 
+      subjectboxWed, 
+      subjectboxThe, 
+      subjectboxFri,
+      subjectboxSat,
+      dayExambox,
+      daybox
     } = this.state
     return (
       <div>
+        { ReplyPageone && <ProgressOne/> }
+        { ReplyPagetwo && <ProgressTwo/> }
+        { ReplyPagethree && <ProgressThree/> }
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
         { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
-        { ReplyPagethree && <Pagethree tableFinal = { tableFinal } tableMid={ tableMid } tableStudy = { tableStudy } creditNum = { creditNum }/> }
+        { ReplyPagethree && <Pagethree 
+                                tableFinal = { tableFinal } 
+                                tableMid={ tableMid } 
+                                tableStudy = { tableStudy } 
+                                creditNum = { creditNum }
+                                subjectboxMon = { subjectboxMon }
+                                subjectboxTue = { subjectboxTue }
+                                subjectboxWed = { subjectboxWed }
+                                subjectboxThe = { subjectboxThe }
+                                subjectboxFri = { subjectboxFri }
+                                subjectboxSat = { subjectboxSat }
+                                dayExambox = { dayExambox }
+                                daybox = { daybox }
+                            />}
       </div>
     )
   }

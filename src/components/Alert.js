@@ -5,7 +5,7 @@ export class AlertExam extends Component {
         return (
             <div className="alert alert-danger">
                 <strong>คำเตือน !!</strong> 
-                ดูเหมือนวิชาสอบจะชนกันนะ ลองแก้ไขอีกที
+                <p>ดูเหมือนตารางสอบจะชนกันนะ ลองตรวจสอบดีๆ</p>
             </div>
         )
     }
@@ -16,7 +16,7 @@ export class AlertStudy extends Component {
         return (
             <div className="alert alert-danger">
                 <strong>คำเตือน !!</strong> 
-                ดูเหมือนวิชาบางอันจะชนกันนะ
+                วิชาเรียนซ้ำ ไอ้สัดเลือกดีๆ
             </div>
         )
     }
