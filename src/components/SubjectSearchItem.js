@@ -1,9 +1,14 @@
-import React from'react'
+import React,{Component} from'react'
 
-const SubjectSearchItem = ({ data })=>{
-    return(
-      <a>{ data.course_id } - { data.name }</a>  
-    )
+class SubjectSearchItem extends Component{
+  render(){
+      const { selectCourse,data} = this.props
+      return(
+          <li onClick={ ()=>selectCourse(data.course_id) }>
+              <a>{ data.course_id } - { data.name }</a>  
+          </li>
+      )
+  }
 }
 
 export default SubjectSearchItem

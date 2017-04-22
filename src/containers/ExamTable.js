@@ -5,8 +5,8 @@ class ExamTable extends Component {
     
     render() {
         const { dayExambox,dataarray,title } = this.props
-        const examarrayshow = dataarray.map((data)=>
-			<RowExam data={data} />
+        const examarrayshow = dataarray.map((data,index)=>
+			<RowExam key={ index } data={ data } />
 		)
         return (
             <div>
@@ -15,7 +15,7 @@ class ExamTable extends Component {
                     <div className="table-schdule">
                         <div className="index_header">
                             <div className="index_firstHeaderExam"></div>
-                                { dayExambox }
+                            { dayExambox }
                         </div>
                         <div className="index_day">
                             { examarrayshow }

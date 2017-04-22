@@ -25,10 +25,11 @@ export default function(BoxItem){
         }
         render(){
             const { colorrandom } = this.state
-            const sectionobject = findSectionFromSection_id(this.props.sectionid)
+            const { sectionid } = this.props
+            const sectionobject = findSectionFromSection_id(sectionid)
             const subject = findById(sectionobject.course_id)
             return(
-                <BoxItem color={ colorrandom } data={ subject }/>
+                <BoxItem color={ colorrandom } data={ subject } sec={ sectionobject }/>
             )
         }
     }

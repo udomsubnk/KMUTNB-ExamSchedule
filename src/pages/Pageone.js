@@ -8,7 +8,6 @@ import {ProgressOne} from '../components/Progress'
 export default class Pageone extends React.Component{
 
   constructor(){
-    
     super()
     this.state = {
       currentName:[],
@@ -91,7 +90,6 @@ export default class Pageone extends React.Component{
         console.log(courses) 
         this.props.gotwo(courses)
       }
-      
     }
   }
 
@@ -185,8 +183,8 @@ export default class Pageone extends React.Component{
                     <div className="dropdown">
                       <select className="form-control input-lg z-depth-2">
                         <option selected disabled>เลือกรอบ</option>
-                        <option>R รอบเช้า</option>
-                        <option>T รอบบ่าย</option>
+                        <option value="morning">R รอบเช้า</option>
+                        <option value="afternoon">T รอบบ่าย</option>
                       </select>
                     </div>
                   </div>
