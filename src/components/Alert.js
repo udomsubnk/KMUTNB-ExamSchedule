@@ -16,7 +16,7 @@ export class AlertStudy extends Component {
         return (
             <div className="alert alert-danger">
                 <strong>คำเตือน !!</strong> 
-                วิชาเรียนซ้ำ ไอ้สัดเลือกดีๆ
+                <p>วิชาเรียนซ้ำ ตรวจสอบดีๆ</p>
             </div>
         )
     }

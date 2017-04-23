@@ -280,6 +280,9 @@ body{
 .mgt20{
     margin-top: 60px;
 }
+.list-selected{
+    cursor: pointer;
+}
 /*.btn-Green{
     background: #00C853;
     color: #fff;

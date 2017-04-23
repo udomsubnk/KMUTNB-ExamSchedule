@@ -107,16 +107,18 @@ class Pagetwo extends Component{
 				for(var j=0;j<i;j++){
 					var sec1 = findSectionFromSection_id(allselect[i]).course_id
 					var sec2 = findSectionFromSection_id(allselect[j]).course_id
-					if(sec1 == sec2){
-						tempp1 = true
+					var type1 = findSectionFromSection_id(allselect[i]).type
+					var type2 = findSectionFromSection_id(allselect[j]).type
+					if(type1 == 'S' && type2 == 'S'){
+						if(sec1 == sec2 )
+							tempp1 = true
 					}
 				}
 			}
-		
 			for(var i=1;i<examarrayMid.length;i++){
 				for(var j=0;j<i;j++){
 					if(examarrayMid[i][0].day == examarrayMid[j][0].day && examarrayMid[i][0].month == examarrayMid[j][0].month && examarrayMid[i][0].year == examarrayMid[j][0].year){
-						for(var k=0;k<22;k++){
+						for(var k=0;k<23;k++){
 							if(examarrayMid[i][k].status == true && examarrayMid[j][k].status == true){
 								tempp2 = true
 							}
@@ -127,7 +129,7 @@ class Pagetwo extends Component{
 			for(var i=1;i<examarrayFinal.length;i++){
 				for(var j=0;j<i;j++){
 					if(examarrayFinal[i][0].day == examarrayFinal[j][0].day && examarrayFinal[i][0].month == examarrayFinal[j][0].month && examarrayFinal[i][0].year == examarrayFinal[j][0].year){
-						for(var k=0;k<22;k++){
+						for(var k=0;k<23;k++){
 							if(examarrayFinal[i][k].status == true && examarrayFinal[j][k].status == true){
 								tempp2 = true
 							}
@@ -168,13 +170,10 @@ class Pagetwo extends Component{
   	searchUpdate(e){
 		let { val,SearchList,subject } = this.state
 		val = e.target.value
-		if(val=='')
-			SearchList=[]
-		else{
-			SearchList = subject.filter((subject)=>{
-					return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
-				})
-		}
+		console.log(val)
+		SearchList = subject.filter((subject) =>{
+				return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
+		})
 		this.setState({
 			val:val,
 			SearchList:SearchList
@@ -198,19 +197,16 @@ class Pagetwo extends Component{
 		const begintime = arraytime.indexOf(timeOpen)
 		const beginday = arrayday.indexOf(day)
 		var check = true
-
 		if(hour==2){
 			for(var i=0;i<4;i++){
 				if(arraybox[beginday][begintime+i].status == true){
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
-					
 				}
 			}
 			if(check){
 				arraybox[beginday][begintime].beginStatusSmall = true
 				allselect.push(data.section_id)
-				
 				for(var i=0;i<4;i++){
 					arraybox[beginday][begintime+i].status = true
 					arraybox[beginday][begintime+i].sectionId = data.section_id	
@@ -223,10 +219,8 @@ class Pagetwo extends Component{
 		}else if(hour==3){
 			for(var i=0;i<6;i++){
 				if(arraybox[beginday][begintime+i].status == true){
-					
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
-
 				}
 			}
 			if(check){
@@ -252,6 +246,18 @@ class Pagetwo extends Component{
 		const { examarrayMid,examarrayFinal,allselect } = this.state
 		let tempExamarrayMid = []
 		let tempExamarrayFinal = []
+		if(data.type == 'L' || data.course_id == '040613400'){
+			return
+		}
+		let dataExam = findDataExam(data.course_id)
+		console.log('dataExam',dataExam)
+		//########check if no exam ##############
+		if(dataExam==undefined){
+			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
+			this.checkAlert()
+			return
+		}
+		// ##########################################
 		for(var j=0;j<23;j++){
 			let inlistM = {
 				id:j,
@@ -278,14 +284,6 @@ class Pagetwo extends Component{
 			tempExamarrayMid.push(inlistM)
 			tempExamarrayFinal.push(inlistE)
 		}
-		let dataExam = findDataExam(data.course_id)
-		
-		//########check if no exam ##############
-		if(dataExam==undefined){
-			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
-			return
-		}
-		// ##########################################
 		
 		const timeStartMidExam = dataExam.exam.mid.timeStart
 		const timeEndtMidExam = dataExam.exam.mid.timeEnd
@@ -349,35 +347,16 @@ class Pagetwo extends Component{
 				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id	
 			}
 		}
-		for(var i=0;i<22;i++){
-			tempExamarrayMid[i].day = dataExam.exam.mid.day
+		for(var i=0;i<23;i++){
+			tempExamarrayMid[i].day = dataExam.exam.mid.date
 			tempExamarrayMid[i].year = dataExam.exam.mid.year
 			tempExamarrayMid[i].month = dataExam.exam.mid.month
-			tempExamarrayFinal[i].day = dataExam.exam.final.day
+			tempExamarrayFinal[i].day = dataExam.exam.final.date
 			tempExamarrayFinal[i].month = dataExam.exam.final.month
 			tempExamarrayFinal[i].year = dataExam.exam.final.year
 		}
 		let temp = examarrayFinal.length
 		if(temp!=size){
-			for(var i=0;i<examarrayFinal.length;i++){
-				if(examarrayMid[i][0].day == tempExamarrayMid[0].day && examarrayMid[i][0].month == tempExamarrayMid[0].month && examarrayMid[i][0].year == tempExamarrayMid[0].year){
-					for(var j=0;j<22;j++){
-						if(examarrayMid[i][j].status == tempExamarrayMid[j].status){
-							
-							console.log('ดูเหมือนวิชาสอบกลางภาคจะชนกันนะ ลองแก้ไขอีกที')
-						}
-					}
-				}
-				if(examarrayFinal[i][0].day == tempExamarrayFinal[0].day && examarrayFinal[i][0].month == tempExamarrayFinal[0].month && examarrayFinal[i][0].year == tempExamarrayFinal[0].year){
-					for(var j=0;j<22;j++){
-						if(examarrayFinal[i][j].status == tempExamarrayFinal[j].status){
-							
-							console.log('ดูเหมือนวิชาสอบปลายภาคจะชนกันนะ ลองแก้ไขอีกที')
-						}
-					}
-				}
-				 
-			}
 			examarrayMid.push(tempExamarrayMid)
 			examarrayFinal.push(tempExamarrayFinal)
 		}
@@ -450,14 +429,14 @@ class Pagetwo extends Component{
 		}
 		
 		for(var i=0;i<examarrayMid.length;i++){
-			for(var j=0;j<22;j++){
+			for(var j=0;j<23;j++){
 				if(examarrayMid[i][j].sectionId == data.section_id){
 					var indexRemoveMid = i
 				}
 			}
 		}
 		for(var i=0;i<examarrayFinal.length;i++){
-			for(var j=0;j<22;j++){
+			for(var j=0;j<23;j++){
 				if(examarrayFinal[i][j].sectionId == data.section_id){
 					var indexRemoveFinal = i
 				}
