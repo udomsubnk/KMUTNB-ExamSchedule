@@ -36,7 +36,6 @@ class Pagethree extends React.Component{
       if(i!=tableStudy.length-1)
         myUrl+="&"
     }
-    console.log(myUrl)
     window.history.pushState(null, null,myUrl);
   }
   render(){
@@ -73,11 +72,10 @@ class Pagethree extends React.Component{
         </StudyTable>
         <ExamTable dayExambox = { dayExambox } dataarray = { tableMid } title={ 'ExamMidterm Schudule' }/>
         <ExamTable dayExambox = { dayExambox } dataarray = { tableFinal } title={ 'FinalMidterm Schudule'}/>
-        
-          <button type="button" onClick={ this.exportMobile.bind(null,tableStudy) } className="btn btn-primary btn-lg export">Export to calendar</button>
-        
+        <button type="button" onClick={ this.exportMobile.bind(null,tableStudy) } className="btn btn-primary btn-lg export">Export to calendar</button>
       </div>
     )
   }
 }
+
 export default Pagethree;

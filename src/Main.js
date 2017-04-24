@@ -78,11 +78,9 @@ class Main extends React.Component {
         if(xx[i][0]!='i')
           data.push(xx[i])
       }
-      console.log(data)
       for(i in data){
         data[i]=findSectionFromSection_id(data[i])
       }
-      console.log(data)
       this.setState({
         dataFormPageOne:data,
         ReplyPageone:false,
@@ -94,7 +92,6 @@ class Main extends React.Component {
   }
 
   render(){
-    console.log('render')
     const { 
       ReplyPageone,
       ReplyPagetwo,

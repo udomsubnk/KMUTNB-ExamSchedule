@@ -7,7 +7,6 @@ import { Daybox,Hiddenbox,DayboxExam,HiddenboxExam } from '../components/Box'
 import SelectSubjectItem from '../components/SelectSubjectItem'
 import { AlertExam,AlertStudy } from '../components/Alert'
 
-
 import { findNameFormCourseID,findById } from '../api/subject'
 import { findSection,findSectionFromSection_id } from '../api/section'
 import { day,dayExam } from '../api/day'
@@ -15,8 +14,6 @@ import { findDataExam } from '../api/exam'
 
 import StudyTable from '../containers/StudyTable'
 import ExamTable from '../containers/ExamTable'
-import ExamList from '../containers/ExamList'
-
 
 class Pagetwo extends Component{
 
@@ -35,8 +32,10 @@ class Pagetwo extends Component{
 			examarrayFinal:[],
 			credit:0,
 			alertStudy:false,
-			alertExam:false
+			alertExam:false,
+			dataGetBack:[]
 		}
+		this.getBack = this.getBack.bind(this)
 		this.removeClick = this.removeClick.bind(this)
 		this.searchUpdate = this.searchUpdate.bind(this)
 		this.selectCourse = this.selectCourse.bind(this)
@@ -47,13 +46,17 @@ class Pagetwo extends Component{
 		this.checkCredit = this.checkCredit.bind(this)
 		this.checkAlert = this.checkAlert.bind(this)
 	}
+
 	checkCredit(){
-		const { credit,allselect } = this.state
+		const { allselect } = this.state
 		let x=0
-		for(var i=0;i<allselect.length;i++){
-			const weigth = findById(findSectionFromSection_id(allselect[i]).course_id).weight
-			const weightInt = parseInt(weigth.substring(0,1))
-			x+=weightInt
+		for(let i in allselect){
+			const section = findSectionFromSection_id(allselect[i])
+			if(section.type != 'L'){
+				const weigth = findById(section.course_id).weight
+				const weightInt = parseInt(weigth.substring(0,1))
+				x+=weightInt
+			}
 		}
 		this.setState({
 			credit:x
@@ -61,12 +64,8 @@ class Pagetwo extends Component{
 	}
 
 	componentWillMount(){
-		
-		const { arraybox,dataSubject } = this.state
+		const { arraybox } = this.state
 		const { dataPageOne } = this.props
-		$( document ).ready(function() {
-			$('.add').click()
-		});
 		for(var i=0;i<6;i++){
 			arraybox.push([])
 			for(var j=0;j<25;j++){
@@ -88,6 +87,9 @@ class Pagetwo extends Component{
 	}
 
 	componentDidMount(){
+		$(document).ready(function() {
+			$('.add').click()
+		});
 		this.checkCredit()
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
@@ -105,16 +107,18 @@ class Pagetwo extends Component{
 				for(var j=0;j<i;j++){
 					var sec1 = findSectionFromSection_id(allselect[i]).course_id
 					var sec2 = findSectionFromSection_id(allselect[j]).course_id
-					if(sec1 == sec2){
-						tempp1 = true
+					var type1 = findSectionFromSection_id(allselect[i]).type
+					var type2 = findSectionFromSection_id(allselect[j]).type
+					if(type1 == 'S' && type2 == 'S'){
+						if(sec1 == sec2 )
+							tempp1 = true
 					}
 				}
 			}
-		
 			for(var i=1;i<examarrayMid.length;i++){
 				for(var j=0;j<i;j++){
 					if(examarrayMid[i][0].day == examarrayMid[j][0].day && examarrayMid[i][0].month == examarrayMid[j][0].month && examarrayMid[i][0].year == examarrayMid[j][0].year){
-						for(var k=0;k<22;k++){
+						for(var k=0;k<23;k++){
 							if(examarrayMid[i][k].status == true && examarrayMid[j][k].status == true){
 								tempp2 = true
 							}
@@ -125,7 +129,7 @@ class Pagetwo extends Component{
 			for(var i=1;i<examarrayFinal.length;i++){
 				for(var j=0;j<i;j++){
 					if(examarrayFinal[i][0].day == examarrayFinal[j][0].day && examarrayFinal[i][0].month == examarrayFinal[j][0].month && examarrayFinal[i][0].year == examarrayFinal[j][0].year){
-						for(var k=0;k<22;k++){
+						for(var k=0;k<23;k++){
 							if(examarrayFinal[i][k].status == true && examarrayFinal[j][k].status == true){
 								tempp2 = true
 							}
@@ -154,8 +158,6 @@ class Pagetwo extends Component{
 				alertStudy:false
 			})
 		}
-			
-		
 	}
 	selectCourse(id){
 		const {specialSection } = this.state
@@ -168,13 +170,10 @@ class Pagetwo extends Component{
   	searchUpdate(e){
 		let { val,SearchList,subject } = this.state
 		val = e.target.value
-		if(val=='')
-			SearchList=[]
-		else{
-			SearchList = subject.filter((subject)=>{
-					return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
-				})
-		}
+		console.log(val)
+		SearchList = subject.filter((subject) =>{
+				return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
+		})
 		this.setState({
 			val:val,
 			SearchList:SearchList
@@ -198,19 +197,16 @@ class Pagetwo extends Component{
 		const begintime = arraytime.indexOf(timeOpen)
 		const beginday = arrayday.indexOf(day)
 		var check = true
-
 		if(hour==2){
 			for(var i=0;i<4;i++){
 				if(arraybox[beginday][begintime+i].status == true){
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
-					
 				}
 			}
 			if(check){
 				arraybox[beginday][begintime].beginStatusSmall = true
 				allselect.push(data.section_id)
-				
 				for(var i=0;i<4;i++){
 					arraybox[beginday][begintime+i].status = true
 					arraybox[beginday][begintime+i].sectionId = data.section_id	
@@ -223,10 +219,8 @@ class Pagetwo extends Component{
 		}else if(hour==3){
 			for(var i=0;i<6;i++){
 				if(arraybox[beginday][begintime+i].status == true){
-					
 					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
 					check = false
-
 				}
 			}
 			if(check){
@@ -247,12 +241,23 @@ class Pagetwo extends Component{
 		const size = allselect.length
 		this.checkTimeExam(data,size)
 		
-		
 	}
 	checkTimeExam(data,size){
 		const { examarrayMid,examarrayFinal,allselect } = this.state
 		let tempExamarrayMid = []
 		let tempExamarrayFinal = []
+		if(data.type == 'L' || data.course_id == '040613400'){
+			return
+		}
+		let dataExam = findDataExam(data.course_id)
+		console.log('dataExam',dataExam)
+		//########check if no exam ##############
+		if(dataExam==undefined){
+			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
+			this.checkAlert()
+			return
+		}
+		// ##########################################
 		for(var j=0;j<23;j++){
 			let inlistM = {
 				id:j,
@@ -279,14 +284,6 @@ class Pagetwo extends Component{
 			tempExamarrayMid.push(inlistM)
 			tempExamarrayFinal.push(inlistE)
 		}
-		let dataExam = findDataExam(data.course_id)
-		
-		//########check if no exam ##############
-		if(dataExam==undefined){
-			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
-			return
-		}
-		// ##########################################
 		
 		const timeStartMidExam = dataExam.exam.mid.timeStart
 		const timeEndtMidExam = dataExam.exam.mid.timeEnd
@@ -350,47 +347,24 @@ class Pagetwo extends Component{
 				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id	
 			}
 		}
-		for(var i=0;i<22;i++){
-			tempExamarrayMid[i].day = dataExam.exam.mid.day
+		for(var i=0;i<23;i++){
+			tempExamarrayMid[i].day = dataExam.exam.mid.date
 			tempExamarrayMid[i].year = dataExam.exam.mid.year
 			tempExamarrayMid[i].month = dataExam.exam.mid.month
-			tempExamarrayFinal[i].day = dataExam.exam.final.day
+			tempExamarrayFinal[i].day = dataExam.exam.final.date
 			tempExamarrayFinal[i].month = dataExam.exam.final.month
 			tempExamarrayFinal[i].year = dataExam.exam.final.year
 		}
-		
 		let temp = examarrayFinal.length
 		if(temp!=size){
-			for(var i=0;i<examarrayFinal.length;i++){
-				if(examarrayMid[i][0].day == tempExamarrayMid[0].day && examarrayMid[i][0].month == tempExamarrayMid[0].month && examarrayMid[i][0].year == tempExamarrayMid[0].year){
-					for(var j=0;j<22;j++){
-						if(examarrayMid[i][j].status == tempExamarrayMid[j].status){
-							
-							console.log('ดูเหมือนวิชาสอบกลางภาคจะชนกันนะ ลองแก้ไขอีกที')
-						}
-					}
-				}
-				if(examarrayFinal[i][0].day == tempExamarrayFinal[0].day && examarrayFinal[i][0].month == tempExamarrayFinal[0].month && examarrayFinal[i][0].year == tempExamarrayFinal[0].year){
-					for(var j=0;j<22;j++){
-						if(examarrayFinal[i][j].status == tempExamarrayFinal[j].status){
-							
-							console.log('ดูเหมือนวิชาสอบปลายภาคจะชนกันนะ ลองแก้ไขอีกที')
-						}
-					}
-				}
-				 
-			}
 			examarrayMid.push(tempExamarrayMid)
 			examarrayFinal.push(tempExamarrayFinal)
-			
-			
 		}
 		this.setState({
 			examarrayMid:examarrayMid,
 			examarrayFinal:examarrayFinal
 		})
 		this.checkAlert(data)
-		
 	}
 	
 	addSection(data) {
@@ -405,17 +379,23 @@ class Pagetwo extends Component{
 			dataSubject:cutdataSubject
 		})
 	}
-	
 	removeListSection(data){
-		const { dataSubject } = this.state
+		const { dataSubject,dataGetBack } = this.state
 		const id = data.section_id
+		dataGetBack.push(id)
+		let cutdataGetBack = dataGetBack.reduce((prev,cur)=>{
+			if(prev.indexOf(cur) < 0 )
+				prev.push(cur);
+			return prev;
+		},[]);
 		let obj = dataSubject.find(function(e){
 			return id === e.section_id
 		})
 		let x = dataSubject.indexOf(obj)
 		dataSubject.splice(x,1)
 		this.setState({
-			dataSubject:dataSubject
+			dataSubject:dataSubject,
+			dataGetBack:cutdataGetBack
 		})
 
 	}
@@ -429,7 +409,6 @@ class Pagetwo extends Component{
 			var timeClose = data.time.substring(6,8) + ':' + data.time.substring(9,11)
 		}
 		const lengthstatus = parseInt(timeClose)-parseInt(timeOpen)
-		
 		const arraytime =['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
 		'14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']
 		const begintime = arraytime.indexOf(timeOpen)
@@ -450,14 +429,14 @@ class Pagetwo extends Component{
 		}
 		
 		for(var i=0;i<examarrayMid.length;i++){
-			for(var j=0;j<22;j++){
+			for(var j=0;j<23;j++){
 				if(examarrayMid[i][j].sectionId == data.section_id){
 					var indexRemoveMid = i
 				}
 			}
 		}
 		for(var i=0;i<examarrayFinal.length;i++){
-			for(var j=0;j<22;j++){
+			for(var j=0;j<23;j++){
 				if(examarrayFinal[i][j].sectionId == data.section_id){
 					var indexRemoveFinal = i
 				}
@@ -480,31 +459,36 @@ class Pagetwo extends Component{
 			examarrayFinal:examarrayFinal
 		})
 		this.checkAlert()
-
+	}
+	getBack(){
+		const {dataGetBack,dataSubject} = this.state
+		if(dataGetBack.length == 0){
+			return
+		}
+		const data = findSectionFromSection_id(dataGetBack[dataGetBack.length-1])
+		dataGetBack.splice(dataGetBack.length-1,1)
+		dataSubject.push(data)
+		this.setState({
+			dataSubject:dataSubject,
+			dataGetBack:dataGetBack
+		})
 	}
 	render() {
-		
 		const { gothree,data } = this.props
-		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam } = this.state 
-		console.log('kaoarray = ',allselect)
-		console.log(examarrayMid)
-		console.log(examarrayFinal)
+		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam,dataGetBack } = this.state
 		const showDropdownSearch = SearchList.map( (data) =>
-			<li className="drop-down" onClick={ this.selectCourse.bind( null,data.course_id ) }>
-				<SubjectSearchItem key={ data.course_id } data={ data }/>
-			</li>
+			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
-		const showSelectSection = specialSection.map((data) =>{
-			return (
-				<div onClick={ this.addSection.bind(null,data) } >
-					<SectionListItem key={ data.section_id } sectionName={ data }/>
-				</div>
-			)
-		})
-		const daybox = day.map( (data)=>
+		const showSelectSection = specialSection.map((data) =>
+			<SectionListItem key={ data.section_id } section={ data } addSection={ this.addSection }/>
+		)
+		const showdataSubject = dataSubject.map((data) =>
+			<SelectSubjectItem key={ data.section_id} data= { data } removeClick = { this.removeClick } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
+		)
+		const daybox = day.map( (data) =>
 			<Daybox key={ data.id } time={ data.time }/>
 		)
-		const dayExambox = dayExam.map( (data)=>
+		const dayExambox = dayExam.map( (data) =>
 			<DayboxExam key={ data.id } time={ data.time }/>
 		)
 		const subjectboxMon =  arraybox[0].map( (data) =>
@@ -525,22 +509,18 @@ class Pagetwo extends Component{
 		const subjectboxSat =  arraybox[5].map( (data) =>
 			<Hiddenbox key={ data.id } data={data}/>
 		)
-		
-		const showdataSubject = dataSubject.map((data)=>
-			<SelectSubjectItem key={ data.section_id} data= { data } removeClick = { this.removeClick } checkTimeClick = { this.checkTime } removeListSectionClick = { this.removeListSection }/>
-		)
 		return (
 			<div className="container">
 				<div className="dropdown word-1">
 					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle z-depth-2" placeholder="Name or ID" data-toggle="dropdown"/>
-					<ul className="dropdown-menu z-depth-2" style = {{ "min-width":"100%","overflow-y":"scroll","height":"115px" }}>
+					<ul className="dropdown-menu z-depth-2" style = {{ "minWidth":"100%","overflowY":"scroll","height":"115px" }}>
 						{ showDropdownSearch }
 					</ul>
 				</div>
 				<div className="row mgt5" >
 					{ showSelectSection }
 				</div>
-				<table className="table table-hover table-courses table-responsive z-depth-2">
+				<table className="table table-hover table-courses table-responsive z-depth-2 mgt20">
 					<thead>
 						<tr>
 							<th className="col-md-2 col-xs-2 col-sm-2 col-lg-2">ID</th>
@@ -557,6 +537,7 @@ class Pagetwo extends Component{
 				</table>
 				{ alertExam && <AlertExam/>}
 				{ alertStudy && <AlertStudy/>}
+				<button className="btn btn-info" onClick={ this.getBack } >นำกลับมา</button>
 				<center><h3>Credits : <span id="credits"> { credit } </span></h3></center>
 				<StudyTable 
 					boxdataMon = { subjectboxMon }
@@ -572,8 +553,6 @@ class Pagetwo extends Component{
 				</StudyTable>
 				<ExamTable dayExambox = { dayExambox } dataarray = { examarrayMid } title={ 'ExamMidterm Schudule' }/>
 				<ExamTable dayExambox = { dayExambox } dataarray = { examarrayFinal } title={ 'FinalMidterm Schudule'}/>
-					
-				
 				<button type="button" onClick={ ()=> gothree(
 					examarrayMid,
 					examarrayFinal,
