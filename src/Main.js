@@ -2,9 +2,9 @@ import React from'react'
 import Pageone from './pages/Pageone'
 import Pagetwo from './pages/Pagetwo'
 import Pagethree from './pages/Pagethree'
-import Header from './Header'
-import {ProgressOne,ProgressTwo,ProgressThree} from './components/Progress'
+import { ProgressOne,ProgressTwo,ProgressThree } from './components/Progress'
 import {findSectionFromSection_id} from './api/section'
+import Header from './components/Header'
 
 class Main extends React.Component {
 
@@ -88,7 +88,6 @@ class Main extends React.Component {
         ReplyPagethree:false
       })
     }
-     
   }
 
   render(){
@@ -111,7 +110,8 @@ class Main extends React.Component {
       daybox
     } = this.state
     return (
-      <div>
+      <div className="container">
+        <Header />
         { ReplyPageone && <ProgressOne/> }
         { ReplyPagetwo && <ProgressTwo/> }
         { ReplyPagethree && <ProgressThree/> }

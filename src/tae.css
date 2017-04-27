@@ -377,3 +377,38 @@ body{
 .whi{
     color: #fff;
 }
+.moveIn{
+	animation: moveIn 0.8s ease;
+}
+.moveAlert{
+	animation: moveAlert 0.4s ease;
+}
+.MoveChangePage{
+    animation:MoveChangePage 0.3s ease;
+}
+.MoveChangePage2{
+    animation:MoveChangePage2 0.3s ease;
+}
+@keyframes moveAlert{
+	0%{
+		transform: translate(-360px,0px);
+	}
+}
+@keyframes MoveChangePage{
+	0%{
+		transform: translate(500px,0px);
+	}
+}
+@keyframes MoveChangePage2{
+	0%{
+		transform: translate(-600px,-500px);
+	}
+	100%{
+		transform: translate(-500px,0px);
+	}
+}
+@keyframes moveIn{
+	0%{
+		transform: translate(0px,-50px);
+	}
+}
