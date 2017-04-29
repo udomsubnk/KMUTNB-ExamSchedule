@@ -77,7 +77,7 @@ export default class Pageone extends React.Component{
     })
     
   }
-  
+
   checkSections(){
     const { alertStatus,coursesSelect } = this.state
     const courses = findCourse(coursesSelect)
@@ -92,7 +92,7 @@ export default class Pageone extends React.Component{
       }
     }
   }
-
+  
   render(){
     const { gotwo,alertStatus } = this.props
     const { currentName } = this.state

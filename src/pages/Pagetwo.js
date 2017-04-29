@@ -33,7 +33,8 @@ class Pagetwo extends Component{
 			credit:0,
 			alertStudy:false,
 			alertExam:false,
-			dataGetBack:[]
+			dataGetBack:[],
+	
 		}
 		this.getBack = this.getBack.bind(this)
 		this.removeClick = this.removeClick.bind(this)
@@ -302,21 +303,21 @@ class Pagetwo extends Component{
 		const targetFinal = arraytimeExam.indexOf(timeStartFinalExam)
 		
 		// Mid logic
-		if(hourExamMid ==3 ){
+		if(hourExamMid == 3 ) {
 			tempExamarrayMid[targetMid].begin = true
 			tempExamarrayMid[targetMid].date = alldateMid
 			for(var i=0;i<6;i++){
 				tempExamarrayMid[targetMid+i].status = true
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id		
 			}
-		}else if(hourExamMid ==2){
+		}else if(hourExamMid == 2) {
 			tempExamarrayMid[targetMid].begin = true
 			tempExamarrayMid[targetMid].date = alldateMid
-			for(var i=0;i<4;i++){
+			for(var i=0;i<4;i++) {
 				tempExamarrayMid[targetMid+i].status = true
 				tempExamarrayMid[targetMid+i].sectionId = data.section_id
 			}
-		}else if(hourExamMid ==1){
+		}else if(hourExamMid == 1) {
 			tempExamarrayMid[size-1][targetMid].begin = true
 			tempExamarrayMid[targetMid].date = alldateMid
 			for(var i=0;i<2;i++){
@@ -325,21 +326,21 @@ class Pagetwo extends Component{
 			}
 		}
 		// Final logic
-		if(hourExamFinal ==3 ){
+		if(hourExamFinal ==3 ) {
 			tempExamarrayFinal[targetFinal].begin = true
 			tempExamarrayFinal[targetFinal].date = alldateFinal
-			for(var i=0;i<6;i++){
+			for(var i=0;i<6;i++) {
 				tempExamarrayFinal[targetFinal+i].status = true
 				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id		
 			}
-		}else if(hourExamFinal ==2){
+		}else if(hourExamFinal ==2) {
 			tempExamarrayFinal[targetFinal].begin = true
 			tempExamarrayFinal[targetFinal].date = alldateFinal
-			for(var i=0;i<4;i++){
+			for(var i=0;i<4;i++) {
 				tempExamarrayFinal[targetFinal+i].status = true
 				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id
 			}
-		}else if(hourExamFinal ==1){
+		}else if(hourExamFinal ==1) {
 			tempExamarrayFinal[size-1][targetFinal].begin = true
 			tempExamarrayFinal[targetFinal].date = alldateFinal
 			for(var i=0;i<2;i++){
@@ -347,7 +348,7 @@ class Pagetwo extends Component{
 				tempExamarrayFinal[targetFinal+i].sectionId = data.section_id	
 			}
 		}
-		for(var i=0;i<23;i++){
+		for(var i=0;i<23;i++) {
 			tempExamarrayMid[i].day = dataExam.exam.mid.date
 			tempExamarrayMid[i].year = dataExam.exam.mid.year
 			tempExamarrayMid[i].month = dataExam.exam.mid.month
@@ -397,7 +398,6 @@ class Pagetwo extends Component{
 			dataSubject:dataSubject,
 			dataGetBack:cutdataGetBack
 		})
-
 	}
 	removeClick(data){
 		const {arraybox,examarrayFinal,examarrayMid,allselect} = this.state
@@ -427,7 +427,6 @@ class Pagetwo extends Component{
 				 }
 			}
 		}
-		
 		for(var i=0;i<examarrayMid.length;i++){
 			for(var j=0;j<23;j++){
 				if(examarrayMid[i][j].sectionId == data.section_id){
@@ -473,6 +472,9 @@ class Pagetwo extends Component{
 			dataGetBack:dataGetBack
 		})
 	}
+	setContainer(container){
+		return container
+	}
 	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam,dataGetBack } = this.state
@@ -510,7 +512,7 @@ class Pagetwo extends Component{
 			<Hiddenbox key={ data.id } data={data}/>
 		)
 		return (
-			<div className="container">
+			<div className="container MoveChangePage">
 				<div className="dropdown word-1">
 					<input list="search" type="text" onChange={ this.searchUpdate } className="form-control input-lg dropdown-toggle z-depth-2" placeholder="Name or ID" data-toggle="dropdown"/>
 					<ul className="dropdown-menu z-depth-2" style = {{ "minWidth":"100%","overflowY":"scroll","height":"115px" }}>
