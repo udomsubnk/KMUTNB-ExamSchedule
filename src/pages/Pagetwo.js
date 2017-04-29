@@ -97,7 +97,9 @@ class Pagetwo extends Component{
 	}
 
 	componentDidMount(){
-		
+		$(document).ready(function() {
+			$('.add').click()
+		});
 		this.checkCredit()
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
@@ -178,7 +180,6 @@ class Pagetwo extends Component{
   	searchUpdate(e){
 		let { val,SearchList,subject } = this.state
 		val = e.target.value
-		console.log(val)
 		SearchList = subject.filter((subject) =>{
 				return subject.name.toLowerCase().indexOf(val.toLowerCase()) !== -1
 		})
@@ -205,6 +206,7 @@ class Pagetwo extends Component{
 		const begintime = arraytime.indexOf(timeOpen)
 		const beginday = arrayday.indexOf(day)
 		var check = true
+		
 		if(hour==2){
 			for(var i=0;i<4;i++){
 				if(arraybox[beginday][begintime+i].status == true){
@@ -252,21 +254,25 @@ class Pagetwo extends Component{
 					allselect:allselect
 				})
 			}
+		}else{
+			console.log('นอกเหนือจากวิชาที่เรียน2กับ3ชม ยังไมไ่ด้ทำนะ')
 		}
 		this.checkCredit()
 		const size = allselect.length
-		this.checkTimeExam(data,size)
+		this.checkTimeExam(data,size,check)
 		
 	}
-	checkTimeExam(data,size){
+	checkTimeExam(data,size,check){
 		const { examarrayMid,examarrayFinal,allselect } = this.state
 		let tempExamarrayMid = []
 		let tempExamarrayFinal = []
+		if(check == false){
+			return
+		}
 		if(data.type == 'L' || data.course_id == '040613400'){
 			return
 		}
 		let dataExam = findDataExam(data.course_id)
-		console.log('dataExam',dataExam)
 		//########check if no exam ##############
 		if(dataExam==undefined){
 			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
@@ -385,13 +391,14 @@ class Pagetwo extends Component{
 
 	addSection(data) {
 		const { dataSubject } = this.state
-		dataSubject.push(data)
+		const dataWithStatus = Object.assign(data, { status: true })
+		dataSubject.push(dataWithStatus)
 		let cutdataSubject = dataSubject.reduce((prev,cur)=>{
 			if(prev.indexOf(cur) < 0 )
 				prev.push(cur);
 			return prev;
 		},[]);
-		cutdataSubject = this.createStatus(cutdataSubject)
+		
 		this.setState({
 			dataSubject:cutdataSubject
 		})
@@ -418,6 +425,7 @@ class Pagetwo extends Component{
 	}
 	// REMOVE button
 	removeClick(data){
+		
 		const {arraybox,examarrayFinal,examarrayMid,allselect,dataSubject} = this.state
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
@@ -460,13 +468,22 @@ class Pagetwo extends Component{
 			}
 		}
 		if (indexRemoveMid > -1 ) {
+			
+			dataSubject.filter((g)=>
+				g.section_id === data.section_id
+			)[0].status = true
 			examarrayMid.splice(indexRemoveMid, 1);
 		}
 		if(indexRemoveFinal > -1){
+			
+			dataSubject.filter((g)=>
+				g.section_id === data.section_id
+			)[0].status = true
 			examarrayFinal.splice(indexRemoveFinal, 1);
 		}
 		const x = allselect.indexOf(data.section_id)
 		if( x > -1){
+			
 			dataSubject.filter((g)=>
 				g.section_id === data.section_id
 			)[0].status = true
@@ -502,7 +519,7 @@ class Pagetwo extends Component{
 	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam,dataGetBack } = this.state
-		console.log(dataSubject)
+		console.log(allselect)
 		const showDropdownSearch = SearchList.map( (data) =>
 			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
