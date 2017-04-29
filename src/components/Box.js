@@ -27,6 +27,19 @@ export class Smallbox extends Component {
     }
 }
 
+export class ExtraSmallbox extends Component {
+    render() {
+        const { data,color,sec } = this.props
+        return (
+            <div className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "87px" }}>
+                <div className="section-box-detail">{ data.course_id }</div>
+                <div className="section-box-detail">{ data.name }</div>
+                <div className="section-box-detail">{ sec.type }-{ sec.section }</div>
+            </div>
+        )
+    }
+}
+
 export class BoxExam extends Component {
     render() {
         const { data,color,sec } = this.props
@@ -50,7 +63,7 @@ export class BoxExamSmall extends Component {
         )
     }
 }
-
+const ExtraSmallboxRandomColor = randomColor(ExtraSmallbox)
 const BigboxRandomColor = randomColor(Bigbox)
 const SmallboxRandomColor = randomColor(Smallbox)
 const BoxExamRandomColor = randomColor(BoxExam)
@@ -63,6 +76,7 @@ export class Hiddenbox extends Component {
             <div className="hiddenbox-box" >
                 { data.beginStatusSmall && <SmallboxRandomColor sectionid={ data.sectionId }/>}
                 { data.beginStatusBig && <BigboxRandomColor sectionid={ data.sectionId }/>}
+                { data.beginStatusExtraSmall && <ExtraSmallboxRandomColor sectionid={ data.sectionId }/>}
             </div>
         )
     }
