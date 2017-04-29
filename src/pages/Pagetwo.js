@@ -80,17 +80,24 @@ class Pagetwo extends Component{
 				arraybox[i].push(itembox)
 			}
 		}
+		const data = this.createStatus(dataPageOne)
 		this.setState({
 			arraybox:arraybox,
-			dataSubject:dataPageOne
-	
+			dataSubject:data
 		})
 	}
 
+	createStatus(dataSubject){
+		const status = { status: true }
+		const dataStatus = []
+		dataSubject.map((data)=>{
+			dataStatus.push(Object.assign(data,status))
+		})
+		return dataStatus
+	}
+
 	componentDidMount(){
-		$(document).ready(function() {
-			$('.add').click()
-		});
+		
 		this.checkCredit()
 		fetch(`http://localhost:3000/subject`)
 		.then(res=> res.json())
@@ -180,9 +187,9 @@ class Pagetwo extends Component{
 			SearchList:SearchList
 		})
 	}
-
+	// ADD button
   	checkTime(data){
-		let { arraybox,allselect } = this.state
+		let { arraybox,allselect,dataSubject } = this.state
 		let day = data.day
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
@@ -208,11 +215,15 @@ class Pagetwo extends Component{
 			if(check){
 				arraybox[beginday][begintime].beginStatusSmall = true
 				allselect.push(data.section_id)
+				dataSubject.filter((d)=>
+					d.section_id === data.section_id
+				)[0].status = false
 				for(var i=0;i<4;i++){
 					arraybox[beginday][begintime+i].status = true
 					arraybox[beginday][begintime+i].sectionId = data.section_id	
 				}
 				this.setState({
+					dataSubject:dataSubject,
 					arraybox:arraybox,
 					allselect:allselect	
 				})
@@ -227,12 +238,16 @@ class Pagetwo extends Component{
 			if(check){
 				arraybox[beginday][begintime].beginStatusBig = true
 				allselect.push(data.section_id)
+				dataSubject.filter((d)=>
+					d.section_id === data.section_id
+				)[0].status = false
 				
 				for(var i=0;i<6;i++){
 					arraybox[beginday][begintime+i].status = true
 					arraybox[beginday][begintime+i].sectionId = data.section_id		
 				}
 				this.setState({
+					dataSubject:dataSubject,
 					arraybox:arraybox,
 					allselect:allselect
 				})
@@ -367,7 +382,7 @@ class Pagetwo extends Component{
 		})
 		this.checkAlert(data)
 	}
-	
+
 	addSection(data) {
 		const { dataSubject } = this.state
 		dataSubject.push(data)
@@ -376,10 +391,12 @@ class Pagetwo extends Component{
 				prev.push(cur);
 			return prev;
 		},[]);
+		cutdataSubject = this.createStatus(cutdataSubject)
 		this.setState({
 			dataSubject:cutdataSubject
 		})
 	}
+
 	removeListSection(data){
 		const { dataSubject,dataGetBack } = this.state
 		const id = data.section_id
@@ -399,8 +416,9 @@ class Pagetwo extends Component{
 			dataGetBack:cutdataGetBack
 		})
 	}
+	// REMOVE button
 	removeClick(data){
-		const {arraybox,examarrayFinal,examarrayMid,allselect} = this.state
+		const {arraybox,examarrayFinal,examarrayMid,allselect,dataSubject} = this.state
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
 			var timeClose = data.time.substring(5,7) + ':' + data.time.substring(8,10)	
@@ -449,16 +467,21 @@ class Pagetwo extends Component{
 		}
 		const x = allselect.indexOf(data.section_id)
 		if( x > -1){
+			dataSubject.filter((g)=>
+				g.section_id === data.section_id
+			)[0].status = true
 			allselect.splice(x,1)
 		}
 		this.checkCredit()
 		this.setState({
+			dataSubject:dataSubject,
 			allselect:allselect,
 			examarrayMid:examarrayMid,
 			examarrayFinal:examarrayFinal
 		})
 		this.checkAlert()
 	}
+
 	getBack(){
 		const {dataGetBack,dataSubject} = this.state
 		if(dataGetBack.length == 0){
@@ -472,12 +495,14 @@ class Pagetwo extends Component{
 			dataGetBack:dataGetBack
 		})
 	}
+
 	setContainer(container){
 		return container
 	}
 	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam,dataGetBack } = this.state
+		console.log(dataSubject)
 		const showDropdownSearch = SearchList.map( (data) =>
 			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
