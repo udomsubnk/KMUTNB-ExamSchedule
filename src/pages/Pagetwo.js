@@ -73,6 +73,7 @@ class Pagetwo extends Component{
 				let itembox = {
 					id:j,
 					beginStatusBig:false,
+					beginStatusExtraSmall:false,
 					beginStatusSmall:false,
 					status:false,
 					sectionId:'',
@@ -195,9 +196,13 @@ class Pagetwo extends Component{
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
 			var timeClose = data.time.substring(5,7) + ':' + data.time.substring(8,10)	
-		}else{
+		}
+		else if(data.time.length == 11){
 			var timeOpen = data.time.substring(0,2) + ':' + data.time.substring(3,5)
 			var timeClose = data.time.substring(6,8) + ':' + data.time.substring(9,11)
+		}else if(data.time.length == 9){
+			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
+			var timeClose = data.time.substring(5,6) + ':' + data.time.substring(7,9)
 		}
 		const hour = parseInt(timeClose)-parseInt(timeOpen)
 		const arrayday = ['M','T','W','H','F','S']
@@ -206,7 +211,6 @@ class Pagetwo extends Component{
 		const begintime = arraytime.indexOf(timeOpen)
 		const beginday = arrayday.indexOf(day)
 		var check = true
-		
 		if(hour==2){
 			for(var i=0;i<4;i++){
 				if(arraybox[beginday][begintime+i].status == true){
@@ -254,8 +258,30 @@ class Pagetwo extends Component{
 					allselect:allselect
 				})
 			}
-		}else{
-			console.log('นอกเหนือจากวิชาที่เรียน2กับ3ชม ยังไมไ่ด้ทำนะ')
+		}else if(hour==1){
+			for(var i=0;i<2;i++){
+				if(arraybox[beginday][begintime+i].status == true){
+					console.log('ดูเหมือนวิชาบางอันจะชนกันนะ')
+					check = false
+				}
+			}
+			if(check){
+				arraybox[beginday][begintime].beginStatusExtraSmall = true
+				allselect.push(data.section_id)
+				dataSubject.filter((d)=>
+					d.section_id === data.section_id
+				)[0].status = false
+				
+				for(var i=0;i<2;i++){
+					arraybox[beginday][begintime+i].status = true
+					arraybox[beginday][begintime+i].sectionId = data.section_id		
+				}
+				this.setState({
+					dataSubject:dataSubject,
+					arraybox:arraybox,
+					allselect:allselect
+				})
+			}
 		}
 		this.checkCredit()
 		const size = allselect.length
@@ -275,7 +301,7 @@ class Pagetwo extends Component{
 		let dataExam = findDataExam(data.course_id)
 		//########check if no exam ##############
 		if(dataExam==undefined){
-			console.log('ยังไม่มีตารางวิชาสอบวิชานี้')
+			console.log('หาวิชาสอบไม่พบจ้า')
 			this.checkAlert()
 			return
 		}
@@ -379,8 +405,14 @@ class Pagetwo extends Component{
 		}
 		let temp = examarrayFinal.length
 		if(temp!=size){
-			examarrayMid.push(tempExamarrayMid)
-			examarrayFinal.push(tempExamarrayFinal)
+			if(tempExamarrayMid[0].day != undefined){
+				examarrayMid.push(tempExamarrayMid)
+			}
+			if(tempExamarrayFinal[0].day != undefined){
+				examarrayFinal.push(tempExamarrayFinal)
+			}
+			else 
+				console.log('ไม่มีสอบทั้งMIDและFinalนะ')
 		}
 		this.setState({
 			examarrayMid:examarrayMid,
@@ -390,7 +422,11 @@ class Pagetwo extends Component{
 	}
 
 	addSection(data) {
-		const { dataSubject } = this.state
+		const { dataSubject,allselect } = this.state
+		for(let i in allselect){
+			if(allselect[i] == data.section_id)
+				return
+		}
 		const dataWithStatus = Object.assign(data, { status: true })
 		dataSubject.push(dataWithStatus)
 		let cutdataSubject = dataSubject.reduce((prev,cur)=>{
@@ -430,9 +466,12 @@ class Pagetwo extends Component{
 		if(data.time.length == 10){
 			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
 			var timeClose = data.time.substring(5,7) + ':' + data.time.substring(8,10)	
-		}else{
+		}else if(data.time.length == 11){
 			var timeOpen = data.time.substring(0,2) + ':' + data.time.substring(3,5)
 			var timeClose = data.time.substring(6,8) + ':' + data.time.substring(9,11)
+		}else if(data.time.length == 9){
+			var timeOpen = data.time.substring(0,1) + ':' + data.time.substring(2,4)
+			var timeClose = data.time.substring(5,6) + ':' + data.time.substring(7,9)
 		}
 		const lengthstatus = parseInt(timeClose)-parseInt(timeOpen)
 		const arraytime =['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
@@ -443,6 +482,7 @@ class Pagetwo extends Component{
 				 if(arraybox[i][j].sectionId == data.section_id){
 					arraybox[i][j].beginStatusBig = false
 					arraybox[i][j].beginStatusSmall = false
+					arraybox[i][j].beginStatusExtraSmall = false
 					arraybox[i][j].sectionId = ''
 					for(var k=0;k<(lengthstatus*2);k++){
 						arraybox[i][begintime+k].status = false
@@ -468,14 +508,12 @@ class Pagetwo extends Component{
 			}
 		}
 		if (indexRemoveMid > -1 ) {
-			
 			dataSubject.filter((g)=>
 				g.section_id === data.section_id
 			)[0].status = true
 			examarrayMid.splice(indexRemoveMid, 1);
 		}
 		if(indexRemoveFinal > -1){
-			
 			dataSubject.filter((g)=>
 				g.section_id === data.section_id
 			)[0].status = true
@@ -483,7 +521,6 @@ class Pagetwo extends Component{
 		}
 		const x = allselect.indexOf(data.section_id)
 		if( x > -1){
-			
 			dataSubject.filter((g)=>
 				g.section_id === data.section_id
 			)[0].status = true
@@ -519,7 +556,6 @@ class Pagetwo extends Component{
 	render() {
 		const { gothree,data } = this.props
 		const { subject,SearchList,specialSection,arraybox,dataSubject,examarrayMid,examarrayFinal,allselect,credit,alertStudy,alertExam,dataGetBack } = this.state
-		console.log(allselect)
 		const showDropdownSearch = SearchList.map( (data) =>
 			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
