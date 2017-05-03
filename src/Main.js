@@ -2,7 +2,7 @@ import React from'react'
 import Pageone from './pages/Pageone'
 import Pagetwo from './pages/Pagetwo'
 import Pagethree from './pages/Pagethree'
-import { ProgressOne,ProgressTwo,ProgressThree } from './components/Progress'
+import { ProgressBar } from './components/Progress'
 import {findSectionFromSection_id} from './api/section'
 import Header from './components/Header'
 
@@ -112,9 +112,10 @@ class Main extends React.Component {
     return (
       <div className="container">
         <Header />
-        { ReplyPageone && <ProgressOne/> }
-        { ReplyPagetwo && <ProgressTwo/> }
-        { ReplyPagethree && <ProgressThree/> }
+        <ProgressBar/>
+        { ReplyPageone }
+        { ReplyPagetwo }
+        { ReplyPagethree }
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
         { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
         { ReplyPagethree && <Pagethree 

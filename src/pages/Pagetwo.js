@@ -647,7 +647,7 @@ class Pagetwo extends Component{
 					subjectboxSat,
 					dayExambox,
 					daybox
-				)} className="btn btn-Blue btn-lg export">Export</button>
+				)} className="btn btn-Blue btn-lg export" id="goThree">Export</button>
 			</div>
 		)
 	}

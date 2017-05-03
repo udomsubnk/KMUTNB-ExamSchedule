@@ -1,66 +1,10 @@
 import React, { Component } from 'react';
 
-export class ProgressOne extends Component {
+export class ProgressBar extends Component {
     render() {
         const iii = 'iconOpen'
         return (
-           <div className="journey-list mgt20">
-                <div className="step-1">
-                    <div className={iii}>1</div>
-                    <div className="name">เลือกวิชา</div>
-                </div>
-                <div className="step-2">
-                    <div className="iconClose">2</div>
-                    <div className="name">จัดการ</div>
-                </div>
-                <div className="step-3">
-                    <div className="iconClose">3</div>
-                    <div className="name">สรุปวิชา</div>
-                </div>
-                <div className="journey-arm"></div>
-            </div> 
-        )
-    }
-}
-export class ProgressTwo extends Component {
-    render() {
-        return (
-           <div className="journey-list mgt20">
-                <div className="step-1">
-                    <div className="iconOpen">1</div>
-                    <div className="name">เลือกวิชา</div>
-                </div>
-                <div className="step-2">
-                    <div className="iconOpen">2</div>
-                    <div className="name">จัดการ</div>
-                </div>
-                <div className="step-3">
-                    <div className="iconClose">3</div>
-                    <div className="name">สรุปวิชา</div>
-                </div>
-                <div className="journey-arm"></div>
-            </div> 
-        )
-    }
-}
-export class ProgressThree extends Component {
-    render() {
-        return (
-           <div className="journey-list mgt20">
-                <div className="step-1">
-                    <div className="iconOpen">1</div>
-                    <div className="name">เลือกวิชา</div>
-                </div>
-                <div className="step-2">
-                    <div className="iconOpen">2</div>
-                    <div className="name">จัดการ</div>
-                </div>
-                <div className="step-3">
-                    <div className="iconOpen">3</div>
-                    <div className="name">สรุปวิชา</div>
-                </div>
-                <div className="journey-arm"></div>
-            </div> 
+           <div className="processbar-process-bar"><div className="processbar-process"><div className="processbar-img"><div className="processbar-circle processbar-p1"><span className="processbar-number">1</span></div><div className="processbar-line-r"></div></div><div className="processbar-text processbar-p1">เริ่มต้น</div></div><div className="processbar-process"><div className="processbar-img"><div className="processbar-circle processbar-p2"><span className="processbar-number">2</span></div><div className="processbar-line-l"></div><div className="processbar-line-r"></div></div><div className="processbar-text processbar-p2">จัดตารางเรียน</div></div><div className="processbar-process"><div className="processbar-img"><div className="processbar-line-l"></div><div className="processbar-circle processbar-p3"><span className="processbar-number">3</span></div></div><div className="processbar-text processbar-p3">สำเร็จ</div></div></div>
         )
     }
 }

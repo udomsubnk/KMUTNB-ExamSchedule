@@ -1,4 +1,16 @@
+function wait(){
+	setTimeout(function(){
+		$('#goThree').click(function(){
+			act('processbar-p3');
+		})
+	}, 500);
+}
 $(document).ready(function() {
+	act('processbar-p1');
+	$('.btn.btn-Blue.size-menu2.btn-lg.btn1.z-depth-2').click(function(){
+		act('processbar-p2');
+		wait();
+	})
 	$('#button').click(function(event) {
 		var id = $("#id").val()
 		$.ajax({
@@ -151,6 +163,7 @@ var credits = 0;
 
 
 $(document).ready(function() {
+
   $(document).on('input','.xxx',function(e){
 
 
@@ -173,3 +186,4 @@ $(document).ready(function() {
   })
 
 });
+function act(s){"processbar-p1"==s?($(".processbar-p1").removeClass("processbar-unfocus").addClass("processbar-active"),$(".processbar-p2").hasClass("processbar-active")&&$(".processbar-p2").removeClass("processbar-active").addClass("processbar-unfocus"),$(".processbar-p3").hasClass("processbar-active")&&$(".processbar-p3").removeClass("processbar-active").addClass("processbar-unfocus")):"processbar-p2"==s?($(".processbar-p2").removeClass("processbar-unfocus").addClass("processbar-active"),$(".processbar-p1").hasClass("processbar-active")&&$(".processbar-p1").removeClass("processbar-active").addClass("processbar-unfocus"),$(".processbar-p3").hasClass("processbar-active")&&$(".processbar-p3").removeClass("processbar-active").addClass("processbar-unfocus")):($(".processbar-p3").removeClass("processbar-unfocus").addClass("processbar-active"),$(".processbar-p1").hasClass("processbar-active")&&$(".processbar-p1").removeClass("processbar-active").addClass("processbar-unfocus"),$(".processbar-p2").hasClass("processbar-active")&&$(".processbar-p2").removeClass("processbar-active").addClass("processbar-unfocus"))}	
