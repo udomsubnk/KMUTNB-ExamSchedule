@@ -6,11 +6,30 @@ function wait(){
 	}, 500);
 }
 $(document).ready(function() {
+
 	act('processbar-p1');
 	$('.btn.btn-Blue.size-menu2.btn-lg.btn1.z-depth-2').click(function(){
 		act('processbar-p2');
 		wait();
 	})
+	$('.processbar-p1').click(function(){
+		window.location = '/'
+	});
+	$('.processbar-p2').click(function(){
+		window.location = window.location.href
+	});
+	$('.processbar-p2').click(function(){
+		setTimeout(function(){
+			$('#goThree').click(function(){
+				act('processbar-p3');
+			})
+		}, 500);
+		setTimeout(function(){
+			$('#goThree').click();
+		}, 1000);
+
+		window.location = window.location.href
+	});
 	$('#button').click(function(event) {
 		var id = $("#id").val()
 		$.ajax({
