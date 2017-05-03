@@ -42,7 +42,7 @@ class Pagethree extends Component {
         setTimeout(()=>{ window.location="/getFile"; }, 3000);
     });
   }
-
+ 
   render() {
     const { 
       tableStudy,
@@ -58,9 +58,10 @@ class Pagethree extends Component {
       dayExambox,
       daybox,
     } = this.props
-    
+   
     return (
       <div className="container MoveChangePage">
+        <button onClick={ ()=> window.location = window.location.href }>แก้ไข</button>
         <center><h1 className="zzz">Summary</h1></center>
         <center><h3>Credits : <span id="credits">{ creditNum }</span></h3></center>
         <StudyTable 

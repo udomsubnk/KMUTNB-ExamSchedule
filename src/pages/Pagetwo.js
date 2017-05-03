@@ -1,5 +1,4 @@
 import React,{Component} from'react'
-import Pagetree from'./Pagethree'
 
 import SubjectSearchItem from'../components/SubjectSearchItem'
 import SectionListItem from '../components/SectionListItem'
@@ -91,9 +90,9 @@ class Pagetwo extends Component{
 	createStatus(dataSubject){
 		const status = { status: true }
 		const dataStatus = []
-		dataSubject.map((data)=>{
+		dataSubject.map((data)=>
 			dataStatus.push(Object.assign(data,status))
-		})
+		)
 		return dataStatus
 	}
 
@@ -231,7 +230,8 @@ class Pagetwo extends Component{
 				this.setState({
 					dataSubject:dataSubject,
 					arraybox:arraybox,
-					allselect:allselect	
+					allselect:allselect
+					
 				})
 			}
 		}else if(hour==3){
@@ -559,6 +559,7 @@ class Pagetwo extends Component{
 		const showDropdownSearch = SearchList.map( (data) =>
 			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
+		console.log(allselect)
 		const showSelectSection = specialSection.map((data) =>
 			<SectionListItem key={ data.section_id } section={ data } addSection={ this.addSection }/>
 		)
