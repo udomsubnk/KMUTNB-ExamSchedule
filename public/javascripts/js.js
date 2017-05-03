@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$('.processbar-p2').click(function(){
 		window.location = window.location.href
 	});
-	$('.processbar-p2').click(function(){
+	$('.processbar-p3').click(function(){
 		setTimeout(function(){
 			$('#goThree').click(function(){
 				act('processbar-p3');

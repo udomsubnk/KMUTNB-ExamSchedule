@@ -70,7 +70,7 @@ class Main extends React.Component {
   }
   componentWillMount(){
     var url = window.location.href;
-    if(url.indexOf("finish?")!=-1){
+    if(url.indexOf("finish?id")!=-1){
       // http://localhost:3000/finish? id[0],2020,id[1],220 
       var xx = url.split("finish?").pop().split(/=|&/g)
       var data = []
@@ -87,6 +87,8 @@ class Main extends React.Component {
         ReplyPagetwo:true,
         ReplyPagethree:false
       })
+    }else{
+      window.location = '/'
     }
   }
 
