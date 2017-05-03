@@ -76,8 +76,15 @@ class Main extends React.Component {
       }
       setTimeout(function(){
         act('processbar-p1');
-        act('processbar-p2');
       }, 500);
+      setTimeout(function(){
+        act('processbar-p2');
+      }, 800);
+      setTimeout(function(){
+        $('#goThree').click(function(){
+          act('processbar-p3');
+        })
+      }, 800);
       // http://localhost:3000/finish? id[0],2020,id[1],220 
       var xx = url.split("finish?").pop().split(/=|&/g)
       var data = []
