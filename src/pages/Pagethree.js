@@ -39,8 +39,7 @@ class Pagethree extends Component {
       exam : examArray
     }
     $.post('/exportexam',data,(res) => {
-      if(res=="success")
-        setTimeout(()=>{ window.location="/getFile"; }, 3000);
+      window.location="/getFile?filename="+res;
     });
   }
  

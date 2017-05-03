@@ -9,6 +9,7 @@ var subject = require('../src/api/subject')
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use( bodyParser.json() );
 var request = require('request');
+var count = 0;
 // router.get('/xxx',function(req,res){
 //   res.sendFile(path.join(__dirname + '/template/index.html'))
 // })
@@ -25,17 +26,58 @@ function findNameById(code){
 //จะได้รับตอบกลับว่า "success" ให้ redirect ไปที่ /getFile ได้เลย
 router.post('/exportexam',function(req,res,next){
   exam = req.body.exam;
-  console.log('exam',exam)
-  // writefile(exam,res)
-  res.send("success")
+  writefile(exam).then((counter)=>{
+  	console.log(counter)
+  	res.send(counter+"")
+  }).catch(()=>{
+  	console.log('reject')
+  })
+  
 });
 router.get('/getfile',function(req,res,next){
-    res.sendFile(path.resolve('public/files/'+'5704062616518122559'+'.ics'));
+	let filename = req.query.filename
+	console.log(filename)
+    res.sendFile(path.resolve('public/files/'+filename+'.ics'));
 });
 //---------------------------------
-function writefile(exam,res){
-  console.log('exam,fileName',exam)
-  var text = `BEGIN:VCALENDAR
+async function writefile(exam){
+/*[
+	{
+		"code":"010013002",
+		"exam":{
+			"final":{
+				"day":"F",
+				"date":"19",
+				"month":"5",
+				"year":"2017",
+				"timeStart":"13:00",
+				"timeEnd":"15:00"
+			}
+		}
+	},
+	{
+		"code":"010403004",
+		"exam":{
+			"mid":{
+				"day":"H",
+				"date":"9",
+				"month":"3",
+				"year":"2017",
+				"timeStart":"13:00",
+				"timeEnd":"16:00"
+			},
+			"final":{
+				"day":"T",
+				"date":"23",
+				"month":"5",
+				"year":"2017",
+				"timeStart":"13:00",
+				"timeEnd":"16:00"
+			}
+		}
+	}
+]*/
+	var text = `BEGIN:VCALENDAR
 METHOD:PUBLISH
 VERSION:2.0
 X-WR-CALNAME:ปฏิทินสอบกลางภาค
@@ -43,44 +85,87 @@ PRODID:-//Apple Inc.//Mac OS X 10.12.1//EN
 X-APPLE-CALENDAR-COLOR:#63DA38
 X-WR-TIMEZONE:Asia/Bangkok
 CALSCALE:GREGORIAN\n`
-  for(i in exam){
-    // Midterm
-    text+='BEGIN:VEVENT\n'
-    text+='UID:'+i+'\n'
-    text+='DTSTAMP: 2017Mar02T000000\n'
-    text+='DTSTART:'+exam[i].mid.year+'0'+exam[i].mid.month+exam[i].mid.date+'T'+exam[i].mid.timeStart.replace(":",'')+'\n'
-    text+='DTEND:'+exam[i].mid.year+'0'+exam[i].mid.month+exam[i].mid.date+'T'+exam[i].mid.timeEnd.replace(":",'')+'\n'
-    text+='SUMMARY:'+findNameById(exam[i].code)+'\n'
-    text+='DESCRIPTION:.\n'
-    text+='BEGIN:VALARM\n'
-    text+='TRIGGER:-PT0030M\n'
-    text+='ACTION:DISPLAY\n'
-    text+='DESCRIPTION:Reminder\n'
-    text+='END:VALARM\n'
-    text+='END:VEVENT\n'
-    // Final
-    text+='BEGIN:VEVENT\n'
-    text+='UID:'+i+'\n'
-    text+='DTSTAMP: 2017Mar02T000000\n'
-    text+='DTSTART:'+exam[i].final.year+'0'+exam[i].final.month+exam[i].final.date+'T'+exam[i].final.timeStart.replace(":",'')+'\n'
-    text+='DTEND:'+exam[i].final.year+'0'+exam[i].final.month+exam[i].final.date+'T'+exam[i].final.timeEnd.replace(":",'')+'\n'
-    text+='SUMMARY:'+findNameById(exam[i].code)+'\n'
-    text+='DESCRIPTION:.\n'
-    text+='BEGIN:VALARM\n'
-    text+='TRIGGER:-PT0030M\n'
-    text+='ACTION:DISPLAY\n'
-    text+='DESCRIPTION:Reminder\n'
-    text+='END:VALARM\n'
-    text+='END:VEVENT\n'
-  }
-  text += `END:VCALENDAR`
-    fs.writeFile("public/files/"+'5704062616518122559'+'.ics', text, function(err) {
-      if(err) {
-        return console.log(err);
-      }
-      console.log("The file was saved!");
-      res.send("success")
-    });
+	var uid = 0;
+	for(i in exam){
+		// Midterm
+		if(exam[i].exam.mid){
+			var midYear = exam[i].exam.mid.year
+			var midMonth
+			if(exam[i].exam.mid.month.toString().length==1)
+				midMonth = '0'+exam[i].exam.mid.month
+			else midMonth = exam[i].exam.mid.month
+			var midDate
+			if(exam[i].exam.mid.date.toString().length==1)
+				midDate = '0'+exam[i].exam.mid.date
+			else midDate = exam[i].exam.mid.date
+			var midTimeStart
+			if(exam[i].exam.mid.timeStart.split(':')[0].length==1)
+				midTimeStart = '0'+exam[i].exam.mid.timeStart.replace(':','')+'00'
+			else midTimeStart = exam[i].exam.mid.timeStart.replace(':','')+'00'    
+			var midTimeEnd
+			if(exam[i].exam.mid.timeEnd.split(':')[0].length==1)
+				midTimeEnd = '0'+exam[i].exam.mid.timeEnd.replace(':','')+'00'
+			else midTimeEnd = exam[i].exam.mid.timeEnd.replace(':','')+'00'    
+			text+='BEGIN:VEVENT\n'
+			text+='UID:'+uid+'\n'
+			text+='DTSTAMP:'+midYear+midMonth+midDate+'T'+midTimeStart+'\n'
+			//1997 07 14 T 170000
+			text+='DTSTART:'+midYear+midMonth+midDate+'T'+midTimeStart+'\n'
+			text+='DTEND:'+midYear+midMonth+midDate+'T'+midTimeEnd+'\n'
+			text+='SUMMARY:'+findNameById(exam[i].code)+'\n'
+			text+='BEGIN:VALARM\n'
+			text+='TRIGGER:-PT0030M\n'
+			text+='ACTION:DISPLAY\n'
+			text+='DESCRIPTION:Reminder\n'
+			text+='END:VALARM\n'
+			text+='END:VEVENT\n'
+			uid++;
+		}
+		// Final
+		if(exam[i].exam.final){
+			var finalYear = exam[i].exam.final.year
+			var finalMonth
+			if(exam[i].exam.final.month.toString().length==1)
+				finalMonth = '0'+exam[i].exam.final.month
+			else finalMonth = exam[i].exam.final.month
+			var finalDate
+			if(exam[i].exam.final.date.toString().length==1)
+				finalDate = '0'+exam[i].exam.final.date
+			else finalDate = exam[i].exam.final.date
+			if(exam[i].exam.final.timeStart.split(':')[0].length==1)
+				finalTimeStart = '0'+exam[i].exam.final.timeStart.replace(':','')+'00'
+			else finalTimeStart = exam[i].exam.final.timeStart.replace(':','')+'00'    
+			var finalTimeEnd
+			if(exam[i].exam.final.timeEnd.split(':')[0].length==1)
+				finalTimeEnd = '0'+exam[i].exam.final.timeEnd.replace(':','')+'00'
+			else finalTimeEnd = exam[i].exam.final.timeEnd.replace(':','')+'00'  
+			text+='BEGIN:VEVENT\n'
+			text+='UID:'+uid+'\n'
+			text+='DTSTAMP:'+finalYear+finalMonth+finalDate+'T'+finalTimeStart+'\n'
+			//1997 07 14 T 170000
+			text+='DTSTART:'+finalYear+finalMonth+finalDate+'T'+finalTimeStart+'\n'
+			text+='DTEND:'+finalYear+finalMonth+finalDate+'T'+finalTimeEnd+'\n'
+			text+='SUMMARY:'+findNameById(exam[i].code)+'\n'
+			text+='BEGIN:VALARM\n'
+			text+='TRIGGER:-PT0030M\n'
+			text+='ACTION:DISPLAY\n'
+			text+='DESCRIPTION:Reminder\n'
+			text+='END:VALARM\n'
+			text+='END:VEVENT\n'
+			uid++;
+		}
+	}
+	text += `END:VCALENDAR`
+	return await new Promise(function(resolve,reject){
+	    fs.writeFile("public/files/"+count+'.ics', text, function(err) {
+	      if(err) {
+	        console.log(err);
+	        reject();
+	      }
+	      console.log("The file was saved!");
+	      resolve(count++);
+	    });
+	})
 }
 
 //------------------------------------------------
@@ -144,44 +229,4 @@ function reqData(id){
   return fileName;
 }
 
-
-function createFile(result,fileName){
-  var date = Date().split(' ')
-  var text = `BEGIN:VCALENDAR
-METHOD:PUBLISH
-VERSION:2.0
-X-WR-CALNAME:ปฏิทินสอบกลางภาค
-PRODID:-//Apple Inc.//Mac OS X 10.12.1//EN
-X-APPLE-CALENDAR-COLOR:#63DA38
-X-WR-TIMEZONE:Asia/Bangkok
-CALSCALE:GREGORIAN\n`
-  for(i in result){
-    text+='BEGIN:VEVENT\n'
-    text+='UID:'+i+'\n'
-    text+='DTSTAMP: '+date[3]+date[1]+date[2]+'T'+'000000\n'
-    text+='LOCATION:อาคาร'+result[i][9]+' ชั้น'+result[i][8]+' ห้อง'+result[i][7]+'\n'
-    text+='DTSTART:20170226T090000\n'
-    text+='DTEND:20170226T120000\n'
-    text+='SUMMARY:'+result[i][3]+'\n'
-    text+='DESCRIPTION:บลาๆๆๆ\n'
-    text+='BEGIN:VALARM\n'
-    text+='TRIGGER:-PT0030M\n'
-    text+='ACTION:DISPLAY\n'
-    text+='DESCRIPTION:Reminder\n'
-    text+='END:VALARM\n'
-    text+='END:VEVENT\n'
-  }
-  text += `END:VCALENDAR`
-  return write(text,fileName)
-}
-
-function write(text,fileName){
-  fs.writeFile("public/files/"+fileName+'.ics', text, function(err) {
-    if(err) {
-      return console.log(err);
-    }
-    console.log("The file was saved!");
-    return "test.ics"
-  });
-}
 module.exports = router;
