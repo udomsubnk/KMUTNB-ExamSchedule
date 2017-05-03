@@ -23,6 +23,9 @@ export default class Pageone extends React.Component{
     this.checkCourses = this.checkCourses.bind(this)
     this.checkSections = this.checkSections.bind(this)
   }
+  componentDidMount(){
+      act('processbar-p1');
+  }
  selectSubject(e){
     const { currentName } = this.state
     const value = e.target.value

@@ -28,11 +28,22 @@ class Main extends React.Component {
       dayExambox:{},
       daybox:{}
     }
+    this.goPageOne = this.goPageOne.bind(this)
     this.goPagetwo = this.goPagetwo.bind(this)
     this.goPagethree = this.goPagethree.bind(this)
   }
-
+  goPageOne(){
+    var url = '/'
+    window.history.pushState(null, null,url);
+    this.setState ({
+      ReplyPageone:true,
+      ReplyPagetwo:false,
+      ReplyPagethree:false,
+    })
+  }
   goPagetwo(courses){
+    var url = '/'
+    window.history.pushState(null, null,url);
     this.setState ({
       ReplyPageone:false,
       ReplyPagetwo:true,
@@ -74,17 +85,6 @@ class Main extends React.Component {
       if(url.indexOf("finish?id")==-1){
         window.location = '/'
       }
-      setTimeout(function(){
-        act('processbar-p1');
-      }, 500);
-      setTimeout(function(){
-        act('processbar-p2');
-      }, 800);
-      setTimeout(function(){
-        $('#goThree').click(function(){
-          act('processbar-p3');
-        })
-      }, 800);
       // http://localhost:3000/finish? id[0],2020,id[1],220 
       var xx = url.split("finish?").pop().split(/=|&/g)
       var data = []
@@ -123,13 +123,11 @@ class Main extends React.Component {
       dayExambox,
       daybox
     } = this.state
+    const reply = {ReplyPageone,ReplyPagetwo,ReplyPagethree}
     return (
       <div className="container">
         <Header />
-        <ProgressBar/>
-        { ReplyPageone }
-        { ReplyPagetwo }
-        { ReplyPagethree }
+        <ProgressBar replyPage = { reply } goPageOne = { this.goPageOne } goPagetwo = { this.goPagetwo } section_id={tableStudy} />
         { ReplyPageone && <Pageone gotwo={ this.goPagetwo } /> }
         { ReplyPagetwo && <Pagetwo gothree={ this.goPagethree } dataPageOne = { dataFormPageOne }/> }
         { ReplyPagethree && <Pagethree 

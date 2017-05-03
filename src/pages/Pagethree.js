@@ -18,6 +18,7 @@ class Pagethree extends Component {
 
   componentDidMount() {
     const { tableStudy } = this.props
+    act('processbar-p3');
     var myUrl = '/finish?'
     // finish?id[0]=1020&id[1]=2020
     for(var i in tableStudy){

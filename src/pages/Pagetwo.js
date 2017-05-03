@@ -97,6 +97,7 @@ class Pagetwo extends Component{
 	}
 
 	componentDidMount(){
+		act('processbar-p2');
 		$(document).ready(function() {
 			$('.add').click()
 		});
@@ -559,7 +560,6 @@ class Pagetwo extends Component{
 		const showDropdownSearch = SearchList.map( (data) =>
 			<SubjectSearchItem key={ data.course_id } data={ data } selectCourse={ this.selectCourse }/>
 		)
-		console.log(allselect)
 		const showSelectSection = specialSection.map((data) =>
 			<SectionListItem key={ data.section_id } section={ data } addSection={ this.addSection }/>
 		)
