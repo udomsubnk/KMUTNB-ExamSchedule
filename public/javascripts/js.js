@@ -27,8 +27,6 @@ $(document).ready(function() {
 		setTimeout(function(){
 			$('#goThree').click();
 		}, 1000);
-
-		window.location = window.location.href
 	});
 	$('#button').click(function(event) {
 		var id = $("#id").val()
