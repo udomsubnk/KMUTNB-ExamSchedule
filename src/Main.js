@@ -79,7 +79,7 @@ class Main extends React.Component {
           data.push(xx[i])
       }
       for(i in data){
-        data[i]=findSectionFromSection_id(data[i])
+        data[i] = findSectionFromSection_id(data[i])
       }
       this.setState({
         dataFormPageOne:data,
