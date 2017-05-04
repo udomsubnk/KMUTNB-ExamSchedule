@@ -24,7 +24,7 @@ export class ProgressBar extends Component {
         const { ReplyPageone,ReplyPagetwo,ReplyPagethree} = this.props.replyPage
         const iii = 'iconOpen'
         return (
-            <div className="process-bar">
+            <div className="process-bar moveIn">
                 <center>
                     <div className="processbar-process-bar">
                         <div className="processbar-process">
@@ -37,23 +37,23 @@ export class ProgressBar extends Component {
                     </div>
                     <div className="processbar-text processbar-p1">เริ่มต้น</div>
             </div>
+
             <div className="processbar-process">
                 <div className="processbar-img">
                     <div className="processbar-circle processbar-p2" onClick={ this.pageTwo }>
                         <span className="processbar-number">2</span>
                     </div>
-                <div className="processbar-line-l"></div>
-                <div className="processbar-line-r">
-            </div>
+                    <div className="processbar-line-l"></div>
+                <div className="processbar-line-r"></div>
             </div>
             <div className="processbar-text processbar-p2">จัดตารางเรียน</div>
-            </div><div className="processbar-process"><div className="processbar-img">
-                <div className="processbar-line-l">
-                    </div><div className="processbar-circle processbar-p3">
-                        <span className="processbar-number">3</span>
+                </div><div className="processbar-process"><div className="processbar-img">
+                    <div className="processbar-line-l">
+                        </div><div className="processbar-circle processbar-p3">
+                            <span className="processbar-number">3</span>
                         </div>
-                        </div>
-                        <div className="processbar-text processbar-p3">สำเร็จ</div></div></div>
+                    </div>
+                <div className="processbar-text processbar-p3">สำเร็จ</div></div></div>
                 </center>
             </div>
         )

@@ -3,8 +3,8 @@
     cursor: pointer;
 }
 .process-bar{
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 body{
     margin-bottom: 50px;;
@@ -396,6 +396,14 @@ body{
 }
 .MoveChangePage2{
     animation:MoveChangePage2 0.3s ease;
+}
+.moveInBottom{
+    animation:moveInBottom 0.8s ease;
+}
+@keyframes moveInBottom{
+	0%{
+		transform: translate(40px,-10px);
+	}
 }
 @keyframes moveAlert{
 	0%{

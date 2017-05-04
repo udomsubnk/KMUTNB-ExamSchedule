@@ -95,7 +95,7 @@ export default class Pageone extends React.Component{
       }
     }
   }
-  
+
   render(){
     const { gotwo,alertStatus } = this.props
     const { currentName } = this.state
@@ -103,7 +103,7 @@ export default class Pageone extends React.Component{
         <OptionDropdownItem key={ res.curr_id } currentNameprops={ res }/>
     )
     return(
-      <div className="row">
+      <div className="row moveInBottom">
         <div className="container middle word-1">
           <form className="eiei">
             <div className="row m0">

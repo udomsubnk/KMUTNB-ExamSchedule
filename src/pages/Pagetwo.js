@@ -98,6 +98,7 @@ class Pagetwo extends Component{
 
 	componentDidMount(){
 		act('processbar-p2');
+		
 		$(document).ready(function() {
 			$('.add').click()
 		});
