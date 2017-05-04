@@ -187,10 +187,12 @@ function act(s){
 	$(".processbar-p2").hasClass("processbar-active")&&$(".processbar-p2").removeClass("processbar-active").addClass("processbar-unfocus"),
 	$(".processbar-p3").hasClass("processbar-active")&&$(".processbar-p3").removeClass("processbar-active").addClass("processbar-unfocus"))
 	
-	:"processbar-p2"==s?($(".processbar-p2").removeClass("processbar-unfocus").addClass("processbar-active"),
+	:"processbar-p2"==s?
+	($(".processbar-p2").removeClass("processbar-unfocus").addClass("processbar-active"),
 	$(".processbar-p1").hasClass("processbar-active")&&$(".processbar-p1").removeClass("processbar-active").addClass("processbar-unfocus"),
 	$(".processbar-p3").hasClass("processbar-active")&&$(".processbar-p3").removeClass("processbar-active").addClass("processbar-unfocus"))
 	
 	:($(".processbar-p3").removeClass("processbar-unfocus").addClass("processbar-active"),
 	$(".processbar-p1").hasClass("processbar-active")&&$(".processbar-p1").removeClass("processbar-active").addClass("processbar-unfocus"),
-	$(".processbar-p2").hasClass("processbar-active")&&$(".processbar-p2").removeClass("processbar-active").addClass("processbar-unfocus"))}	
+	$(".processbar-p2").hasClass("processbar-active")&&$(".processbar-p2").removeClass("processbar-active").addClass("processbar-unfocus"))
+}	

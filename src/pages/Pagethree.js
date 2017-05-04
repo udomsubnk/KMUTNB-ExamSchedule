@@ -42,7 +42,7 @@ class Pagethree extends Component {
       window.location="/getFile?filename="+res;
     });
   }
- 
+
   render() {
     const { 
       tableStudy,
@@ -58,7 +58,7 @@ class Pagethree extends Component {
       dayExambox,
       daybox,
     } = this.props
-   
+    
     return (
       <div className="container MoveChangePage">
         <center><h1 className="zzz">Summary</h1></center>
