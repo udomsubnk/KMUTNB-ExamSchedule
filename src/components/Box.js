@@ -5,10 +5,26 @@ export class Bigbox extends Component {
     render() {
         const { data,color,sec } = this.props
         return (
-            <div className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "262px" }}>
-                <div className="section-box-detail">{ data.course_id }</div>
-                <div className="section-box-detail">{ data.name }</div>
-                <div className="section-box-detail">{ sec.type }-{ sec.section }</div>
+            <div>
+                <div data-toggle="modal" data-target="#myModal" className = "section-box z-depth-2 whi" style = {{ "background": color,"width": "262px" }}>
+                    <div className="section-box-detail">{ data.course_id }</div>
+                    <div className="section-box-detail">{ data.name }</div>
+                    <div className="section-box-detail">{ sec.type }-{ sec.section }</div>
+                </div>
+                <div className="modal fade" id="myModal" role="dialog">
+                    <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                        <button type="button" className="close" data-dismiss="modal">&times;</button>
+                        <h4 className="modal-title">wwwwwww</h4>
+                        </div>
+                        <div className="modal-body">
+                        <p>Some text in the modal.</p>
+                        </div>
+                    </div>
+                    
+                    </div>
+                </div>
             </div>
         )
     }

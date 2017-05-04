@@ -113,7 +113,23 @@ export default class Pageone extends React.Component{
               <div className="col-md-11 col-xs-10">
                 <select className="form-control input-lg z-depth-2" onChange={ this.selectSubject } >
                   <option selected disabled>---เลือกคณะ---</option>
+                  <option value="01">คณะวิศวกรรมศาสตร์</option>
+                  <option value="02">คณะครุศาสตร์อุตสาหกรรม</option>
+                  <option value="03">คณะวิทยาลัยเทคโนโลยีอุตสาหกรรม</option>
                   <option value="04">คณะวิทยาศาสตร์ประยุกต์</option>
+                  <option value="05">คณะอุตสาหกรรมเกษตร</option>
+                  <option value="06">คณะเทคโนโลยีและการจัดการอุตสาหกรรม</option>
+                  <option value="07">คณะเทคโนโลยีและสารสนเทศ</option>
+                  <option value="08">คณะศิลปศาสตร์ประยุกต์</option>
+                  <option value="09">บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติฯ</option>
+                  <option value="10">บัณฑิตวิทยาลัย</option>
+                  <option value="11">คณะสถาปัตยกรรมและการออกแบบ</option>
+                  <option value="12">คณะวิศวกรรมศาสตร์และเทคโนโลยี</option>
+                  <option value="13">คณะวิทยาศาสตร์ พลังงานและสิ่งแวดล้อม</option>
+                  <option value="14">คณะบริหารธุรกิจ</option>
+                  <option value="15">วิทยาลัยนานาชาติ</option>
+                  <option value="16">คณะพัฒนาธุรกิจและอุตสาหกรรม</option>
+                  <option value="17">คณะบริหารธุรกิจและอุตสาหกรรมบริการ</option>
                 </select>
               </div>
             </div>
@@ -139,8 +155,23 @@ export default class Pageone extends React.Component{
                     <select className="form-control input-lg z-depth-2" onChange={ this.checkCourses }>
                       <option selected disabled>ประเภทนักศึกษา</option>
                       <option value="R">R ปกติรอบเช้า</option>
+                      <option>T ปกติรอบบ่าย</option>
+                      <option>H โครงการความร่วมมือกับกรมอาชีวศึกษาฯ</option>
+                      <option>S โครงการครูประจำการ</option>
+                      <option>A ช่างฝึกหัด</option>
+                      <option>O โครงการเร่งรัดการผลิตบัณฑิต</option>
                       <option value="D">D โครงการสมทบพิเศษ</option>
+                      <option>N โครงการเครือข่ายฯ</option>
+                      <option>HM โครงการพัฒนาผู้บริหารด้านการจัดการอุตสาหกรรม</option>
+                      <option>E นักศึกษาพิเศษ</option>
+                      <option>L นักศึกษาโครงการลาว</option>
+                      <option>B นักศึกษาปรับพื้น</option>
+                      <option>X โครงการพัฒนาผู้บริหารด้านอุตสาหกรรม</option>
+                      <option>DP โครงการสมทบพิเศษ(CSs ปราจีนบุรี)</option>
                       <option value="CSB">BP โครงการสองภาษา</option>
+                      <option>EP โครงการภาษาอังกฤษ</option>
+                      <option>DE โครงการเสริมทักษะภาษาอังกฤษ</option>
+                      <option>IP โครงการนานาชาติ</option>
                     </select>
                   </div>
                 </div>
