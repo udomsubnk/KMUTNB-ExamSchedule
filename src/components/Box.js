@@ -15,11 +15,15 @@ export class Bigbox extends Component {
                     <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                        <button type="button" className="close" data-dismiss="modal">&times;</button>
-                        <h4 className="modal-title">wwwwwww</h4>
+                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            <h4 className="modal-title">{data.name}</h4>
                         </div>
                         <div className="modal-body">
-                        <p>Some text in the modal.</p>
+                            <p>{ data.course_id }</p>
+                            <p>{ data.course_id }</p>
+                            <p>{ data.course_id }</p>
+                            <p>{ data.course_id }</p>
+                            <p>{ data.course_id }</p>
                         </div>
                     </div>
                     

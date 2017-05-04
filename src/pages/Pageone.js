@@ -12,10 +12,12 @@ export default class Pageone extends React.Component{
     this.state = {
       currentName:[],
       coursesSelect:{
+        kana:'',
         laksoot:'',
         prapet:'',
         year:'',
         sec:'',
+        rob:''
       },
       alertStatus:false
     }
@@ -58,6 +60,18 @@ export default class Pageone extends React.Component{
         break;
       case'4':
         coursesSelect.year = '4'
+        break;
+      case'5':
+        coursesSelect.year = '5'
+        break;
+      case'6':
+        coursesSelect.year = '6'
+        break;
+      case'7':
+        coursesSelect.year = '7'
+        break;
+      case'8':
+        coursesSelect.year = '8'
         break;
       case'R':
         coursesSelect.prapet = 'R'
@@ -187,6 +201,10 @@ export default class Pageone extends React.Component{
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
                       </select>
                     </div>
                     </div>
