@@ -222,6 +222,15 @@ export default class Pageone extends React.Component{
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
+                        <option value="A">D</option>
+                        <option value="B">E</option>
+                        <option value="C">F</option>
+                        <option value="A">G</option>
+                        <option value="B">H</option>
+                        <option value="C">I</option>
+                        <option value="A">J</option>
+                        <option value="B">K</option>
+                        <option value="C">L</option>
                       </select>
                     </div>
                   </div>
