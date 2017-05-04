@@ -1,4 +1,4 @@
-                    <option value="01">คณะวิศวกรรมศาสตร์</option>
+                  <option value="01">คณะวิศวกรรมศาสตร์</option>
                   <option value="02">คณะครุศาสตร์อุตสาหกรรม</option>
                   <option value="03">คณะวิทยาลัยเทคโนโลยีอุตสาหกรรม</option>
                   <option value="04">คณะวิทยาศาสตร์ประยุกต์</option>
