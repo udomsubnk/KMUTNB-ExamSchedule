@@ -11,7 +11,7 @@ class ExamTable extends Component {
         return (
             <div>
                 <center><h4 className="pdt20"> { title } </h4></center>
-                <div className="index_container pdt20 z-depth-3">
+                <div className="index_container pdt20 z-depth-3 border-rad-4">
                     <div className="table-schdule">
                         <div className="index_header">
                             <div className="index_firstHeaderExam"></div>

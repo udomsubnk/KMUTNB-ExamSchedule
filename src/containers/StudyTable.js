@@ -13,7 +13,7 @@ class StudyTable extends Component {
         return (
             <div>
                 <center><h4 className="mgt20"> Study Schudule </h4></center>
-                <div className="index_container z-depth-3">
+                <div className="index_container z-depth-3 border-rad-4">
                     <div className="table-schdule">
                         { this.props.children }
                         <div className="index_day">
