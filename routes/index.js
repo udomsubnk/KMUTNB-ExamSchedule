@@ -229,4 +229,99 @@ function reqData(id){
   return fileName;
 }
 
+var webdriverio = require('webdriverio');
+var options = {
+    desiredCapabilities: {
+        browserName: 'chrome'
+    }
+};
+
+var facCode //= "04"  //คณะ
+var currCode //= "54040644" //หลักสูตร
+var stuType //= "R" //เซ็ค R
+var stuYear //= "3" //ปี 
+var stuRound //= "R" //รอบเช้า
+var stuGroup //= "A" //ห้อง
+router.get('/callcourse/:facCode/:currCode/:stuType/:stuYear/:stuRound/:stuGroup',function(req,res,next){
+	facCode = req.params.facCode
+	currCode = req.params.currCode
+	stuType = req.params.stuType
+	stuYear = req.params.stuYear
+	stuRound = req.params.stuRound
+	stuGroup = req.params.stuGroup
+	callCourse().then(function(allCourse){
+		let data = {allCourse}
+		res.json(data);
+	})
+});
+
+async function callCourse(){
+	return await new Promise((resolve, reject) => {
+		var allCourse = []
+		var runner = webdriverio.remote(options);
+		runner = runner.init()
+		runner = runner.url('http://klogic.kmutnb.ac.th:8080/kris/tess/dataQuerySelector.jsp?query=studentTab')
+		runner = runner.selectByValue('select[name="facCode"]',facCode)
+		runner = runner.selectByValue('select[name="currCode"]',currCode)
+		runner = runner.selectByValue('select[name="stuType"]',stuType)
+		runner = runner.selectByValue('select[name="stuYear"]',stuYear)
+		runner = runner.selectByValue('select[name="stuRound"]',stuRound)
+		runner = runner.selectByValue('select[name="stuGroup"]',stuGroup)
+		runner = runner.isVisible('table[bgcolor="#F1F1FD"]')
+		runner = runner.then((check)=>{
+			if(check){
+				runner = runner.getHTML('table[bgcolor="#F1F1FD"]')
+				runner = runner.then((body)=>{
+					$ = cheerio.load(body)
+					$('td[bgcolor="#F4D9FF"]').each(function(index,el){
+						var data = $(this).children('table').children('tbody').children('tr:nth-child(1)')
+						var code = $(data).children('td:nth-child(1)').text().trim()
+						var section = $(data).children('td:nth-child(2)').text().trim().split('.')[1]
+						var secType = $(data).children('td:nth-child(2)').text().trim().split('.')[0]
+						console.log(code,section,secType)
+						console.log('---------------------')
+						var course = {code,section,secType}
+						allCourse.push(course)
+					})
+				})
+			}
+			runner = runner.end()
+			runner = runner.then(()=>{
+				console.log(JSON.stringify(allCourse))
+				var data = []
+				for(i in allCourse){
+					findSection_id(allCourse[i].code,allCourse[i].secType,allCourse[i].section).then((row)=>{
+						data.push(row)
+						if(data.length == allCourse.length)
+							resolve(data)
+					})
+				}
+			})
+		})
+	});
+}
+var mysql = require('mysql');
+var host = 'localhost'
+var user = 'root'
+var password = ''
+var database = 'klogic'
+
+// SELECT section_id FROM `sections` WHERE `course_id` LIKE '040613354' AND `type` LIKE 'S' AND `section` LIKE '1' 
+async function findSection_id(code,type,sec){
+	return await new Promise(function(resolve,reject){
+		let queryCommand = `SELECT section_id FROM sections WHERE course_id LIKE '${code}' AND type LIKE '${type}' AND section LIKE '${sec}' `;
+		var connection = mysql.createConnection({host,user,password,database});
+		connection.connect(function(err,callback){
+			connection.query(queryCommand, function (errr, rows, fields) {
+		  		connection.end()
+		  		if (errr) {
+		  			return reject(errr);
+		  		}else{
+		  			console.log(JSON.stringify(rows))
+			  		resolve(rows[0].section_id);
+		  		}
+			})
+		})
+	});
+}
 module.exports = router;
