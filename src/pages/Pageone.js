@@ -86,17 +86,18 @@ export default class Pageone extends React.Component{
 
   checkSections(){
     const { alertStatus,coursesSelect } = this.state
-    if(coursesSelect.laksoot== '' || coursesSelect.prapet== '' || coursesSelect.year== '' || coursesSelect.sec== ''){
-      this.props.gotwo(courses)
-      return;
+    const { gotwo } = this.props
+    if(coursesSelect.kana == '' || coursesSelect.rob == ''|| coursesSelect.laksoot== '' || coursesSelect.prapet== '' || coursesSelect.year== '' || coursesSelect.sec== ''){
+      const data = []
+      gotwo(data)
     }
-    chooseCourse(coursesSelect,this.props.gotwo)
+    else
+      chooseCourse(coursesSelect,gotwo)
   }
 
   render(){
     const { gotwo,alertStatus } = this.props
     const { currentName ,coursesSelect} = this.state
-    console.log(coursesSelect)
     const showOptionCurrent = currentName.map((res)=>
         <OptionDropdownItem key={ res.curr_id } currentNameprops={ res }/>
     )
