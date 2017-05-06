@@ -1,12 +1,9 @@
-
 exports.findAll = function(){
     return subject;
 }
 exports.findById = function(code){
-    for (var i = 0; i < subject.length; i++){
-        if (subject[i].course_id == code)
-          return subject[i];
-    }
+    let subjectObj = subject.filter((data) => data.course_id === code)
+    return Object.assign(...subjectObj)
 }
 exports.findNameFormCourseID = function(id){
    for (var i = 0; i < subject.length; i++){
