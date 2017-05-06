@@ -40,6 +40,6 @@
   },
   "engines": {
     "node": ">= 7.6.0",
-    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+    "postinstall": "NODE_ENV=production webpack -p"
   }
 }
