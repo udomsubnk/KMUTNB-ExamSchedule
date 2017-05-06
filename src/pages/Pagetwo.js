@@ -334,7 +334,6 @@ class Pagetwo extends Component{
 			tempExamarrayMid.push(inlistM)
 			tempExamarrayFinal.push(inlistE)
 		}
-		
 		const timeStartMidExam = dataExam.exam.mid.timeStart
 		const timeEndtMidExam = dataExam.exam.mid.timeEnd
 		const hourExamMid = parseInt(timeEndtMidExam)-parseInt(timeStartMidExam)
